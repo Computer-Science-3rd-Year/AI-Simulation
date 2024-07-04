@@ -1,3 +1,20 @@
+class Hotel:
+    def __init__(self, services, revenues):
+        self.services = services
+        self.revenues = revenues
+    
+    def calculate_amount():
+        return 0
+    
+
+class Service:
+    def __init__(self, resource) -> None:
+        pass
+
+
+
+
+
 # import simpy
 # import matplotlib.pyplot as plt
 # import resources as rs
