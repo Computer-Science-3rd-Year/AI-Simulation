@@ -1,15 +1,63 @@
 class Hotel:
     def __init__(self, services, revenues):
-        self.services = services
+        self.services = []
+        self.init_services(services)
         self.revenues = revenues
+        self.indexes = []
+        self.calculate_indexes() # 'service: index_in_expenses'
+        self.expenses = [] # [{'utility_1': expense, 'utility_2: expense',...}, {'utility_1': expense, 'utility_2: expense',...}, ...]
+        self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
     
-    def calculate_amount():
-        return 0
+    def init_services(self, services):
+        for service in services:
+            self.services.append((service,True))
+    
+    def calculate_amount(self):
+        pass
+
+    def calculate_indexes(self):
+        i=0
+        for service, _ in self.services:
+            self.indexes[service.name] = i
+            i+=1
+    
+    def add_service(self, new_service):
+        if (new_service, True) in self.services: return
+
+        elif (new_service, False) in self.services:
+            self.services[self.services.index((new_service, False))] = (new_service, True)
+
+        self.services.append(new_service, True)
+        i = len(self.indexes.keys())
+        self.indexes[new_service.name] = i
+        new_dict = {}
+        for utility in new_service.utilities:
+            new_dict[utility.name] = 0
+        self.expenses.append(new_dict)
+    
+    def disable_service(self, old_service):
+        if (old_service, True) in self.service:
+            self.services[self.services.index((old_service, True))] = (old_service, False)
+        elif (old_service, False) in self.services: return
+        else:
+            print(f'The {old_service.name} service does not exist in the hotel')          
     
 
 class Service:
-    def __init__(self, resource) -> None:
-        pass
+    def __init__(self, resource, name, necesity, price, utilities):
+        self.resource = resource
+        self.name = name
+        self.necesity = necesity
+        self.price = price
+        self.utilities = utilities
+        self.state = 0 # porcentaje de calidad de todas sus utilidades
+
+class Utility:
+    def __init__(self, name, container=None): # podríamos agregarle partes, por ej: cama tiene colchón, sábanas, almohadas... 
+                              # => calidad de la cama = sum(qual(colchon), qual(sabanas), qual(almohadas),...)
+        self.name = name
+        self.quality = 0 # porcentaje de 0 a 1, 1 equiv a 100% lo q equivale a lujo, luego 0.5 es estandar 
+        self.container = container
 
 
 
