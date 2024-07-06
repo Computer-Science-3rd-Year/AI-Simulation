@@ -1,39 +1,55 @@
 class Hotel:
-    def __init__(self, services, revenues):
-        self.services = []
+    def __init__(self, services):
+        self.services = [] # [('service_1', availability), ('service_2', availability),..., ('service_n', availability)] *service_i existió en el hotel al menos 1 vez
         self.init_services(services)
-        self.revenues = revenues
-        self.indexes = []
-        self.calculate_indexes() # 'service: index_in_expenses'
-        self.expenses = [] # [{'utility_1': expense, 'utility_2: expense',...}, {'utility_1': expense, 'utility_2: expense',...}, ...]
+        self.revenues = {}
+        self.init_revenues()
+        self.indexes = {}
+        self.calculate_indexes() # 'service': index_in_expenses
+        self.expenses = [] # [{'utility_1': expense, 'utility_2: expense',...}, {'utility_1': expense, 'utility_2: expense',...}, ...] => 1 dict for each service
+        self.init_expenses()
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
     
     def init_services(self, services):
         for service in services:
             self.services.append((service,True))
     
-    def calculate_amount(self):
-        pass
-
+    def init_revenues(self):
+        for serv, _ in self.services:
+            self.revenues[serv] = 0
+    
     def calculate_indexes(self):
         i=0
-        for service, _ in self.services:
-            self.indexes[service.name] = i
+        for serv, _ in self.services:
+            self.indexes[serv] = i
             i+=1
     
+    def init_expenses(self):
+        for i,tuple in enumerate(self.services):
+            ditc_ = {}
+            self.expenses.append(ditc_)
+            for utl in tuple[0].utilities:
+                self.expenses[i][utl] = 0
+     
     def add_service(self, new_service):
         if (new_service, True) in self.services: return
 
         elif (new_service, False) in self.services:
             self.services[self.services.index((new_service, False))] = (new_service, True)
+            return
 
         self.services.append(new_service, True)
         i = len(self.indexes.keys())
-        self.indexes[new_service.name] = i
+        self.indexes[new_service] = i
+        self.revenues[new_service] = 0
         new_dict = {}
         for utility in new_service.utilities:
-            new_dict[utility.name] = 0
+            new_dict[utility] = 0
         self.expenses.append(new_dict)
+
+
+
+
     
     def disable_service(self, old_service):
         if (old_service, True) in self.service:
@@ -51,13 +67,30 @@ class Service:
         self.price = price
         self.utilities = utilities
         self.state = 0 # porcentaje de calidad de todas sus utilidades
+    
+    def update_state(self):
+        for utlty in self.utilities:
+            self.state += utlty.quality
+        self.state = self.state/len(self.utilities)
+    
+    def update_price_from_state(self):
+        for utlty in self.utilities:
+            if utlty.quality < 0.5:
+                price -= utlty.quality
+            elif utlty.quality > 0.5:
+                price += utlty.quality    
+
 
 class Utility:
     def __init__(self, name, container=None): # podríamos agregarle partes, por ej: cama tiene colchón, sábanas, almohadas... 
                               # => calidad de la cama = sum(qual(colchon), qual(sabanas), qual(almohadas),...)
         self.name = name
-        self.quality = 0 # porcentaje de 0 a 1, 1 equiv a 100% lo q equivale a lujo, luego 0.5 es estandar 
+        self.quality = 0.5 # porcentaje de 0 a 1, 1 equiv a 100% lo q equivale a lujo, luego 0.5 es estandar
+                           # establecer un cálculo en base a, quizás, la opinión de los turistas, o pagar más dinero por aumentar la calidad 
         self.container = container
+
+    def increment_quality(self):
+        pass
 
 
 
