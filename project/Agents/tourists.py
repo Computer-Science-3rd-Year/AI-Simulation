@@ -1,3 +1,33 @@
+class Tourist: # Agente BDI --> todas las funciones/componentes 
+    def __init__(self, name, beliefs, desires, intentions, hotel):
+        self.name = name
+        self.beliefs = beliefs
+        self.desires = desires
+        self.intentions = intentions
+        self.use_service = None
+        self.init_use_service(hotel)
+    
+    def init_use_service(self, hotel):
+        for serv in hotel.services:
+            if serv[0].name == 'reception' and serv[1]:
+                self.use_service = serv[0]
+                break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # class Tourist(object):
 #     def __init__(self, env, nombre, hotel):
 #         self.env = env

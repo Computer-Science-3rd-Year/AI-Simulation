@@ -1,14 +1,28 @@
 import simpy 
 
 class AGENT: # Agente BDI --> todas las funciones/componentes 
-    def __init__(self, name, beliefs, desires, intentions):
+    def __init__(self, name, beliefs, desires, intentions, hotel, type):
         self.name = name
         self.beliefs = beliefs
         self.desires = desires
         self.intentions = intentions
+        self.type = type
+    
+    lambda x, h: x + h * 4
+    
+    
+
+def Agent(beliefs, desires, intentions):
+    agent_data = {}
+    agent_data['beliefs'] = beliefs
+    agent_data['desires'] = desires
+    agent_data['intentions'] = intentions
+
 
 # ganma(Bel)xP-->ganma(Bel) dada una percepción y un conjunto de beliefs determina un nuevo conjunto de beliefs
-def brf(agent, perception): # todo lo que el agente observa del medio
+def brf(perception): # todo lo que el agente observa del medio 
+                            # perception --> [hotel.property_1, hotel.property_2, ..., hotel.property_3]
+                            # cada perception varia de acuerdo con la inst de agente => se usará una func lambda para generarlas
     new_beliefs = agent.beliefs
     for bel in agent.beliefs:
         pass
@@ -20,7 +34,7 @@ def brf(agent, perception): # todo lo que el agente observa del medio
 # considera y realiza intenciones cada vez más específicas hasta que se corresponda con una acción inmediata
 # CONSISTENCIA: las opciones deben ser consistentes con las creencias y las intenciones actuales
 # OPORTUNISMO: verificar los cambios del ambiente para detectar nuevas condiciones favorables
-def options(agent): 
+def options(): 
     new_desires = agent.desires
     for bel in agent.beliefs:
         for int in agent.intentions:
@@ -33,7 +47,7 @@ def options(agent):
 # ACTUALIZAR eliminar intenciones inválidas o cuyo costo supere la ganancia
 # MANTENER intenciones no logradas con beneficio positivo
 # NO ADD nuevas intenciones
-def filter(agent):
+def filter():
     new_intentions = agent.intentions
     for bel in agent.beliefs:
         for des in agent.desires:
@@ -43,7 +57,7 @@ def filter(agent):
 # P*-->A dada una secuencia de percepciones las transforma en una acción
 # I-->A des estados internos en acciones (pues será un agente con estados)
 # D-->A (para agentes inteligentes) de una base de datos (interna del agente) devuelve una acción
-def action(agent, perception): # lo que el agente hace con el medio, a partir de lo que observa
+def action(perception): # lo que el agente hace con el medio, a partir de lo que observa
     print('Executing action...')
 
 

@@ -1,62 +1,48 @@
 class Hotel:
     def __init__(self, services):
-        self.services = [] # [('service_1', availability), ('service_2', availability),..., ('service_n', availability)] *service_i existió en el hotel al menos 1 vez
+        self.services = {} # {'service_1': availability, 'service_2': availability,..., 'service_n': availability} *service_i existió en el hotel al menos 1 vez
         self.init_services(services)
         self.revenues = {}
         self.init_revenues()
-        self.indexes = {}
-        self.calculate_indexes() # 'service': index_in_expenses
-        self.expenses = [] # [{'utility_1': expense, 'utility_2: expense',...}, {'utility_1': expense, 'utility_2: expense',...}, ...] => 1 dict for each service
+        self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
     
+    
     def init_services(self, services):
         for service in services:
-            self.services.append((service,True))
+            self.services[service] = True
     
     def init_revenues(self):
         for serv, _ in self.services:
             self.revenues[serv] = 0
-    
-    def calculate_indexes(self):
-        i=0
-        for serv, _ in self.services:
-            self.indexes[serv] = i
-            i+=1
-    
+       
     def init_expenses(self):
-        for i,tuple in enumerate(self.services):
-            ditc_ = {}
-            self.expenses.append(ditc_)
-            for utl in tuple[0].utilities:
-                self.expenses[i][utl] = 0
+        for serv, _ in self.services:
+            self.expenses[serv] = {}
+
+            for utl in serv.utilities:
+                self.expenses[serv][utl] = 0
      
     def add_service(self, new_service):
-        if (new_service, True) in self.services: return
-
-        elif (new_service, False) in self.services:
-            self.services[self.services.index((new_service, False))] = (new_service, True)
+        if new_service in self.services:
+            if self.services[new_service]: return
+            self.services[new_service] = True
             return
 
-        self.services.append(new_service, True)
-        i = len(self.indexes.keys())
-        self.indexes[new_service] = i
+        self.services[new_service] = True       
         self.revenues[new_service] = 0
-        new_dict = {}
+        self.expenses[new_service] = {}
+
         for utility in new_service.utilities:
-            new_dict[utility] = 0
-        self.expenses.append(new_dict)
-
-
-
+            self.expenses[utility] = 0
 
     
     def disable_service(self, old_service):
-        if (old_service, True) in self.service:
-            self.services[self.services.index((old_service, True))] = (old_service, False)
-        elif (old_service, False) in self.services: return
-        else:
-            print(f'The {old_service.name} service does not exist in the hotel')          
+        if not old_service in self.services:
+            print(f'The {old_service.name} service does not exist in the hotel')
+            return
+        self.services[old_service] = False        
     
 
 class Service:
