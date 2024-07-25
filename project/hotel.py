@@ -1,3 +1,4 @@
+import copy
 class Hotel:
     def __init__(self, services):
         self.services = {} # {'service_1': availability, 'service_2': availability,..., 'service_n': availability} *service_i existió en el hotel al menos 1 vez
@@ -66,6 +67,16 @@ class Service:
             elif utlty.quality > 0.5:
                 price += utlty.quality    
 
+    def execute_service(self, agent):
+        for key in agent.perception.services.keys():
+            if key.name == self.name:
+                del agent.perception.services[key]
+                break
+        
+        actually_service = copy.deepcopy(self)
+        agent.perception.services[actually_service] = True
+
+        agent.beliefs[self.necesity] += 10
 
 class Utility:
     def __init__(self, name, container=None): # podríamos agregarle partes, por ej: cama tiene colchón, sábanas, almohadas... 

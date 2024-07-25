@@ -7,44 +7,27 @@ class AGENT: # Agente BDI --> todas las funciones/componentes
         self.desires = desires
         self.intentions = intentions
         self.type = type
+        self.perception = None
+        self.location = None
+    lambda x, h: x + h * 4
     
-    def brf(self):  # perception --> [hotel.property_1, hotel.property_2, ..., hotel.property_3]
-        new_beliefs = agent.beliefs
-        for bel in agent.beliefs:
-            pass
-        return new_beliefs
+    
 
-    def generate_options(self): 
-        new_desires = agent.desires
-        for bel in agent.beliefs:
-            for int in agent.intentions:
-                pass
-        return new_desires
-
-    def filter(self):
-        new_intentions = agent.intentions
-        for bel in agent.beliefs:
-            for des in agent.desires:
-                for int in agent.intentions:
-                    pass
-        return new_intentions
-   
-    def action(self): # lo que el agente hace con el medio, a partir de lo que observa
-        self.brf()
-        self.generate_options()
-        self.filter()
-        return self.intentions[0] # intención de mayor prioridad
+def Agent(beliefs, desires, intentions):
+    agent_data = {}
+    agent_data['beliefs'] = beliefs
+    agent_data['desires'] = desires
+    agent_data['intentions'] = intentions
 
 
-#===========================================================================================================
- # ganma(Bel)xP-->ganma(Bel) dada una percepción y un conjunto de beliefs determina un nuevo conjunto de beliefs
-    def brf(self): # todo lo que el agente observa del medio 
-                                # perception --> [hotel.property_1, hotel.property_2, ..., hotel.property_3]
-                                # cada perception varia de acuerdo con la inst de agente => se usará una func lambda para generarlas
-        new_beliefs = agent.beliefs
-        for bel in agent.beliefs:
-            pass
-        return new_beliefs
+# ganma(Bel)xP-->ganma(Bel) dada una percepción y un conjunto de beliefs determina un nuevo conjunto de beliefs
+def brf(perception): # todo lo que el agente observa del medio 
+                            # perception --> [hotel.property_1, hotel.property_2, ..., hotel.property_3]
+                            # cada perception varia de acuerdo con la inst de agente => se usará una func lambda para generarlas
+    new_beliefs = agent.beliefs
+    for bel in agent.beliefs:
+        pass
+    return new_beliefs
 
     # ganma(Bel)xganma(Int)-->ganma(Des) dado un conjunto de beliefs y un conjunto de intentions devuelve un conjunto de desires
     # proceso de PLANIFICACION del agente (lograr las intenciones del agente)
