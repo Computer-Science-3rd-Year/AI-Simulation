@@ -12,20 +12,8 @@ class Tourist: # Agente BDI --> todas las funciones/componentes
             if serv[0].name == 'reception' and serv[1]:
                 self.use_service = serv[0]
                 break
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        
 
 
 # class Tourist(object):

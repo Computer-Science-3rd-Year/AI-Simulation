@@ -7,7 +7,8 @@ class AGENT: # Agente BDI --> todas las funciones/componentes
         self.desires = desires
         self.intentions = intentions
         self.type = type
-    
+        self.perception = None
+        self.location = None
     lambda x, h: x + h * 4
     
     
