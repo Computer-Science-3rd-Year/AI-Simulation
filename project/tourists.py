@@ -1,6 +1,7 @@
+
 import random
 
-""" PARAMS"""
+
 NECESITY_SIZE = 100
 NUMBER = 10
 TOURIST_ENERGY_SIZE = 100        # nivel máximo de descanso
@@ -21,15 +22,15 @@ services = {'energy': {'room', 'coffee', 'energy_drink', 'reserve_room'},
 
 
 # servicios que un turista en particular necesita para ssatisfacer sus necesidades
-beliefs = {
-    'energy_level': (random.randint(*TOURIST_ENERGY_LEVEL), set(random.sample(list(services['energy']), random.randint(1, len(services['energy'])))).update(['room'])),
-    'food_level': (random.randint(*TOURIST_food_LEVEL), random.sample(list(services['food']), random.randint(1, len(services['food'])))),
-    'fun_level': (random.randint(*TOURIST_FUN_LEVEL), random.sample(list(services['fun']), random.randint(1, len(services['fun'])))),
-    #'comfort_level': random.randint(*TOURIST_COMFORT_LEVEL),
-    'has_room': False,
-    'room_cleanliness': None,
-    
-}
+def beliefs():
+    return {
+            'energy_level': (random.randint(*TOURIST_ENERGY_LEVEL), set(random.sample(list(services['energy']), random.randint(1, len(services['energy'])))).update(['room'])),
+            'food_level': (random.randint(*TOURIST_food_LEVEL), random.sample(list(services['food']), random.randint(1, len(services['food'])))),
+            'fun_level': (random.randint(*TOURIST_FUN_LEVEL), random.sample(list(services['fun']), random.randint(1, len(services['fun'])))),
+            #'comfort_level': random.randint(*TOURIST_COMFORT_LEVEL),
+            'has_room': False,
+            'room_cleanliness': None,
+            }
 
 desires = {
     'want_energy': False,
@@ -71,7 +72,7 @@ def execute_action(tourist, intention, hotel):
             if room.resource.count == 0:
                 with room.request() as request_room:
                     yield request_room
-                    beliefs['has_room'] = True
+                    tourist.beliefs['has_room'] = True
                     desires['want_room'] = False                            
                     # TOURIST_ROOMS[name] = room
                     # AMOUNT['room'] += PRICES['room']
@@ -89,7 +90,7 @@ def execute_action(tourist, intention, hotel):
                 if service.resource.container.level >= cant_required:
                     yield service.resource.container.get(cant_required)
                     yield hotel.env.timeout(NUMBER)
-                    beliefs[necesity_level] += cant_required
+                    tourist.beliefs[necesity_level] += cant_required
                     desires['want_' + intention[1]] = False
 
 

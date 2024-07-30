@@ -4,6 +4,7 @@ ROOM_CLEANING_SIZE = 200       # máximo nive de limpieza de una habitación
 THRESHOLD_CLEAN = 80           # mínimo de limpieza/confort (% del total)
 class Hotel:
     def __init__(self, services, env):
+        self.env = env
         self.services = {} # {'service_1': availability, 'service_2': availability,..., 'service_n': availability} *service_i existió en el hotel al menos 1 vez
         self.init_services(services)
         self.init_rooms()
@@ -12,7 +13,7 @@ class Hotel:
         self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
-        self.env = env
+        
     
     
     def init_services(self, services):
@@ -24,11 +25,11 @@ class Hotel:
 
     
     def init_revenues(self):
-        for serv, _ in self.services:
+        for serv in self.services:
             self.revenues[serv] = 0
        
     def init_expenses(self):
-        for serv, _ in self.services:
+        for serv in self.services:
             self.expenses[serv] = {}
 
             for utl in serv.utilities:
@@ -92,7 +93,7 @@ class Services_set:
     def __init__(self, env, count_resources, name, necesity, utility: Utility =None):
         self.env = env
         self.service_name = name
-        self.services = [Service(simpy.resources.Resource(env, capacity=1), f'{name}_{i}', necesity,  utility) for i in range(count_resources)]
+        self.services = [Service(simpy.Resource(env, capacity=1), f'{name}_{i}', necesity,  utility) for i in range(count_resources)]
 
 
 
