@@ -1,67 +1,74 @@
 import simpy 
 import tourists
-import workers
-import manager
+import workers 
+import manager 
+
 
 class AGENT: # Agente BDI --> todas las funciones/componentes 
-    def __init__(self, name, beliefs, desires, intentions, type):
+    def __init__(self, name, beliefs, desires, intentions, type_):
         self.name = name
         self.beliefs = beliefs # {'perceptions': ..., 'rules': ...}
         self.desires = desires
         self.intentions = intentions
-        self.type = type
         self.perception = None # propiedades de Hotel en dependencia del tipo de agente y coincide con la estructura respectiva en Hotel
         self.location = None
+        self.type_ = type_
     
     
     def brf(self, hotel):
-        if self.beliefs[0] in tourists.beliefs:
+        if self.type_ == 'tourist':
             for service in hotel.services:
-                if not service in self.perception and hotel[service]:
-                    self.perception[service] = True
+                necesity = service.necesity
+                name = service.name
+                if not necesity in self.perception and hotel[service]:
+                    self.perception[necesity] = {name}
                     continue
-                if service in self.perception and not hotel[service]:
-                    del self.perception[service]            
+                if necesity in self.perception and not name in self.perception[necesity] and hotel[service]:
+                    self.perception[necesity].update([name])
+                    continue                
+                if name in self.perception[necesity] and not hotel[service]:
+                    self.perception[necesity].remouve(name)         
         
-        if self.beliefs[0] in workers.beliefs:
+        if self.type_ == 'worker':
             self.beliefs = workers.brf(self.beliefs, self.perception)
 
-        if self.beliefs[0] in manager.beliefs:
+        if self.type_ == 'manager':
             self.beliefs = manager.brf(self.beliefs, self.perception)
             
         
 
     def generate_options(self):
-        if self.beliefs[0] in tourists.beliefs:
-            self.desires = tourists.generate_option(self.beliefs, self.intentions)          
+        if self.type_ == 'tourist':
+            self.desires = tourists.generate_option(self)          
             return
         
-        if self.beliefs[0] in workers.beliefs:
+        if self.type_ == 'worker':
             self.desires = workers.generate_option(self.beliefs, self.intentions)          
             return
         
-        if self.beliefs[0] in manager.beliefs:
+        if self.type_ == 'manager':
             self.desires = manager.generate_option(self.beliefs, self.intentions)
 
     # NO ADD nuevas intenciones
     def filter(self):
-        if self.beliefs[0] in tourists.beliefs:
-            self.intentions = tourists.filter(self.beliefs, self.desires, self.intentions)          
+        if self.type_ == 'tourist':
+            self.intentions = tourists.filter(self)          
             return
         
-        if self.beliefs[0] in workers.beliefs:
+        if self.type_ == 'worker':
             self.intentions = workers.filter(self.beliefs, self.desires, self.intentions)          
             return
         
-        if self.beliefs[0] in manager.beliefs:
+        if self.type_ == 'manager':
             self.intentions = manager.filter(self.beliefs, self.desires, self.intentions)
 
     
-    def action(self):
-        self.brf()
+    def action(self, hotel):
+        self.brf(hotel)
         self.generate_options()
         self.filter()
-        return self.intentions[0] # intención de mayor prioridad
+        return self.intentions 
+    
 
 
 
