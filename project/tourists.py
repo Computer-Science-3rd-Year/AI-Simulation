@@ -13,7 +13,7 @@ TOURIST_FUN_LEVEL = [20, 100]     # nivel inicial de diversión de los turistas
 TOURIST_COMFORT_SIZE = 100       # nivel máximo de confort
 TOURIST_COMFORT_LEVEL = [20, 100] # nivel inicial de confort de los turistas (menor_energía => más_sueño)
 
-services = {'energy': {'room', 'coffee', 'energy_drink', 'reserve_room'},
+services = {'energy': {'room', 'coffee', 'energy_drink'},
             'food': {'buffet', 'snack_bar', 'room_service', 'restaurant', 'ranchon'},
             'fun': {'pool', 'pool_table', 'table_tennis', 'tennis', 'gym', 'show_time'}
             }
@@ -31,6 +31,7 @@ def beliefs():
             'has_room': False,
             'room_cleanliness': None,
             }
+
 def desires():
     return {
     'want_energy': False,
