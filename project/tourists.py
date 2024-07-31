@@ -24,9 +24,9 @@ services = {'energy': {'room', 'coffee', 'energy_drink', 'reserve_room'},
 # servicios que un turista en particular necesita para ssatisfacer sus necesidades
 def beliefs():
     return {
-            'energy_level': (random.randint(*TOURIST_ENERGY_LEVEL), set(random.sample(list(services['energy']), random.randint(1, len(services['energy'])))).update(['room'])),
-            'food_level': (random.randint(*TOURIST_food_LEVEL), random.sample(list(services['food']), random.randint(1, len(services['food'])))),
-            'fun_level': (random.randint(*TOURIST_FUN_LEVEL), random.sample(list(services['fun']), random.randint(1, len(services['fun'])))),
+            'energy_level': [random.randint(*TOURIST_ENERGY_LEVEL), set(random.sample(list(services['energy']), random.randint(1, len(services['energy'])))).update(['room'])],
+            'food_level': [random.randint(*TOURIST_food_LEVEL), random.sample(list(services['food']), random.randint(1, len(services['food'])))],
+            'fun_level': [random.randint(*TOURIST_FUN_LEVEL), random.sample(list(services['fun']), random.randint(1, len(services['fun'])))],
             #'comfort_level': random.randint(*TOURIST_COMFORT_LEVEL),
             'has_room': False,
             'room_cleanliness': None,
