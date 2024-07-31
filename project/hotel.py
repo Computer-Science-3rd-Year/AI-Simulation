@@ -7,6 +7,7 @@ class Hotel:
         self.env = env
         self.services = {} # {'service_1': availability, 'service_2': availability,..., 'service_n': availability} *service_i existió en el hotel al menos 1 vez
         self.init_services(services)
+        self.rooms = None
         self.init_rooms()
         self.revenues = {}
         self.init_revenues()

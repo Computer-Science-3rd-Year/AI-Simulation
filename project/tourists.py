@@ -31,8 +31,8 @@ def beliefs():
             'has_room': False,
             'room_cleanliness': None,
             }
-
-desires = {
+def desires():
+    return {
     'want_energy': False,
     'want_food': False,
     'want_fun': False,
