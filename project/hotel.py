@@ -23,7 +23,6 @@ class Hotel:
     
     def init_rooms(self):
         self.rooms = Services_set(self.env, 10, 'room', 'energy', Utility('bed', simpy.Container(self.env, ROOM_CLEANING_SIZE, init=ROOM_CLEANING_SIZE)))
-
     
     def init_revenues(self):
         for serv in self.services:

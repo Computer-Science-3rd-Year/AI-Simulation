@@ -13,7 +13,7 @@ TOURIST_FUN_LEVEL = [20, 100]     # nivel inicial de diversión de los turistas
 TOURIST_COMFORT_SIZE = 100       # nivel máximo de confort
 TOURIST_COMFORT_LEVEL = [20, 100] # nivel inicial de confort de los turistas (menor_energía => más_sueño)
 
-services = {'energy': {'room', 'coffee', 'energy_drink'},
+services = {'energy': {'rest_room', 'coffee', 'energy_drink'},
             'food': {'buffet', 'snack_bar', 'room_service', 'restaurant', 'ranchon'},
             'fun': {'pool', 'pool_table', 'table_tennis', 'tennis', 'gym', 'show_time'}
             }
@@ -29,6 +29,7 @@ def beliefs():
             'fun_level': [random.randint(*TOURIST_FUN_LEVEL), random.sample(list(services['fun']), random.randint(1, len(services['fun'])))],
             #'comfort_level': random.randint(*TOURIST_COMFORT_LEVEL),
             'has_room': False,
+            'my_room': None,
             'room_cleanliness': None,
             }
 
