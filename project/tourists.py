@@ -1,174 +1,65 @@
-
 import random
+import params as prm
 
-
-NECESITY_SIZE = 100
-NUMBER = 10
-TOURIST_ENERGY_SIZE = 100        # nivel máximo de descanso
-TOURIST_ENERGY_LEVEL = [20, 100]  # nivel inicial de energía de los turistas (menor_energía => más_sueño)
-TOURIST_food_SIZE = 100        # nivel máximo de llenura por comida
-TOURIST_food_LEVEL = [20, 100]  # nivel inicial de hambre de los turistas (menor_nivel => más_hambre)
-TOURIST_FUN_SIZE = 100           # nivel máximo de diversión
-TOURIST_FUN_LEVEL = [20, 100]     # nivel inicial de diversión de los turistas
-TOURIST_COMFORT_SIZE = 100       # nivel máximo de confort
-TOURIST_COMFORT_LEVEL = [20, 100] # nivel inicial de confort de los turistas (menor_energía => más_sueño)
-
-services = {'energy': {'rest_room', 'coffee', 'energy_drink'},
-            'food': {'buffet', 'snack_bar', 'room_service', 'restaurant', 'ranchon'},
-            'fun': {'pool', 'pool_table', 'table_tennis', 'tennis', 'gym', 'show_time'}
+services = {prm.energy: {prm.rest_room, prm.coffee, prm.energy_drink},
+            prm.food: {prm.buffet, prm.snack_bar, prm.room_service, prm.restaurant, prm.ranchon},
+            prm.fun: {prm.pool, prm.pool_table, prm.table_tennis, prm.tennis, prm.gym, prm.show_time}
             }
 
 
-
-
-# servicios que un turista en particular necesita para ssatisfacer sus necesidades
+# servicios que un turista en particular necesita para satisfacer sus necesidades
 def beliefs():
     return {
-            'energy_level': [random.randint(*TOURIST_ENERGY_LEVEL), random.sample(list(services['energy']), random.randint(1, len(services['energy'])))],
-            'food_level': [random.randint(*TOURIST_food_LEVEL), random.sample(list(services['food']), random.randint(1, len(services['food'])))],
-            'fun_level': [random.randint(*TOURIST_FUN_LEVEL), random.sample(list(services['fun']), random.randint(1, len(services['fun'])))],
-            #'comfort_level': random.randint(*TOURIST_COMFORT_LEVEL),
+            'energy_level': [random.randint(*prm.TOURIST_ENERGY_LEVEL), random.sample(list(services[prm.energy]), random.randint(1, len(services[prm.energy])))],
+            'food_level':   [random.randint(*prm.TOURIST_FOOD_LEVEL), random.sample(list(services[prm.food]), random.randint(1, len(services[prm.food])))],
+            'fun_level':    [random.randint(*prm.TOURIST_FUN_LEVEL), random.sample(list(services[prm.fun]), random.randint(1, len(services[prm.fun])))],
+            #'comfort_level': 
             'has_room': False,
             'my_room': None,
             'room_cleanliness': None,
+            'using_service': False,
             }
 
 def desires():
     return {
-    'want_energy': False,
-    'want_food': False,
-    'want_fun': False,
-    #'want_comfort': False,
-    'want_room': False,
-    }
+            'want_energy': False,
+            'want_food': False,
+            'want_fun': False,
+            #'want_comfort': False,
+            'want_room': False,
+            }
 
-def generate_option(tourist):
-    if not tourist.beliefs['has_room']:
-        tourist.desires['want_room'] = True
-        return
-    if tourist.beliefs['energy_level'][0] < 20:
-        tourist.desires['want_energy'] = True
-        return
-    if tourist.beliefs['food_level'][0] < 20:
-        tourist.desires['want_food'] = True
-        return
-    if tourist.beliefs['fun_level'][0] < 40:
-        tourist.desires['want_fun'] = True
-        return
-    else:
-        tourist.desires['want_food'] = True
-
-def filter(tourist):
-    if tourist.desires['want_room']:
-        tourist.intentions = ('reserve_room', 'energy')
-    if tourist.desires['want_energy']:
-        tourist.intentions = (random.choice(set(tourist.beliefs['energy_level'][1]).intersection(tourist.perception['energy'])), 'energy')
-    if tourist.desires['want_food']:
-        tourist.intentions = (random.choice(set(tourist.beliefs['food_level'][1]).intersection(tourist.perception['food'])), 'food')
-    if tourist.desires['want_fun']:
-        tourist.intentions = (random.choice(set(tourist.beliefs['fun_level'][1]).intersection(tourist.perception['fun'])), 'fun')
-
-def execute_action(tourist, intention, hotel):
-    if tourist.intentions[0] == 'reserve_room':
-        for room in hotel.rooms.services:
-            if room.resource.count == 0:
-                with room.request() as request_room:
-                    yield request_room
-                    tourist.beliefs['has_room'] = True
-                    desires['want_room'] = False                            
-                    # TOURIST_ROOMS[name] = room
-                    # AMOUNT['room'] += PRICES['room']
-                    print(f'El turista {tourist.name} accedió a la habitación {room.name}.')
-                    yield hotel.env.timeout(20)
-                    break  # Salir del bucle una vez que se reserve una habitación
-        return
-                
+def brf(hotel, perception):
     for service in hotel.services:
-        if service.name == intention[0]:
-            necesity_level = intention[1] + '_level'
-            cant_required = NECESITY_SIZE - tourist.beliefs[necesity_level]
-            with service.resource.request() as request_service:
-                yield request_service
-                if service.resource.container.level >= cant_required:
-                    yield service.resource.container.get(cant_required)
-                    yield hotel.env.timeout(NUMBER)
-                    tourist.beliefs[necesity_level] += cant_required
-                    desires['want_' + intention[1]] = False
+        s_necesity = service.necesity
+        s_name = service.name
+        if not s_necesity in perception and hotel.services[service]:
+           perception[s_necesity] = [s_name]
+        elif s_necesity in perception and not s_name in perception[s_necesity] and hotel.services[service]:
+           perception[s_necesity].append(s_name)                
+        elif s_name in perception[s_necesity] and not hotel.services[service]:
+           perception[s_necesity].remove(s_name)
 
+def generate_option(beliefs, desires):
+    if not beliefs['has_room']:
+        desires['want_room'] = True
+    elif beliefs['energy_level'][0] < prm.THRESHOLD_ENERGY:
+        desires['want_energy'] = True
+    elif beliefs['food_level'][0] < prm.THRESHOLD_FOOD:
+        desires['want_food'] = True
+    elif beliefs['fun_level'][0] < prm.THRESHOLD_FUN:
+        desires['want_fun'] = True
+    else:
+        desires['want_fun'] = True
 
+def filter(beliefs, desires, perception):
+        if desires['want_room']:
+            intentions = [('reserve_room', prm.energy)]            
+        if desires['want_energy']:
+            intentions = [(random.choice(list(set(beliefs['energy_level'][1]).intersection(set(perception[prm.energy])))), prm.energy)]            
+        if desires['want_food']:
+            intentions = [(random.choice(list(set(beliefs['food_level'][1]).intersection(set(perception[prm.food])))), prm.food)]        
+        if desires['want_fun']:
+            intentions = [(random.choice(list(set(beliefs['fun_level'][1]).intersection(set(perception[prm.fun])))), prm.fun)]        
+        return intentions
 
-
-
-# conditions_of_rules_tourist = 
-# {
-#     if beliefs['has_room']:
-#         beliefs['room_cleanliness'] = TOURIST_ROOMS[name].container.level,
-#     if beliefs['energy_level'] >= TOURIST_ENERGY_SIZE:
-#         desires['want_energy'] = False,
-#     if beliefs['food_level'] >= TOURIST_food_SIZE:
-#         desires['want_food'] = False
-#     if beliefs['fun_level'] >= TOURIST_FUN_SIZE:
-#         desires['want_fun'] = False
-#     if beliefs['comfort_level'] >= TOURIST_COMFORT_SIZE:
-#         desires['want_comfort'] = False
-
-# }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Tourist: # Agente BDI --> todas las funciones/componentes 
-    def __init__(self, name, beliefs, desires, intentions, hotel):
-        self.name = name
-        self.beliefs = beliefs
-        self.desires = desires
-        self.intentions = intentions
-        self.use_service = None
-        self.init_use_service(hotel)
-    
-    def init_use_service(self, hotel):
-        for serv in hotel.services:
-            if serv[0].name == 'reception' and serv[1]:
-                self.use_service = serv[0]
-                break
-        
-        
-
-
-# class Tourist(object):
-#     def __init__(self, env, nombre, hotel):
-#         self.env = env
-#         self.nombre = nombre
-#         self.hotel = hotel
-#         self.action = env.process(self.run())
-    
-#     def run(self):
-#         # El turista llega al hotel 
-#         print(f'{self.env.now}: {self.nombre} llega al hotel')
-#         # El turista reserva una habitación
-#         with self.hotel.habitaciones.request() as req:
-#             yield req
-#             print(f'{self.env.now}: {self.nombre} se registra en la habitación')
-#             yield self.env.timeout(2)  # Tiempo que el turista pasa en la habitación 
-#             print(f'{self.env.now}: {self.nombre} sale del hotel') 
-
-#         #tiempos_salida.append(self.env.now)  # Guarda el tiempo de salida del turista

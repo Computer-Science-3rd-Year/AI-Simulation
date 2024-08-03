@@ -1,4 +1,3 @@
-import simpy 
 import tourists
 import workers 
 import manager 
