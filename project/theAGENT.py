@@ -1,5 +1,5 @@
 import tourists
-import workers 
+import housemaid 
 import manager 
 
 
@@ -29,7 +29,7 @@ class AGENT: # Agente BDI --> todas las funciones/componentes
                     self.perception[necesity].remouve(name)         
         
         if self.type_ == 'worker':
-            self.beliefs = workers.brf(self.beliefs, self.perception)
+            self.beliefs = housemaid.brf(self.beliefs, self.perception)
 
         if self.type_ == 'manager':
             self.beliefs = manager.brf(self.beliefs, self.perception)
@@ -42,7 +42,7 @@ class AGENT: # Agente BDI --> todas las funciones/componentes
             return
         
         if self.type_ == 'worker':
-            self.desires = workers.generate_option(self.beliefs, self.intentions)          
+            self.desires = housemaid.generate_option(self.beliefs, self.intentions)          
             return
         
         if self.type_ == 'manager':
@@ -55,7 +55,7 @@ class AGENT: # Agente BDI --> todas las funciones/componentes
             return
         
         if self.type_ == 'worker':
-            self.intentions = workers.filter(self.beliefs, self.desires, self.intentions)          
+            self.intentions = housemaid.filter(self.beliefs, self.desires, self.intentions)          
             return
         
         if self.type_ == 'manager':

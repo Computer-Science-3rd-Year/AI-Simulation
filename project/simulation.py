@@ -4,7 +4,8 @@ import simpy
 import hotel
 import params as prm
 import tourists as t
-
+import housemaid as hsd
+import generic_worker as gw
 outputs = []
 
 #Red Social
@@ -16,9 +17,11 @@ SATISFACTION = {} # ['tourist_name'] = {['necesity'] = level_when_leaves_the_hot
 
 def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
     perception = {}
-    outputs.append((env.now, beliefs))
+    #outputs.append((env.now, beliefs))
     
     def execute_action_(intentions, hotel):
+        if not intentions:
+            return
         for intention in intentions:
             if intention[0] == 'reserve_room':
                 beliefs['using_service'] = True
@@ -30,32 +33,34 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
                             beliefs['my_room'] = room
                             desires['want_room'] = False  
                             outputs.append((env.now,f'El turista {name} accedió a la habitación {room.name}.')) 
-                            outputs.append((env.now,f'LEVEL OF CLEAN OF {room.name}: {room.utilities.container.level}'))                            
-                            yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
+                            outputs.append((env.now,f'LEVEL OF CLEAN OF {room.name}: {room.utilities[0].container.level}'))                            
+                            yield hotel.env.timeout(len_of_stay)
                             beliefs['using_service'] = False
                             break
 
             elif intention[0] == 'rest_room':
                 beliefs['using_service'] = True
                 my_room = beliefs['my_room']
+                outputs.append((env.now, f'{name}--> {my_room.name} jjjjjjjjjjjjjjjj'))
                 if my_room:
+                    my_room.using = True
                     necesity_level = intention[1] + '_level'
                     cant_required = prm.NECESITY_SIZE - beliefs[necesity_level][0]
                     if cant_required > 0:
                         with my_room.resource.request() as request_service:
                             yield request_service
-                            if my_room.utilities.container.level >= cant_required and cant_required != 1:
-                                my_room.utilities.container.get(cant_required)
+                            if my_room.utilities[0].container.level >= cant_required and cant_required != 1:
+                                
                                 outputs.append((env.now, f'El turista {name} accedió al servicio {my_room.name}, {beliefs[necesity_level][0]}'))
                                 beliefs[necesity_level][0] += cant_required
                                 desires['want_' + intention[1]] = False
                                 outputs.append((env.now,beliefs[necesity_level][0]))
                                 yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
                                 beliefs['using_service'] = False
-
+                                my_room.utilities[0].container.get(cant_required)
                             else:
                                 beliefs['using_service'] = False
-                                outputs.append((env.now, f'Habitación {my_room.name} con CLEAN LEVEL = {my_room.utilities.container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de energy'))
+                                outputs.append((env.now, f'Habitación {my_room.name} con CLEAN LEVEL = {my_room.utilities[0].container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de energy'))
                     else:
                         with my_room.resource.request() as request_service:
                             yield request_service
@@ -64,6 +69,7 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
                             outputs.append((env.now,beliefs[necesity_level][0]))
                             yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
                             beliefs['using_service'] = False
+                my_room.using = False
             else:            
                 for service in hotel.services:
                     if service.name == intention[0]:
@@ -83,7 +89,7 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
                                     beliefs['using_service'] = False
                                 else:
                                     beliefs['using_service'] = False
-                                    outputs.append((env.now, f'The service {service.name} con CLEAN LEVEL = {service.utilities.container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de {intention[1]}'))
+                                    outputs.append((env.now, f'The service {service.name} con CLEAN LEVEL = {service.utilities[0].container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de {intention[1]}'))
                         else:
                             with service.resource.request() as request_service:
                                 yield request_service
@@ -117,72 +123,160 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
 #------------------------- W   O   R   K   E   R   S --------------------------
 ###############################################################################
 
-def housemaid(env, room):
+def housemaid(env, rooms, hotel):
     """Arrives at the room and finish of clean it after a certain delay."""
     #add si no tiene el salario completo no rellena al máximo el nivel de limpieza
-    yield env.timeout(2)
+    beliefs = hsd.beliefs(rooms)
+    desires = hsd.desires(beliefs)
 
-    with room.resource.request() as rq:
-        yield rq
-        outputs.append((env.now, f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities.name} of the {room.name}...'))
-        #print(f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities.name} of the {room.name}...')-----------------------------
-        bed = room.utilities.container
-        amount = bed.capacity - bed.level
-        outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}'))
-        #print(f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}')---------------------------------------
-        bed.put(amount)
-        yield env.timeout(prm.HOUSEMAID_TIME)
+    
+    def execute_action(env, rooms):
+        #print('housemaiddddddddddd')
+        if rooms == []:
+            return       
+        for room in rooms:
+            beliefs['working'] = True
+            with room.resource.request() as rq: 
+                room.using = True
+                yield rq
+                #print(f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities.name} of the {room.name}...')-----------------------------
+                bed = room.utilities[0].container
+                #print(bed.capacity, bed.level)
+                amount = bed.capacity - bed.level
+                print(f'total: {bed.capacity}, level: {bed.level}, {room.name}')
+                if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                outputs.append((env.now, f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities[0].name} of the {room.name}...'))
+                
+                outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}'))
+                #print(f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}')---------------------------------------
+                
+                bed.put(amount)
+                outputs.append((env.now,(room.name, bed.level)))
+                
+                
+                yield env.timeout(prm.HOUSEMAID_TIME)
+                outputs.append((env.now, (room.name, bed.level, 'bbbbbbbbbbbbbbbbbbb')))
+                room.using = False
+                beliefs['working'] = False
+                outputs.append((env.now, f'{env.now:6.1f} s: Housemaid finished and the room is clean'))
+                outputs.append((env.now, f'Level after clean {room.name}: {bed.level}'))
+    
+    def action(hotel):
+        hsd.brf(hotel, beliefs)
+        hsd.generate_option(beliefs, desires)
+        intentions = hsd.filter(desires)
+        return intentions 
+    time = env.now
+    while time <  prm.SIM_TIME:
+        while beliefs['working']:
+            yield env.timeout(1)
+        intention = action(hotel)
+        
+        env.process(execute_action(env, intention))
+        time = env.now
+        yield env.timeout(5)
 
-    outputs.append((env.now, f'{env.now:6.1f} s: Housemaid finished and the room is clean'))
-    outputs.append((env.now, f'Level after clean {room.name}: {bed.level}'))
-    #print(f'{env.now:6.1f} s: Housemaid finished and the room is clean')---------------------------------------------
-    #print(f'Level after clean {room.name}: {bed.level}')-----------------------------------------------------
+    
+def generic_worker(env, name, service, hotel):
+    beliefs = gw.beliefs(service)
+    desires = gw.desires(beliefs)
 
-def interviewer(env):
-    pass
+    def execute_action(env, service):
+        if service == []:
+            return
+        beliefs['working'] = True
+        
+        with service[0].resource.request() as rq:
+                service[0].using = True
+                yield rq
+                #print(f'{env.now:6.1f} s: Housemaid is cleaning the {service.utilities.name} of the {service.name}...')-----------------------------
+                utility = service[0].utilities[0].container
+                #print(utility.capacity, utility.level)
+                amount = utility.capacity - utility.level
+                print(f'total: {utility.capacity}, level: {utility.level}, {service[0].name}')
+                if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                outputs.append((env.now, f'{env.now:6.1f} s: {name} is cleaning the {service[0].utilities[0].name} of the {service[0].name}...'))
+                
+                outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {service[0].name}: {utility.level}'))
+                #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
+                
+                utility.put(amount)
+                outputs.append((env.now,(service[0].name, utility.level)))
+                
+                
+                yield env.timeout(prm.HOUSEMAID_TIME)
+                outputs.append((env.now, (service[0].name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
+                service[0].using = False
+                beliefs['working'] = False
+                outputs.append((env.now, f'{env.now:6.1f} s: {name} finished and the service is clean'))
+                outputs.append((env.now, f'Level after clean {service[0].name}: {utility.level}'))
+    
+    def action(hotel):
+        gw.brf(hotel, beliefs)
+        gw.generate_options(beliefs, desires)
+        intentions = gw.filter(desires)
+        return intentions
+    
+    time = env.now
+    while time <  prm.SIM_TIME:
+        while beliefs['working']:
+            yield env.timeout(1)
+        intention = action(hotel)
+        
+        env.process(execute_action(env, intention))
+        time = env.now
+        yield env.timeout(5)
+     
 
-def receptionist(env):
-    pass
-
-def bartender(env):
-    pass
-
-def pool_cleaner(env):
-    pass
 
 ###############################################################################
 #------------------------- M   A   N   A   G   E   R --------------------------
 ###############################################################################
 
-def manager(env, rooms):
+def manager(env, rooms, hotel):
     """Periodically check the clean level of the room and call the housemaid
        if the level falls below a threshold."""
-    while True:
-        # DO SOMETHING FOR VERIFY THE EVOLUTION OF THE AMOUNT%%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$###################
-        
-        # actual_amount = AMOUNT
-        # yield env.timeout(30)
-        # diff = DeepDiff(actual_amount, AMOUNT)
-        # print(f'Actualization of evolution of amount: {diff}')
+    rooms_housemaid = []
+    count = 0
+    for room in rooms:
+        rooms_housemaid.append(room)
+        count += 1
+        if count == 2:
+            env.process(housemaid(env, rooms_housemaid, hotel))
+            count = 0
+            rooms_housemaid = []
+            yield env.timeout(1)
 
-        for room in rooms:
+    for service in hotel.services:
+        worker = env.process(generic_worker(env, service.name+'_worker', service, hotel))
+        service.worker = worker
+        yield env.timeout(1)
+    #while True:
+    #    # DO SOMETHING FOR VERIFY THE EVOLUTION OF THE AMOUNT%%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$###################
+    #    
+    #    # actual_amount = AMOUNT
+    #    # yield env.timeout(30)
+    #    # diff = DeepDiff(actual_amount, AMOUNT)
+    #    # print(f'Actualization of evolution of amount: {diff}')
 
-            if room.utilities.container.level / room.utilities.container.capacity * 100 < prm.THRESHOLD_CLEAN:
-                # We need to call the housemaid now!
-                
-                # Wait for the housemaid to clean the room
-                yield env.process(housemaid(env, room))
+    #    for room in rooms:
 
-                housemaid_salary = prm.SALARIES['housemaid']
+    #        if room.utilities.container.level / room.utilities.container.capacity * 100 < prm.THRESHOLD_CLEAN:
+    #            # We need to call the housemaid now!
+    #            
+    #            # Wait for the housemaid to clean the room
+    #            yield env.process(housemaid(env, room))
 
-                if prm.AMOUNT['room'] >= housemaid_salary:
-                    prm.AMOUNT['room'] -= housemaid_salary
-                    prm.SALARIES_AMOUNT['housemaid'] += housemaid_salary
-                    #print(f'{env.now:6.1f} s: The housemaid charaged ${housemaid_salary}. The amount salary of housemaid is {SALARIES_AMOUNT['housemaid']}')
+    #            housemaid_salary = prm.SALARIES['housemaid']
 
-                # else: (algo con el rendimiento de la housemaid al limpiar la habitación)
-        
-        yield env.timeout(5)  # Check every 5 seconds
+    #            if prm.AMOUNT['room'] >= housemaid_salary:
+    #                prm.AMOUNT['room'] -= housemaid_salary
+    #                prm.SALARIES_AMOUNT['housemaid'] += housemaid_salary
+    #                #print(f'{env.now:6.1f} s: The housemaid charaged ${housemaid_salary}. The amount salary of housemaid is {SALARIES_AMOUNT['housemaid']}')
+
+    #            # else: (algo con el rendimiento de la housemaid al limpiar la habitación)
+    #    
+    #    yield env.timeout(5)  # Check every 5 seconds
 
         # añadir análisis con las ganancias
 
@@ -228,7 +322,7 @@ services = [rest_room, pool, coffee, energy_drink, buffet, snack_bar, room_servi
 
 melia_hotel = hotel.Hotel(services, env)
 
-env.process(manager(env, melia_hotel.rooms.services))
+env.process(manager(env, melia_hotel.rooms.services, melia_hotel))
 env.process(tourist_generator(env, melia_hotel))
 
 # Execute!

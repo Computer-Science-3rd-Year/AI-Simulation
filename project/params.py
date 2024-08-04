@@ -1,8 +1,8 @@
 import enums as enu
 
 """ SIMULATION """
-T_INTER = [30, 400]            # intervalo entre la llegada de los turistas     
-SIM_TIME = 500                 # tiempo total de la simulación     
+T_INTER = [30, 40]            # intervalo entre la llegada de los turistas     
+SIM_TIME = 500            # tiempo total de la simulación     
 
 """ NECESITY """
 energy = enu.Necesity.energy.name
@@ -26,8 +26,8 @@ gym = enu.Services_name.gym.name
 show_time = enu.Services_name.show_time.name
 
 """ ROOM """
-ROOM_CLEANING_SIZE = 200       # máximo nive de limpieza de una habitación         
-THRESHOLD_CLEAN = 80           # mínimo de limpieza/confort (% del total)        
+ROOM_CLEANING_SIZE = 100       # máximo nive de limpieza de una habitación         
+THRESHOLD_CLEAN = 95           # mínimo de limpieza/confort (% del total)        
 
 """ POOL """
 POOL_CLEANING_SIZE = 100       # máximo nive de limpieza de una habitación       
@@ -47,7 +47,7 @@ LEN_OF_STAY = [100, 200]  #
 SPEED_OF_USING_SERVICE = [10, 20]      # tiempo que demora usar un servicio determinado
 
 """ WORKER """
-HOUSEMAID_TIME = 50                  # tiempo que tarda la mucama en limpiar la habitación (segundos)   
+HOUSEMAID_TIME = 15                  # tiempo que tarda la mucama en limpiar la habitación (segundos)   
 
 
 """ MONEY """

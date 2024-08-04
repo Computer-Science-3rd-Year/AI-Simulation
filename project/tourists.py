@@ -1,7 +1,8 @@
 import random
 import params as prm
 
-services = {prm.energy: {prm.rest_room, prm.coffee, prm.energy_drink},
+services = {prm.energy: {prm.coffee, prm.rest_room, prm.energy_drink},
+            #prm.energy: {prm.rest_room},
             prm.food: {prm.buffet, prm.snack_bar, prm.room_service, prm.restaurant, prm.ranchon},
             prm.fun: {prm.pool, prm.pool_table, prm.table_tennis, prm.tennis, prm.gym, prm.show_time}
             }
@@ -56,7 +57,9 @@ def filter(beliefs, desires, perception):
         if desires['want_room']:
             intentions = [('reserve_room', prm.energy)]            
         if desires['want_energy']:
-            intentions = [(random.choice(list(set(beliefs['energy_level'][1]).intersection(set(perception[prm.energy])))), prm.energy)]            
+            intentions = [(random.choice(list(set(beliefs['energy_level'][1]).intersection(set(perception[prm.energy])))), prm.energy)]
+            if intentions[0][0] == prm.rest_room and  beliefs['my_room'].using:
+                intentions = None
         if desires['want_food']:
             intentions = [(random.choice(list(set(beliefs['food_level'][1]).intersection(set(perception[prm.food])))), prm.food)]        
         if desires['want_fun']:

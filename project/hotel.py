@@ -23,7 +23,7 @@ class Hotel:
             self.services[service] = True
     
     def init_rooms(self):
-        self.rooms = Services_set(self.env, 10, 'room', 'energy', Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
+        self.rooms = Services_set(self.env, 10, 'room', 'energy', ['bed'])#, Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
     
     def init_revenues(self):
         for serv in self.services:
@@ -65,7 +65,9 @@ class Service:
         #self.price = price
         self.utilities = utilities
         self.state = 0 # porcentaje de calidad de todas sus utilidades
-        
+        self.using = False
+        self.worker = None
+
     def update_state(self):
         for utlty in self.utilities:
             self.state += utlty.quality
@@ -91,7 +93,17 @@ class Utility:
         pass
 
 class Services_set:
-    def __init__(self, env, count_resources, name, necesity, utility: Utility =None):
+    def __init__(self, env, count_resources, name, necesity, utilities_name): #, utility: Utility =None):
         self.env = env
         self.service_name = name
-        self.services = [Service(simpy.Resource(env, capacity=1), f'{name}_{i}', necesity,  utility) for i in range(count_resources)]
+        self.services = self.init_services(env, count_resources, name, necesity, utilities_name)#, utility)
+    
+    def init_services(self, env, count_resources, name, necesity, utilities_name): #, utility: Utility =None):
+        services_ = {} #{'service_1': availability, 'service_2': avalability, ...}
+        for i in range(count_resources):
+            utilities = []
+            for utility_name in utilities_name:
+                utilities.append(Utility(utility_name, simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
+            service = Service(simpy.Resource(env, capacity=1), f'{name}_{i}', necesity, utilities)
+            services_[service] = True        
+        return services_
