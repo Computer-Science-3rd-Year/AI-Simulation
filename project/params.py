@@ -25,6 +25,11 @@ tennis = enu.Services_name.tennis.name
 gym = enu.Services_name.gym.name
 show_time = enu.Services_name.show_time.name
 
+""" SERVICES """
+MAXIMUM_MAINTENANCE = 100
+THRESHOLD_MAINTENANCE = 50
+
+
 """ ROOM """
 ROOM_CLEANING_SIZE = 100       # máximo nive de limpieza de una habitación         
 THRESHOLD_CLEAN = 95           # mínimo de limpieza/confort (% del total)        
@@ -47,12 +52,37 @@ LEN_OF_STAY = [100, 200]  #
 SPEED_OF_USING_SERVICE = [10, 20]      # tiempo que demora usar un servicio determinado
 
 """ WORKER """
-HOUSEMAID_TIME = 15                  # tiempo que tarda la mucama en limpiar la habitación (segundos)   
+HOUSEMAID_TIME = 15                  # tiempo que tarda la mucama en limpiar la habitación (segundos)
+REPAIRMAN_TIME = 40 
 
 
 """ MONEY """
-SALARIES = {}                                                           
-SALARIES['housemaid'] = 5
+SALARIES = [70, 90]
+REVENUE_TARGET = 10
+REPUTATION_TARGET = 80
+MINIMUM_BUDGET = 300  # en % lo más probable
+STABLE_BUDGET = 80 
+REPAIR = [10, 17]
+ROOM_PRICE = 50
+COFFEE_PRICE = 5
+ENERGY_DRINK_PRICE = 10
+BUFFET_PRICE = 100
+SNACK_BAR_PRICE = 25
+ROOM_SERVICE_PRICE = 70
+RESTAURANT_PRICE = 150
+RANCHON_PRICE = 65
+POOL_PRICE = 30
+POOL_TABLE_PRICE = 10
+TABLE_TENNIS_PRICE = 10
+TENNIS_PRICE = 25
+GYM_PRICE = 20
+SHOW_TIME_PRICE = 50 
+
+""" SURVEY """
+SURVEY_TIME = 400
+
+"""HOTEL"""
+SEASON_TIME = 300
 
 SALARIES_AMOUNT = {}             # salario cobrado por cada trabajador              
 SALARIES_AMOUNT['housemaid'] = 0

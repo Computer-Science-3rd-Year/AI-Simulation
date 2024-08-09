@@ -57,12 +57,24 @@ def filter(beliefs, desires, perception):
         if desires['want_room']:
             intentions = [('reserve_room', prm.energy)]            
         if desires['want_energy']:
-            intentions = [(random.choice(list(set(beliefs['energy_level'][1]).intersection(set(perception[prm.energy])))), prm.energy)]
+            try:
+                intentions = [(random.choice(list(set(beliefs['energy_level'][1]).intersection(set(perception[prm.energy])))), prm.energy)]
+            except:
+                intentions = [(find_available_service(perception, prm.energy), prm.energy)]
             if intentions[0][0] == prm.rest_room and  beliefs['my_room'].using:
                 intentions = None
         if desires['want_food']:
-            intentions = [(random.choice(list(set(beliefs['food_level'][1]).intersection(set(perception[prm.food])))), prm.food)]        
+            try:
+                intentions = [(random.choice(list(set(beliefs['food_level'][1]).intersection(set(perception[prm.food])))), prm.food)]        
+            except:
+                intentions = [(find_available_service(perception, prm.food), prm.food)]
         if desires['want_fun']:
-            intentions = [(random.choice(list(set(beliefs['fun_level'][1]).intersection(set(perception[prm.fun])))), prm.fun)]        
+            try:
+                intentions = [(random.choice(list(set(beliefs['fun_level'][1]).intersection(set(perception[prm.fun])))), prm.fun)]        
+            except:
+                intentions = [(find_available_service(perception, prm.fun), prm.fun)]
         return intentions
 
+def find_available_service(perception, necesity):
+    for service in perception[necesity]:
+        return service

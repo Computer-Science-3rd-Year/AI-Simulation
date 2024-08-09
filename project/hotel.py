@@ -4,7 +4,7 @@ import params as prm
 # ROOM_CLEANING_SIZE = 200       # máximo nive de limpieza de una habitación 
 # THRESHOLD_CLEAN = 80           # mínimo de limpieza/confort (% del total)
 class Hotel:
-    def __init__(self, services, env):
+    def __init__(self, services, env, budget = 100, competition = 'media'):
         self.env = env
         self.services = {} # {'service_1': availability, 'service_2': availability,..., 'service_n': availability} *service_i existió en el hotel al menos 1 vez
         self.init_services(services)
@@ -15,8 +15,12 @@ class Hotel:
         self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
-        
-    
+        self.peak_season = True
+        self.peak_season_time = 0
+        self.budget = budget
+        self.demand = 0
+        self.competition = competition
+        self.survey = 0
     
     def init_services(self, services):
         for service in services:
@@ -28,9 +32,17 @@ class Hotel:
     def init_revenues(self):
         for serv in self.services:
             self.revenues[serv] = 0
-       
+        for room in self.rooms.services:
+            self.revenues[room] = 0
+
     def init_expenses(self):
         for serv in self.services:
+            self.expenses[serv] = {}
+
+            for utl in serv.utilities:
+                self.expenses[serv][utl] = 0
+
+        for serv in self.rooms.services:
             self.expenses[serv] = {}
 
             for utl in serv.utilities:
@@ -54,19 +66,31 @@ class Hotel:
         if not old_service in self.services:
             print(f'The {old_service.name} service does not exist in the hotel')
             return
-        self.services[old_service] = False        
+        self.services[old_service] = False 
+
+    def expenses_of_service(self, service):
+        if not service in self.services and not service in self.rooms.services:
+            print(f'The service {service.name} does not exist in hotel')
+            return
+        expense = 0
+        for utility in service.utilities:
+            expense += self.expenses[service][utility]
+        
+        return expense
+
     
 
 class Service:
-    def __init__(self, resource, name, necesity: str, utilities):
+    def __init__(self, resource, name, necesity: str, utilities, price):
         self.resource = resource
         self.name = name
         self.necesity = necesity
-        #self.price = price
+        self.price = price
         self.utilities = utilities
         self.state = 0 # porcentaje de calidad de todas sus utilidades
         self.using = False
         self.worker = None
+        self.maintenance = 100
 
     def update_state(self):
         for utlty in self.utilities:
@@ -104,6 +128,6 @@ class Services_set:
             utilities = []
             for utility_name in utilities_name:
                 utilities.append(Utility(utility_name, simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
-            service = Service(simpy.Resource(env, capacity=1), f'{name}_{i}', necesity, utilities)
+            service = Service(simpy.Resource(env, capacity=1), f'{name}_{i}', necesity, utilities, prm.ROOM_PRICE)
             services_[service] = True        
         return services_

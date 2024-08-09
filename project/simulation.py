@@ -6,6 +6,7 @@ import params as prm
 import tourists as t
 import housemaid as hsd
 import generic_worker as gw
+import manager as mg
 outputs = []
 
 #Red Social
@@ -32,6 +33,8 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
                             beliefs['has_room'] = True
                             beliefs['my_room'] = room
                             desires['want_room'] = False  
+                            hotel.revenues[room] += room.price
+                            hotel.budget += room.price
                             outputs.append((env.now,f'El turista {name} accedió a la habitación {room.name}.')) 
                             outputs.append((env.now,f'LEVEL OF CLEAN OF {room.name}: {room.utilities[0].container.level}'))                            
                             yield hotel.env.timeout(len_of_stay)
@@ -84,6 +87,8 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
                                     outputs.append((env.now, f'El turista {name} accedió al servicio {service.name}, {beliefs[necesity_level][0]}'))
                                     beliefs[necesity_level][0] += cant_required
                                     desires['want_' + intention[1]] = False
+                                    hotel.revenues[service] += service.price
+                                    hotel.budget += service.price
                                     outputs.append((env.now,beliefs[necesity_level][0]))
                                     yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
                                     beliefs['using_service'] = False
@@ -93,6 +98,8 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
                         else:
                             with service.resource.request() as request_service:
                                 yield request_service
+                                hotel.revenues[service] += service.price
+                                hotel.budget += service.price
                                 outputs.append((env.now, f'El turista {name} accedió al servicio {service.name}, {beliefs[necesity_level][0]}'))
                                 desires['want_' + intention[1]] = False
                                 outputs.append((env.now,beliefs[necesity_level][0]))
@@ -130,7 +137,7 @@ def housemaid(env, rooms, hotel):
     desires = hsd.desires(beliefs)
 
     
-    def execute_action(env, rooms):
+    def execute_action(env, rooms, hotel):
         #print('housemaiddddddddddd')
         if rooms == []:
             return       
@@ -146,7 +153,8 @@ def housemaid(env, rooms, hotel):
                 print(f'total: {bed.capacity}, level: {bed.level}, {room.name}')
                 if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 outputs.append((env.now, f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities[0].name} of the {room.name}...'))
-                
+                hotel.revenues[room] -= room.worker[1]
+                hotel.budget -= room.worker[1]
                 outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}'))
                 #print(f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}')---------------------------------------
                 
@@ -172,7 +180,7 @@ def housemaid(env, rooms, hotel):
             yield env.timeout(1)
         intention = action(hotel)
         
-        env.process(execute_action(env, intention))
+        env.process(execute_action(env, intention, hotel))
         time = env.now
         yield env.timeout(5)
 
@@ -196,7 +204,8 @@ def generic_worker(env, name, service, hotel):
                 print(f'total: {utility.capacity}, level: {utility.level}, {service[0].name}')
                 if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 outputs.append((env.now, f'{env.now:6.1f} s: {name} is cleaning the {service[0].utilities[0].name} of the {service[0].name}...'))
-                
+                hotel.revenues[service[0]] = hotel.revenues[service[0]] - service[0].worker[1]
+                hotel.budget -= service[0].worker[1]
                 outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {service[0].name}: {utility.level}'))
                 #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
                 
@@ -226,6 +235,29 @@ def generic_worker(env, name, service, hotel):
         env.process(execute_action(env, intention))
         time = env.now
         yield env.timeout(5)
+
+def repairman(env, service, hotel):
+    with service.resource.request() as rq:
+                service.using = True
+                yield rq
+                #print(f'{env.now:6.1f} s: Housemaid is cleaning the {service.utilities.name} of the {service.name}...')-----------------------------
+                #print(utility.capacity, utility.level)
+                amount = prm.MAXIMUM_MAINTENANCE - service.maintenance
+                if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                outputs.append((env.now, f'{env.now:6.1f} s: repairman is reapiring the {service}...'))
+                
+                outputs.append((env.now, f'{env.now:6.1f} s: Level before repair the {service.name}: {service.maintenance}'))
+                #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
+                
+                service.maintenance += amount
+                #outputs.append((env.now,(service[0].name, utility.level)))              
+                yield env.timeout(prm.REPAIRMAN_TIME)
+                #outputs.append((env.now, (service.name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
+                hotel.services[service] = True
+                service.using = False
+                outputs.append((env.now, f'{env.now:6.1f} s: repairman finished and the service is ready'))
+                outputs.append((env.now, f'Level after repair {service.name}: {service.maintenance}'))
+                hotel.budget -= random.randint(*prm.REPAIR)
      
 
 
@@ -236,51 +268,127 @@ def generic_worker(env, name, service, hotel):
 def manager(env, rooms, hotel):
     """Periodically check the clean level of the room and call the housemaid
        if the level falls below a threshold."""
+    beliefs = mg.beliefs(hotel)
+    desires = mg.desires()
+
     rooms_housemaid = []
     count = 0
     for room in rooms:
         rooms_housemaid.append(room)
         count += 1
         if count == 2:
-            env.process(housemaid(env, rooms_housemaid, hotel))
+            housemaid_ = env.process(housemaid(env, rooms_housemaid, hotel))
+            room.worker = housemaid_
             count = 0
+            salary = random.randint(*prm.SALARIES)
+            for room1 in rooms_housemaid:
+                room1.worker = [housemaid_, salary]
             rooms_housemaid = []
             yield env.timeout(1)
 
     for service in hotel.services:
         worker = env.process(generic_worker(env, service.name+'_worker', service, hotel))
-        service.worker = worker
+        service.worker = [worker, random.randint(*prm.SALARIES)]
         yield env.timeout(1)
-    #while True:
-    #    # DO SOMETHING FOR VERIFY THE EVOLUTION OF THE AMOUNT%%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$###################
-    #    
-    #    # actual_amount = AMOUNT
-    #    # yield env.timeout(30)
-    #    # diff = DeepDiff(actual_amount, AMOUNT)
-    #    # print(f'Actualization of evolution of amount: {diff}')
-
-    #    for room in rooms:
-
-    #        if room.utilities.container.level / room.utilities.container.capacity * 100 < prm.THRESHOLD_CLEAN:
-    #            # We need to call the housemaid now!
-    #            
-    #            # Wait for the housemaid to clean the room
-    #            yield env.process(housemaid(env, room))
-
-    #            housemaid_salary = prm.SALARIES['housemaid']
-
-    #            if prm.AMOUNT['room'] >= housemaid_salary:
-    #                prm.AMOUNT['room'] -= housemaid_salary
-    #                prm.SALARIES_AMOUNT['housemaid'] += housemaid_salary
-    #                #print(f'{env.now:6.1f} s: The housemaid charaged ${housemaid_salary}. The amount salary of housemaid is {SALARIES_AMOUNT['housemaid']}')
-
-    #            # else: (algo con el rendimiento de la housemaid al limpiar la habitación)
-    #    
-    #    yield env.timeout(5)  # Check every 5 seconds
-
-        # añadir análisis con las ganancias
-
     
+    def execute_action(env, intentions):
+        print(intentions)
+        if not intentions: return
+        #print(intentions)
+        for intention in intentions:
+            if intention[0] == 'call_IA_Find':
+                # Call the function of search
+                outputs.append((env.now, f'Manager call the Find AI function'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                return
+            
+            if intention[0] == 'call_function_Survey':
+                # Call the function of survey
+                outputs.append((env.now, f'Manager call the Survey function'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                return
+                        
+            if intention[0] == 'raise_price':
+                print('??????????@@@@@@@')
+                old_price = intention[1].price
+                intention[1].price += intention[1].price/10
+                outputs.append((env.now, f'Manager raised the price of {intention[1].name}: {old_price} --> {intention[1].price}'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+
+            if intention[0] == 'lower_price':
+                old_price = intention[1].price
+                intention[1].price -= intention[1].price/10
+                outputs.append((env.now, f'Manager lower the price of {intention[1].name}: {old_price} --> {intention[1].price}'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+
+            if intention[0] == 'close_service':
+                hotel.services[intention[1]] = False
+                outputs.append((env.now, f'Manager disable the {intention[1].name} service for strategy.'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+
+            if intention[0] == 'raise_salary':
+                Lower_raise_salary(hotel, True)
+                outputs.append((env.now, f'Manager raise the salaries.'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+
+            if intention[0] == 'lower_salary':
+                Lower_raise_salary(hotel, False)
+                outputs.append((env.now, f'Manager low the salaries.'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+
+            if intention[0] == 'close_service_and_maintenance':
+                service_ = intention[1]
+                hotel.services[service_] = False
+                outputs.append((env.now, f'Manager close the {service_.name} service for maintenance.'))
+                desires[intention[2]][0] = False
+                env.process(repairman(env, service_, hotel))
+                yield env.timeout(10)
+
+    def action():
+        mg.brf()
+        mg.generate_options(beliefs, desires, env)
+        intentions = mg.filter(beliefs, desires)
+        return intentions
+    
+    time = env.now
+    while time <  prm.SIM_TIME:
+        if time - hotel.peak_season_time > prm.SEASON_TIME:
+            hotel.peak_season = not hotel.peak_season
+            hotel.peak_season_time = time
+        intentions = action()  
+        if intentions == None:
+            continue
+        print(intentions)  
+        yield env.timeout(10)    
+        env.process(execute_action(env, intentions))
+        time = env.now
+        yield env.timeout(40)
+
+
+
+def Lower_raise_salary(hotel, operator):
+    for room in hotel.rooms.services:
+        if operator:
+            room.worker[1] += room.worker[1]/10
+        else:
+            room.worker[1] -= room.worker[1]/10
+    for service in hotel.services:
+        if operator:
+            service.worker[1] += service.worker[1]/10
+        else:
+            service.worker[1] += service.worker[1]/10
+    if operator:
+        prm.HOUSEMAID_TIME -= int(prm.HOUSEMAID_TIME/10)
+    else:
+        prm.HOUSEMAID_TIME += int(prm.HOUSEMAID_TIME/10)
+
 def tourist_generator(env, hotel):
     """Generate new tourists that arrive at the hotel."""
     for i in itertools.count():
@@ -303,20 +411,20 @@ outputs.append((env.now, 'Hotel is open'))
 # fun = enu.Necesity.fun.name
 
 #initial services
-rest_room = hotel.Service(simpy.Resource(env, capacity = 10), 'rest_room', prm.energy, [hotel.Utility('bed', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-pool = hotel.Service(simpy.Resource(env, capacity=11), 'pool', prm.fun, [hotel.Utility('pool_utl', simpy.Container(env, prm.POOL_CLEANING_SIZE, init=prm.POOL_CLEANING_SIZE))])
-coffee = hotel.Service(simpy.Resource(env, capacity=4), 'coffee', prm.energy, [hotel.Utility('bar_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-energy_drink = hotel.Service(simpy.Resource(env, capacity=4), 'energy_drink', prm.energy, [hotel.Utility('bar_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-buffet = hotel.Service(simpy.Resource(env, capacity = 10), 'buffet', prm.food, [hotel.Utility('buffet', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))])
-snack_bar = hotel.Service(simpy.Resource(env, capacity = 7), 'snack_bar', prm.food, [hotel.Utility('snack_bar', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-room_service = hotel.Service(simpy.Resource(env, capacity = 11), 'room_service', prm.food, [hotel.Utility('room_service', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-restaurant = hotel.Service(simpy.Resource(env, capacity = 7), 'restaurant', prm.food, [hotel.Utility('restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-ranchon = hotel.Service(simpy.Resource(env, capacity = 5), 'ranchon', prm.food, [hotel.Utility('ranchon', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-pool_table = hotel.Service(simpy.Resource(env, capacity = 2), 'pool_table', prm.fun, [hotel.Utility('pool_table', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-table_tennis = hotel.Service(simpy.Resource(env, capacity = 2), 'table_tennis', prm.fun, [hotel.Utility('table_tennis', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-tennis = hotel.Service(simpy.Resource(env, capacity = 2), 'tennis', prm.fun, [hotel.Utility('tennis', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-gym = hotel.Service(simpy.Resource(env, capacity = 11), 'gym', prm.fun, [hotel.Utility('gym', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
-show_time = hotel.Service(simpy.Resource(env, capacity = 11), 'show_time', prm.fun, [hotel.Utility('show_time', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))])
+rest_room = hotel.Service(simpy.Resource(env, capacity = 10), 'rest_room', prm.energy, [hotel.Utility('bed', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.ROOM_PRICE)
+pool = hotel.Service(simpy.Resource(env, capacity=11), 'pool', prm.fun, [hotel.Utility('pool_utl', simpy.Container(env, prm.POOL_CLEANING_SIZE, init=prm.POOL_CLEANING_SIZE))], prm.POOL_PRICE)
+coffee = hotel.Service(simpy.Resource(env, capacity=4), 'coffee', prm.energy, [hotel.Utility('bar_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.COFFEE_PRICE)
+energy_drink = hotel.Service(simpy.Resource(env, capacity=4), 'energy_drink', prm.energy, [hotel.Utility('bar_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.ENERGY_DRINK_PRICE)
+buffet = hotel.Service(simpy.Resource(env, capacity = 10), 'buffet', prm.food, [hotel.Utility('buffet', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], prm.BUFFET_PRICE)
+snack_bar = hotel.Service(simpy.Resource(env, capacity = 7), 'snack_bar', prm.food, [hotel.Utility('snack_bar', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.SNACK_BAR_PRICE)
+room_service = hotel.Service(simpy.Resource(env, capacity = 11), 'room_service', prm.food, [hotel.Utility('room_service', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.ROOM_SERVICE_PRICE)
+restaurant = hotel.Service(simpy.Resource(env, capacity = 7), 'restaurant', prm.food, [hotel.Utility('restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.RESTAURANT_PRICE)
+ranchon = hotel.Service(simpy.Resource(env, capacity = 5), 'ranchon', prm.food, [hotel.Utility('ranchon', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.RANCHON_PRICE)
+pool_table = hotel.Service(simpy.Resource(env, capacity = 2), 'pool_table', prm.fun, [hotel.Utility('pool_table', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.POOL_TABLE_PRICE)
+table_tennis = hotel.Service(simpy.Resource(env, capacity = 2), 'table_tennis', prm.fun, [hotel.Utility('table_tennis', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.TABLE_TENNIS_PRICE)
+tennis = hotel.Service(simpy.Resource(env, capacity = 2), 'tennis', prm.fun, [hotel.Utility('tennis', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.TENNIS_PRICE)
+gym = hotel.Service(simpy.Resource(env, capacity = 11), 'gym', prm.fun, [hotel.Utility('gym', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.GYM_PRICE)
+show_time = hotel.Service(simpy.Resource(env, capacity = 11), 'show_time', prm.fun, [hotel.Utility('show_time', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.SHOW_TIME_PRICE)
 services = [rest_room, pool, coffee, energy_drink, buffet, snack_bar, room_service, restaurant, ranchon, pool_table, table_tennis, 
             tennis, gym, show_time]
 
