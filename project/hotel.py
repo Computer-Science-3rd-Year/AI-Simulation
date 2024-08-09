@@ -15,7 +15,7 @@ class Hotel:
         self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
-        self.peak_season = True
+        self.peak_season = False
         self.peak_season_time = 0
         self.budget = budget
         self.demand = 0

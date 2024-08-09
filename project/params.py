@@ -82,7 +82,7 @@ SHOW_TIME_PRICE = 50
 SURVEY_TIME = 400
 
 """HOTEL"""
-SEASON_TIME = 300
+SEASON_TIME = 30
 
 SALARIES_AMOUNT = {}             # salario cobrado por cada trabajador              
 SALARIES_AMOUNT['housemaid'] = 0

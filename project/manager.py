@@ -4,7 +4,11 @@ import params as prm
 
 # Creencias del hotel
 def beliefs(hotel):
-   return hotel
+   beliefs_ = {}
+   beliefs_['hotel'] = hotel
+   beliefs_['working'] = False
+   beliefs_['wait'] = True  # Esperar a que avance un poco la simulación
+   return beliefs_
 
 # Deseos del hotel
 def desires():
@@ -26,18 +30,22 @@ def brf():
 def generate_options(beliefs, desires, env):
     # Ajustar deseos basados en las creencias
     #print(beliefs.budget)
-    if beliefs.budget <= prm.MINIMUM_BUDGET:
-        print(occupate_rooms(beliefs))
-        if beliefs.peak_season and occupate_rooms(beliefs) > 0.5:
+    if beliefs['wait']: return
+    beliefs_ = beliefs['hotel']
+    occup_rooms = occupate_rooms(beliefs_)
+
+    if beliefs_.budget <= prm.MINIMUM_BUDGET:
+        print(occup_rooms)
+        if beliefs_.peak_season and occup_rooms > 0.5:
             print('Manager!!!!!!!!!!!!')
             desires['raise_price'] = True
             return
 
-        elif not beliefs.peak_season and occupate_rooms(beliefs) < 0.45:
+        elif not beliefs_.peak_season and occup_rooms < 0.45:
             desires['close_service'] = True
             return
 
-        elif not beliefs.peak_season:
+        elif not beliefs_.peak_season:
             desires['lower_price'] = True
             return
 
@@ -45,18 +53,17 @@ def generate_options(beliefs, desires, env):
             desires['lower_salary'] = True
             return
 
-    for service in beliefs.services:
+    for service in beliefs_.services:
         if service.maintenance < prm.THRESHOLD_MAINTENANCE:
             desires['close_service_and_maintenance'] = (True, service)
             return 
     
-    if env.now - beliefs.survey > prm.SURVEY_TIME:
-        print('SURVEYYY')
+    if env.now - beliefs_.survey > prm.SURVEY_TIME:
+        print(f'{env.now} --> SURVEYYY')
         desires['make_survey'] = True
             
-    elif beliefs.budget > prm.MINIMUM_BUDGET:
+    elif beliefs_.budget > prm.MINIMUM_BUDGET:
         desires['maximize_revenue'] = True
-
 
     else:
         desires['raise_salary'] = True
@@ -65,7 +72,10 @@ def generate_options(beliefs, desires, env):
 # Generar intenciones basadas en los deseos y creencias
 def filter(beliefs, desire):
     #print('ENTRO A FILTER EL MANAGAER')
+    if beliefs['wait']: return
+    hotel_ = beliefs['hotel']
     intentions = []
+
     if desire['maximize_revenue']:
         intentions.append(('call_IA_Find', 1, 'maximize_revenue'))
         return intentions
@@ -76,18 +86,18 @@ def filter(beliefs, desire):
     
     if desire['raise_price']:
         print('RAISE PRICE')
-        service = calculate_service(beliefs, True)
+        service = calculate_service(hotel_, True)
         intentions.append(('raise_price', service, 'raise_price'))
         return intentions
     
     if desire['lower_price']:
-        service = calculate_service(beliefs, False)
+        service = calculate_service(hotel_, False)
         intentions.append(('lower_price', service, 'lower_price'))
         return intentions
     
     if desire['close_service']:
-        service = calculate_service(beliefs, False)
-        if check(service, beliefs):
+        service = calculate_service(hotel_, False)
+        if check(service, hotel_):
             intentions.append(('close_service', service, 'close_service'))
         else:
             return None

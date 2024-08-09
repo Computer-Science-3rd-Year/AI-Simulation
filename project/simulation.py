@@ -292,66 +292,87 @@ def manager(env, rooms, hotel):
         yield env.timeout(1)
     
     def execute_action(env, intentions):
-        print(intentions)
+        if beliefs['wait']: return
+
+        if intentions[0][1] in hotel.services or intentions[0][1] in hotel.rooms.services:
+            print(intentions[0][0], intentions[0][1].name)
+        else:
+            print(intentions[0][0])
         if not intentions: return
         #print(intentions)
         for intention in intentions:
             if intention[0] == 'call_IA_Find':
+                beliefs['working'] = True
                 # Call the function of search
                 outputs.append((env.now, f'Manager call the Find AI function'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
-                return
+                beliefs['working'] = False
             
-            if intention[0] == 'call_function_Survey':
+            elif intention[0] == 'call_function_Survey':
+                beliefs['working'] = True
                 # Call the function of survey
+                beliefs['hotel'].survey = env.now
                 outputs.append((env.now, f'Manager call the Survey function'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
-                return
+                beliefs['working'] = False
                         
-            if intention[0] == 'raise_price':
+            elif intention[0] == 'raise_price':
                 print('??????????@@@@@@@')
+                beliefs['working'] = True
                 old_price = intention[1].price
                 intention[1].price += intention[1].price/10
                 outputs.append((env.now, f'Manager raised the price of {intention[1].name}: {old_price} --> {intention[1].price}'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
+                beliefs['working'] = False
 
-            if intention[0] == 'lower_price':
+            elif intention[0] == 'lower_price':
+                beliefs['working'] = True
                 old_price = intention[1].price
                 intention[1].price -= intention[1].price/10
                 outputs.append((env.now, f'Manager lower the price of {intention[1].name}: {old_price} --> {intention[1].price}'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
+                beliefs['working'] = False
 
-            if intention[0] == 'close_service':
+            elif intention[0] == 'close_service':
+                beliefs['working'] = True
                 hotel.services[intention[1]] = False
                 outputs.append((env.now, f'Manager disable the {intention[1].name} service for strategy.'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
+                beliefs['working'] = False
 
-            if intention[0] == 'raise_salary':
+            elif intention[0] == 'raise_salary':
+                beliefs['working'] = True
                 Lower_raise_salary(hotel, True)
                 outputs.append((env.now, f'Manager raise the salaries.'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
+                beliefs['working'] = False
 
-            if intention[0] == 'lower_salary':
+            elif intention[0] == 'lower_salary':
+                beliefs['working'] = True
                 Lower_raise_salary(hotel, False)
                 outputs.append((env.now, f'Manager low the salaries.'))
                 desires[intention[2]] = False
                 yield env.timeout(10)
+                beliefs['working'] = False
 
             if intention[0] == 'close_service_and_maintenance':
+                beliefs['working'] = True
                 service_ = intention[1]
                 hotel.services[service_] = False
                 outputs.append((env.now, f'Manager close the {service_.name} service for maintenance.'))
                 desires[intention[2]][0] = False
                 env.process(repairman(env, service_, hotel))
                 yield env.timeout(10)
+                beliefs['working'] = False
 
     def action():
+        if beliefs['wait']: return
         mg.brf()
         mg.generate_options(beliefs, desires, env)
         intentions = mg.filter(beliefs, desires)
@@ -359,14 +380,18 @@ def manager(env, rooms, hotel):
     
     time = env.now
     while time <  prm.SIM_TIME:
+        if env.now >= prm.SIM_TIME/5: beliefs['wait'] = False
+
         if time - hotel.peak_season_time > prm.SEASON_TIME:
             hotel.peak_season = not hotel.peak_season
             hotel.peak_season_time = time
+        while beliefs['working']:
+            yield env.timeout(1)    
         intentions = action()  
-        if intentions == None:
-            continue
-        print(intentions)  
-        yield env.timeout(10)    
+        if not intentions:
+            if not beliefs['wait']:
+                print('NULL INTENTIOONNNNSSSS############')
+            #print(intentions)
         env.process(execute_action(env, intentions))
         time = env.now
         yield env.timeout(40)
