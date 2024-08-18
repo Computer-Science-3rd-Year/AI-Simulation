@@ -20,7 +20,7 @@ def desires():
         'close_service': False,
         'raise_salary': False,
         'lower_salary': False,
-        'close_service_and_maintenance': (False, None)
+        'close_service_and_maintenance': [False, None]
     }
 
 # Actualizar creencias basado en la percepción
@@ -34,6 +34,12 @@ def generate_options(beliefs, desires, env):
     beliefs_ = beliefs['hotel']
     occup_rooms = occupate_rooms(beliefs_)
 
+    for service in beliefs_.services:
+        if service.maintenance < prm.THRESHOLD_MAINTENANCE:
+            desires['close_service_and_maintenance'] = [True, service]
+            print('entry')
+            return 
+    
     if beliefs_.budget <= prm.MINIMUM_BUDGET:
         print(occup_rooms)
         if beliefs_.peak_season and occup_rooms > 0.5:
@@ -41,22 +47,19 @@ def generate_options(beliefs, desires, env):
             desires['raise_price'] = True
             return
 
-        elif not beliefs_.peak_season and occup_rooms < 0.45:
+        if not beliefs_.peak_season and occup_rooms < 0.30:
             desires['close_service'] = True
             return
 
-        elif not beliefs_.peak_season:
+        if not beliefs_.peak_season:
             desires['lower_price'] = True
             return
 
-        else:
+        if occup_rooms < 20:
             desires['lower_salary'] = True
             return
 
-    for service in beliefs_.services:
-        if service.maintenance < prm.THRESHOLD_MAINTENANCE:
-            desires['close_service_and_maintenance'] = (True, service)
-            return 
+    
     
     if env.now - beliefs_.survey > prm.SURVEY_TIME:
         print(f'{env.now} --> SURVEYYY')
@@ -147,6 +150,36 @@ def check(service, hotel):
     count = 0
     for serv in hotel.services:
         if serv.necesity == necesity and hotel.services[service]:
-            count += 1
-    
+            count += 1    
     return count > 1
+
+def AI_function_services(hotel, services_):
+    combinations = []
+    a = combination(services_, [], 200, 0, hotel, combinations)
+    return a
+
+def combination(services_, combination_, budget, minor, hotel, combinations):
+    if budget <= 20:
+        total = 0
+        for i in combination_:
+            if len(i) == 1:
+                total += i[0].price
+            else:
+                total += i[1].price/5
+        if total > 250:
+            return combination_
+        else:
+            return None
+    else:
+        for i in range(minor, len(services_)):
+            k = len(combination_)
+            if services_[i][0] not in hotel.services or not hotel.services[services_[i][0]] or (len(services_[i]) > 1 and ((services_[i][1] in hotel.services and hotel.services[services_[i][1]]) or services_[i][1] in combination_)):
+                combination_.append(services_[i])
+                if len(services_[i]) == 1:
+                    new_budget = budget - services_[i][0].cost
+                else:
+                    new_budget = budget - (services_[i][1].cost/5)
+                result = combination(services_, combination_, new_budget, i + 1, hotel, combinations)
+                if result != None:
+                    return result
+                combination_ = combination_[:k]

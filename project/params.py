@@ -1,13 +1,14 @@
 import enums as enu
 
 """ SIMULATION """
-T_INTER = [30, 40]            # intervalo entre la llegada de los turistas     
-SIM_TIME = 500            # tiempo total de la simulación     
+T_INTER = [5, 20]            # intervalo entre la llegada de los turistas     
+SIM_TIME = 1000            # tiempo total de la simulación     
 
 """ NECESITY """
 energy = enu.Necesity.energy.name
 food = enu.Necesity.food.name
 fun = enu.Necesity.fun.name
+comfort = enu.Necesity.comfort.name
 
 """ SERVICE """
 rest_room = enu.Services_name.rest_room.name
@@ -27,7 +28,7 @@ show_time = enu.Services_name.show_time.name
 
 """ SERVICES """
 MAXIMUM_MAINTENANCE = 100
-THRESHOLD_MAINTENANCE = 50
+THRESHOLD_MAINTENANCE = 70
 
 
 """ ROOM """
@@ -47,8 +48,9 @@ TOURIST_COMFORT_LEVEL = [20, 50] # nivel inicial de confort de los turistas (men
 THRESHOLD_ENERGY = 50
 THRESHOLD_FOOD = 60
 THRESHOLD_FUN = 40
+ATTRIBUTES = ['pool', 'TV', 'safe', 'jacuzzi', 'bar', 'stunning_view', 'balcony']
 
-LEN_OF_STAY = [100, 200]  #   
+LEN_OF_STAY = [100, 300]  #   
 SPEED_OF_USING_SERVICE = [10, 20]      # tiempo que demora usar un servicio determinado
 
 """ WORKER """
@@ -76,13 +78,16 @@ POOL_TABLE_PRICE = 10
 TABLE_TENNIS_PRICE = 10
 TENNIS_PRICE = 25
 GYM_PRICE = 20
-SHOW_TIME_PRICE = 50 
+SHOW_TIME_PRICE = 50
+IRONING_SERVICE_PRICE = 45
+GENERIC_PRICE = 40
+TOURIST_BUDGET = [1000000, 1500000]
 
 """ SURVEY """
 SURVEY_TIME = 400
 
 """HOTEL"""
-SEASON_TIME = 30
+SEASON_TIME = 300
 
 SALARIES_AMOUNT = {}             # salario cobrado por cada trabajador              
 SALARIES_AMOUNT['housemaid'] = 0

@@ -1,5 +1,6 @@
 import simpy
 import params as prm
+import random
 
 # ROOM_CLEANING_SIZE = 200       # máximo nive de limpieza de una habitación 
 # THRESHOLD_CLEAN = 80           # mínimo de limpieza/confort (% del total)
@@ -15,7 +16,7 @@ class Hotel:
         self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
-        self.peak_season = False
+        self.peak_season = True
         self.peak_season_time = 0
         self.budget = budget
         self.demand = 0
@@ -27,7 +28,7 @@ class Hotel:
             self.services[service] = True
     
     def init_rooms(self):
-        self.rooms = Services_set(self.env, 10, 'room', 'energy', ['bed'])#, Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
+        self.rooms = Services_set(self.env, 100, 'room', 'energy', ['bed'])#, Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
     
     def init_revenues(self):
         for serv in self.services:
@@ -81,7 +82,7 @@ class Hotel:
     
 
 class Service:
-    def __init__(self, resource, name, necesity: str, utilities, price):
+    def __init__(self, resource, name, necesity: str, utilities, price, cost = 70):
         self.resource = resource
         self.name = name
         self.necesity = necesity
@@ -91,6 +92,8 @@ class Service:
         self.using = False
         self.worker = None
         self.maintenance = 100
+        self.cost = cost
+        self.attributes = self.attributes_()
 
     def update_state(self):
         for utlty in self.utilities:
@@ -102,8 +105,10 @@ class Service:
             if utlty.quality < 0.5:
                 price -= utlty.quality
             elif utlty.quality > 0.5:
-                price += utlty.quality    
-
+                price += utlty.quality  
+    
+    def attributes_(self):
+        return random.sample(prm.ATTRIBUTES, random.randint(0, len(prm.ATTRIBUTES)))
 
 class Utility:
     def __init__(self, name, container): # podríamos agregarle partes, por ej: cama tiene colchón, sábanas, almohadas... 
