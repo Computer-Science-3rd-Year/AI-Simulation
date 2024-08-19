@@ -22,13 +22,15 @@ class Hotel:
         self.demand = 0
         self.competition = competition
         self.survey = 0
+        self.complaints = 0
+        self.new_services = 0
     
     def init_services(self, services):
         for service in services:
             self.services[service] = True
     
     def init_rooms(self):
-        self.rooms = Services_set(self.env, 100, 'room', 'energy', ['bed'])#, Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
+        self.rooms = Services_set(self.env, 50, 'room', 'energy', ['bed'])#, Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
     
     def init_revenues(self):
         for serv in self.services:

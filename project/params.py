@@ -1,7 +1,7 @@
 import enums as enu
 
 """ SIMULATION """
-T_INTER = [5, 20]            # intervalo entre la llegada de los turistas     
+T_INTER = [7, 35]            # intervalo entre la llegada de los turistas     
 SIM_TIME = 1000            # tiempo total de la simulación     
 
 """ NECESITY """
@@ -50,8 +50,8 @@ THRESHOLD_FOOD = 60
 THRESHOLD_FUN = 40
 ATTRIBUTES = ['pool', 'TV', 'safe', 'jacuzzi', 'bar', 'stunning_view', 'balcony']
 
-LEN_OF_STAY = [100, 300]  #   
-SPEED_OF_USING_SERVICE = [10, 20]      # tiempo que demora usar un servicio determinado
+LEN_OF_STAY = [170, 300]  #   
+SPEED_OF_USING_SERVICE = [15, 30]      # tiempo que demora usar un servicio determinado
 
 """ WORKER """
 HOUSEMAID_TIME = 15                  # tiempo que tarda la mucama en limpiar la habitación (segundos)
@@ -62,7 +62,7 @@ REPAIRMAN_TIME = 40
 SALARIES = [70, 90]
 REVENUE_TARGET = 10
 REPUTATION_TARGET = 80
-MINIMUM_BUDGET = 300  # en % lo más probable
+MINIMUM_BUDGET = 3000  # en % lo más probable
 STABLE_BUDGET = 80 
 REPAIR = [10, 17]
 ROOM_PRICE = 50

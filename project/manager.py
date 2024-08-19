@@ -1,5 +1,6 @@
 import random
 import params as prm
+import generic_worker as gw
 
 
 # Creencias del hotel
@@ -8,6 +9,7 @@ def beliefs(hotel):
    beliefs_['hotel'] = hotel
    beliefs_['working'] = False
    beliefs_['wait'] = True  # Esperar a que avance un poco la simulación
+   beliefs_['nothing'] = False,
    return beliefs_
 
 # Deseos del hotel
@@ -20,14 +22,14 @@ def desires():
         'close_service': False,
         'raise_salary': False,
         'lower_salary': False,
-        'close_service_and_maintenance': [False, None]
+        'close_service_and_maintenance': [False, None],
     }
 
 # Actualizar creencias basado en la percepción
 def brf():
     pass
 # Generar deseos basados en las creencias
-def generate_options(beliefs, desires, env):
+def generate_options(beliefs, desires, env, hotel):
     # Ajustar deseos basados en las creencias
     #print(beliefs.budget)
     if beliefs['wait']: return
@@ -41,7 +43,7 @@ def generate_options(beliefs, desires, env):
             return 
     
     if beliefs_.budget <= prm.MINIMUM_BUDGET:
-        print(occup_rooms)
+        print('ENTROOOOOO')
         if beliefs_.peak_season and occup_rooms > 0.5:
             print('Manager!!!!!!!!!!!!')
             desires['raise_price'] = True
@@ -55,27 +57,28 @@ def generate_options(beliefs, desires, env):
             desires['lower_price'] = True
             return
 
-        if occup_rooms < 20:
+        if occup_rooms < 10:
             desires['lower_salary'] = True
             return
-
-    
     
     if env.now - beliefs_.survey > prm.SURVEY_TIME:
         print(f'{env.now} --> SURVEYYY')
         desires['make_survey'] = True
             
-    elif beliefs_.budget > prm.MINIMUM_BUDGET:
+    elif beliefs_.budget > prm.MINIMUM_BUDGET and env.now - hotel.new_services > 300:
+        hotel.new_services = env.now
         desires['maximize_revenue'] = True
 
-    else:
+    elif hotel.complaints >= 4:
         desires['raise_salary'] = True
 
+    else:
+        desires['nothing'] = True
 
 # Generar intenciones basadas en los deseos y creencias
 def filter(beliefs, desire):
     #print('ENTRO A FILTER EL MANAGAER')
-    if beliefs['wait']: return
+    if beliefs['wait'] or beliefs['nothing']: return None
     hotel_ = beliefs['hotel']
     intentions = []
 
@@ -88,7 +91,6 @@ def filter(beliefs, desire):
         return intentions
     
     if desire['raise_price']:
-        print('RAISE PRICE')
         service = calculate_service(hotel_, True)
         intentions.append(('raise_price', service, 'raise_price'))
         return intentions
@@ -117,7 +119,165 @@ def filter(beliefs, desire):
     if desire['close_service_and_maintenance'][0]:
         intentions.append(('close_service_and_maintenance', desire['close_service_and_maintenance'][1], 'close_service_and_maintenance'))
         return intentions
+
+def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires):
+        if beliefs['wait'] or beliefs['nothing']: return
+
+        if intentions[0][1] in hotel.services or intentions[0][1] in hotel.rooms.services:
+            print(intentions[0][0], intentions[0][1].name)
+        else:
+            print(intentions[0][0])
+        if not intentions: return
+        #print(intentions)
+        for intention in intentions:
+            if intention[0] == 'call_IA_Find':
+                beliefs['working'] = True
+                # Call the function of search
+                outputs.append((env.now, f'Manager call the Find AI function'))
+                desires[intention[2]] = False
+                serv = AI_function_services(hotel, services_)
+                if serv == None:
+                    return
+                for ser_ in serv:
+                    if len(ser_) == 1:
+                        hotel.services[ser_[0]] = True
+                        hotel.revenues[ser_[0]] = 0
+                        hotel.expenses[ser_[0]] = {}
+                        for utlty in ser_[0].utilities:
+                            hotel.expenses[ser_[0]][utlty] = 0
+                        worker = env.process(generic_worker(env, ser_[0].name+'_worker', ser_[0], hotel, outputs))
+                        ser_[0].worker = [worker, random.randint(*prm.SALARIES)]
+                    else:
+                        hotel.services[ser_[1]] = True
+                        if not ser_[1] in hotel.expenses:
+                            hotel.services[ser_[1]] = True
+                            hotel.expenses[ser_[1]] = {}
+                            hotel.revenues[ser_[1]] = 0
+                        hotel.expenses[ser_[1]][ser_[0]] = 0 
+                        worker = env.process(generic_worker(env, ser_[1].name+'_worker', ser_[1], hotel, outputs))
+                        ser_[1].utilities.append(ser_[0])
+                        ser_[1].worker = [worker, random.randint(*prm.SALARIES)]
+                hotel.budget -= 200
+                yield env.timeout(10)
+                beliefs['working'] = False
+            
+            elif intention[0] == 'call_function_Survey':
+                beliefs['working'] = True
+                # Call the function of survey
+                beliefs['hotel'].survey = env.now
+                outputs.append((env.now, f'Manager call the Survey function'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                beliefs['working'] = False
+                        
+            elif intention[0] == 'raise_price':
+                print('??????????@@@@@@@')
+                beliefs['working'] = True
+                old_price = intention[1].price
+                intention[1].price += intention[1].price/10
+                outputs.append((env.now, f'Manager raised the price of {intention[1].name}: {old_price} --> {intention[1].price}'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                beliefs['working'] = False
+
+            elif intention[0] == 'lower_price':
+                beliefs['working'] = True
+                old_price = intention[1].price
+                intention[1].price -= intention[1].price/10
+                outputs.append((env.now, f'Manager lower the price of {intention[1].name}: {old_price} --> {intention[1].price}'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                beliefs['working'] = False
+
+            elif intention[0] == 'close_service':
+                beliefs['working'] = True
+                hotel.services[intention[1]] = False
+                outputs.append((env.now, f'Manager disable the {intention[1].name} service for strategy.'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                beliefs['working'] = False
+
+            elif intention[0] == 'raise_salary':
+                beliefs['working'] = True
+                Lower_raise_salary(hotel, True)
+                outputs.append((env.now, f'Manager raise the salaries.'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                beliefs['working'] = False
+
+            elif intention[0] == 'lower_salary':
+                beliefs['working'] = True
+                Lower_raise_salary(hotel, False)
+                outputs.append((env.now, f'Manager low the salaries.'))
+                desires[intention[2]] = False
+                yield env.timeout(10)
+                beliefs['working'] = False
+
+            if intention[0] == 'close_service_and_maintenance':
+                beliefs['working'] = True
+                service_ = intention[1]
+                hotel.services[service_] = False
+                outputs.append((env.now, f'Manager close the {service_.name} service for maintenance.'))
+                desires[intention[2]][0] = False
+                env.process(repairman(env, service_, hotel, outputs))
+                yield env.timeout(10)
+                beliefs['working'] = False
+
+def generic_worker(env, name, service, hotel, outputs):
+    beliefs = gw.beliefs(service)
+    desires = gw.desires(beliefs)
     
+    time = env.now
+    while time <  prm.SIM_TIME:
+        while beliefs['working']:
+            yield env.timeout(1)
+        gw.brf(hotel, beliefs)
+        gw.generate_options(beliefs, desires)
+        intentions = gw.filter(desires)
+        
+        env.process(gw.execute_action(env, intentions, beliefs, name, hotel, outputs))
+        time = env.now
+        yield env.timeout(5)
+
+def repairman(env, service, hotel, outputs):
+    with service.resource.request() as rq:
+                service.using = True
+                yield rq
+                #print(f'{env.now:6.1f} s: Housemaid is cleaning the {service.utilities.name} of the {service.name}...')-----------------------------
+                #print(utility.capacity, utility.level)
+                amount = prm.MAXIMUM_MAINTENANCE - service.maintenance
+                if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                outputs.append((env.now, f'{env.now:6.1f} s: repairman is reapiring the {service.name}...'))
+                
+                outputs.append((env.now, f'{env.now:6.1f} s: Level before repair the {service.name}: {service.maintenance}'))
+                #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
+                
+                service.maintenance += amount
+                #outputs.append((env.now,(service[0].name, utility.level)))              
+                yield env.timeout(prm.REPAIRMAN_TIME)
+                #outputs.append((env.now, (service.name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
+                hotel.services[service] = True
+                service.using = False
+                outputs.append((env.now, f'{env.now:6.1f} s: repairman finished and the service is ready'))
+                outputs.append((env.now, f'Level after repair {service.name}: {service.maintenance}'))
+                hotel.budget -= random.randint(*prm.REPAIR)  
+
+def Lower_raise_salary(hotel, operator):
+    for room in hotel.rooms.services:
+        if operator:
+            room.worker[1] += room.worker[1]/10
+        else:
+            room.worker[1] -= room.worker[1]/10
+    for service in hotel.services:
+        if operator:
+            service.worker[1] += service.worker[1]/10
+        else:
+            service.worker[1] += service.worker[1]/10
+    if operator:
+        prm.HOUSEMAID_TIME -= 1
+        prm.HOUSEMAID_TIME = max(3, prm.HOUSEMAID_TIME)
+    else:
+        prm.HOUSEMAID_TIME += 1
 
 def occupate_rooms(hotel):
     count = 0
@@ -146,10 +306,11 @@ def calculate_service(hotel, operator):
     return service_return
 
 def check(service, hotel):
-    necesity = service.necesity
+    print(service)
+    necesity_ = service.necesity
     count = 0
     for serv in hotel.services:
-        if serv.necesity == necesity and hotel.services[service]:
+        if serv.necesity == necesity_ and hotel.services[service]:
             count += 1    
     return count > 1
 

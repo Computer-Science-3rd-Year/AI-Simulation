@@ -30,8 +30,6 @@ def generate_option(beliefs, desires):
             if  room.utilities[0].container.level < prm.THRESHOLD_CLEAN:
                 desires[room] = True
                 
-
-    
 def filter(desires):
     intentions = []
     for room in desires:
@@ -39,3 +37,34 @@ def filter(desires):
             intentions.append(room)
     return intentions
 
+def execute_action(env, rooms, hotel, beliefs, outputs):
+        #print('housemaiddddddddddd')
+        if rooms == []:
+            return       
+        for room in rooms:
+            beliefs['working'] = True
+            with room.resource.request() as rq: 
+                room.using = True
+                yield rq
+                #print(f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities.name} of the {room.name}...')-----------------------------
+                bed = room.utilities[0].container
+                #print(bed.capacity, bed.level)
+                amount = bed.capacity - bed.level
+                print(f'total: {bed.capacity}, level: {bed.level}, {room.name}')
+                if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                outputs.append((env.now, f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities[0].name} of the {room.name}...'))
+                hotel.revenues[room] -= room.worker[1]
+                hotel.budget -= room.worker[1]
+                outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}'))
+                #print(f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}')---------------------------------------
+                
+                bed.put(amount)
+                outputs.append((env.now,(room.name, bed.level)))
+                
+                
+                yield env.timeout(prm.HOUSEMAID_TIME)
+                outputs.append((env.now, (room.name, bed.level, 'bbbbbbbbbbbbbbbbbbb')))
+                room.using = False
+                beliefs['working'] = False
+                outputs.append((env.now, f'{env.now:6.1f} s: Housemaid finished and the room is clean'))
+                outputs.append((env.now, f'Level after clean {room.name}: {bed.level}'))

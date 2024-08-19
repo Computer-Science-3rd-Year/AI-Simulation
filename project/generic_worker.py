@@ -29,4 +29,35 @@ def filter(desires):
             intentions.append(service)
     return intentions
 
+def execute_action(env, service, beliefs, name, hotel, outputs):
+    if service == []:
+        return
+    beliefs['working'] = True
+    
+    with service[0].resource.request() as rq:
+            service[0].using = True
+            yield rq
+            #print(f'{env.now:6.1f} s: Housemaid is cleaning the {service.utilities.name} of the {service.name}...')-----------------------------
+            utility = service[0].utilities[0].container
+            #print(utility.capacity, utility.level)
+            amount = utility.capacity - utility.level
+            print(f'total: {utility.capacity}, level: {utility.level}, {service[0].name}')
+            if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            outputs.append((env.now, f'{env.now:6.1f} s: {name} is cleaning the {service[0].utilities[0].name} of the {service[0].name}...'))
+            hotel.revenues[service[0]] = hotel.revenues[service[0]] - service[0].worker[1]
+            hotel.budget -= service[0].worker[1]
+            outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {service[0].name}: {utility.level}'))
+            #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
+            
+            utility.put(amount)
+            outputs.append((env.now,(service[0].name, utility.level)))
+            
+            
+            yield env.timeout(prm.HOUSEMAID_TIME)
+            outputs.append((env.now, (service[0].name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
+            service[0].using = False
+            beliefs['working'] = False
+            outputs.append((env.now, f'{env.now:6.1f} s: {name} finished and the service is clean'))
+            outputs.append((env.now, f'Level after clean {service[0].name}: {utility.level}'))
+
 
