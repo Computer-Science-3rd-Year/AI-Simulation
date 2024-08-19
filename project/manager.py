@@ -8,7 +8,7 @@ def beliefs(hotel):
    beliefs_ = {}
    beliefs_['hotel'] = hotel
    beliefs_['working'] = False
-   beliefs_['wait'] = True  # Esperar a que avance un poco la simulación
+   beliefs_['wait'] = False  # Esperar a que avance un poco la simulación
    beliefs_['nothing'] = False,
    return beliefs_
 
@@ -39,11 +39,9 @@ def generate_options(beliefs, desires, env, hotel):
     for service in beliefs_.services:
         if service.maintenance < prm.THRESHOLD_MAINTENANCE:
             desires['close_service_and_maintenance'] = [True, service]
-            print('entry')
             return 
-    
+    print(beliefs_.budget)
     if beliefs_.budget <= prm.MINIMUM_BUDGET:
-        print('ENTROOOOOO')
         if beliefs_.peak_season and occup_rooms > 0.5:
             print('Manager!!!!!!!!!!!!')
             desires['raise_price'] = True
@@ -64,7 +62,10 @@ def generate_options(beliefs, desires, env, hotel):
     if env.now - beliefs_.survey > prm.SURVEY_TIME:
         print(f'{env.now} --> SURVEYYY')
         desires['make_survey'] = True
-            
+
+    elif hotel.complaints >= 4:
+        desires['raise_salary'] = True
+        
     elif beliefs_.budget > prm.MINIMUM_BUDGET and env.now - hotel.new_services > 300:
         hotel.new_services = env.now
         desires['maximize_revenue'] = True
@@ -148,6 +149,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires)
                         worker = env.process(generic_worker(env, ser_[0].name+'_worker', ser_[0], hotel, outputs))
                         ser_[0].worker = [worker, random.randint(*prm.SALARIES)]
                     else:
+                        print('len > 1')
                         hotel.services[ser_[1]] = True
                         if not ser_[1] in hotel.expenses:
                             hotel.services[ser_[1]] = True

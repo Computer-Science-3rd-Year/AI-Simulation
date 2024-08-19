@@ -97,12 +97,10 @@ def receptionist(env, hotel):
             if item[0] in reserved_bool:
                 continue
             reserved_.append(item)
+            
         ordenated_tourist = sorted(reserved_, key= lambda tupla: len(tupla[1]['restrictions']))
         dict = recp.rooms_distributions(ordenated_tourist, 0, {}, time, hotel, reserved_time)
-        # if dict == None:
-        #     print('ALERTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT')
-        #     yield env.timeout(100)
-        #     continue
+       
         recp.bad_room(dict, hotel, time, ordenated_tourist, reserved_time)
         for item in ordenated_tourist:
             print('room', dict[item[0]])

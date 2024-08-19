@@ -26,11 +26,12 @@ wi_fi = hotel.Service(simpy.Resource(env, capacity= 10), 'wi_fi', prm.fun,[hotel
 transfer_service = hotel.Service(simpy.Resource(env, capacity= 10), 'transfer_service', prm.comfort,[hotel.Utility('transfer_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 20)   
 excursion = hotel.Service(simpy.Resource(env, capacity= 10), 'excursion', prm.fun,[hotel.Utility('excursion', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 100)
 souvenir_shopping = hotel.Service(simpy.Resource(env, capacity= 10), 'souvenir_shopping', prm.comfort,[hotel.Utility('souvenir_shopping', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 20)
-#continental_breakfast = hotel.Utility('continental_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
-#buffet_breakfast = hotel.Utility('buffet_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
-#carte_breakfast = hotel.Utility('carte_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
-#carte_dinner = hotel.Utility('carte_dinner', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
-#tasting_menu = hotel.Utility('tasting_menu', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
+continental_breakfast = hotel.Utility('continental_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
+buffet_breakfast = hotel.Utility('buffet_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
+carte_breakfast = hotel.Utility('carte_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
+carte_dinner = hotel.Utility('carte_dinner', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
+#########################################################################
+tasting_menu = hotel.Utility('tasting_menu', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
 local_cuisine_restaurant = hotel.Service(simpy.Resource(env, capacity= 10), 'local_cuisine_restaurant', prm.food,[hotel.Utility('local_cuisine_restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 80)
 International_cuisine_restaurant = hotel.Service(simpy.Resource(env, capacity= 10), 'International_cuisine_restaurant', prm.food,[hotel.Utility('International_cuisine_restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 90)
 bar = hotel.Service(simpy.Resource(env, capacity= 10), 'bar', prm.food,[hotel.Utility('bar', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 30)
@@ -79,7 +80,7 @@ boat_rides = hotel.Service(simpy.Resource(env, capacity= 10), 'boat_rides', prm.
 kayak_rental = hotel.Service(simpy.Resource(env, capacity= 10), 'kayak_rental', prm.fun,[hotel.Utility('kayak_rental', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100))
 
 
-services_ = [[rest_room], [pool], [coffee], [energy_drink], [buffet], [snack_bar], [room_service], [restaurant], [ranchon], [pool_table], [table_tennis], 
+services_ = [[rest_room], [pool], [coffee], [energy_drink], [buffet], [snack_bar], [room_service], [restaurant],[continental_breakfast, restaurant],[buffet_breakfast, restaurant], [carte_breakfast, restaurant],[carte_dinner, restaurant],[tasting_menu, restaurant],[ranchon], [pool_table], [table_tennis], 
             [tennis], [gym], [show_time], [ironing_service], [laundry_service], [wi_fi], [transfer_service], [excursion], [souvenir_shopping], [local_cuisine_restaurant], [International_cuisine_restaurant], [bar], [pool_bar], 
             [information_bureau], [spa], [masaje], [facial_treatments], [body_treatments], [heated_pool], [jacuzzi], [sauna], [steam_room], [hair_salon], [yoga_service],
             [pilates_service], [reflexology_service], [aromatherapy_service], [turkish_baths], [beauty_treatments], [hair_removal_service], [library], [game_room],
