@@ -37,9 +37,11 @@ def validate(restrictions, room):
 def bad_room(dict, hotel, time, ordenated_tourist, reserved_time):
     for item in ordenated_tourist:
         if dict[item[0]] == None:
+            print(item[0], dict[item[0]])
             for room in hotel.rooms.services:
                 if room in reserved_time and time < reserved_time[room]:
                     continue
                 reserved_time[room] = time + item[2]
                 dict[item[0]] = room
                 break
+            print(item[0], dict[item[0]], '##########################')

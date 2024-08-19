@@ -45,6 +45,8 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
         while beliefs['using_service']:
             yield env.timeout(1)
         env.process(t.execute_action_(intentions, hotel, experience, name, reserved, outputs, len_of_stay, env, beliefs, desires))
+        if beliefs['my_room'] == 1:
+            return
         yield env.timeout(random.randint(1, 3))  # Tiempo de espera
 
         if env.now >= arrive_time + len_of_stay:
@@ -102,12 +104,13 @@ def receptionist(env, hotel):
         for item in ordenated_tourist:
             print('room', dict[item[0]])
             item[1]['my_room'] = dict[item[0]]
-            hotel.revenues[dict[item[0]]] += dict[item[0]].price
-            hotel.budget += dict[item[0]].price
-            outputs.append((env.now,f'El turista {item[0]} accedió a la habitación {dict[item[0]].name}.')) 
-            outputs.append((env.now,f'LEVEL OF CLEAN OF {dict[item[0]].name}: {dict[item[0]].utilities[0].container.level}'))
-            reserved_time[dict[item[0]]] = env.now + item[2]
-            reserved_bool.append(item[0])
+            if dict[item[0]] != None:
+                hotel.revenues[dict[item[0]]] += dict[item[0]].price
+                hotel.budget += dict[item[0]].price
+                outputs.append((env.now,f'El turista {item[0]} accedió a la habitación {dict[item[0]].name}.')) 
+                outputs.append((env.now,f'LEVEL OF CLEAN OF {dict[item[0]].name}: {dict[item[0]].utilities[0].container.level}'))
+                reserved_time[dict[item[0]]] = env.now + item[2]
+                reserved_bool.append(item[0])
         yield env.timeout(70)
         time = env.now
 

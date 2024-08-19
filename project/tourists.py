@@ -194,7 +194,7 @@ def communicate(env, reserved, reserved_time, beliefs):
     if not beliefs['using_service']:
            for i in range(len(reserved) - 1, -1, -1):
                tuple = reserved[i]
-               if not tuple[1]['my_room']: continue
+               if not tuple[1]['my_room'] or tuple[1]['my_room'] == 1: continue
                if reserved_time[tuple[1]['my_room']] <= env.now: break
                if tuple[1]['culture_level'] < beliefs['culture_level']: continue
                for neces in enu.Necesity:
@@ -212,6 +212,8 @@ def reserve_room(env, hotel, name, beliefs, desires, reserved, len_of_stay):
     beliefs['has_room'] = True
     desires['want_room'] = False
     beliefs['using_service'] = False
+    if beliefs['my_room'] == None:
+        beliefs['my_room'] = 1
     yield hotel.env.timeout(len_of_stay)
 
 def use_service(env, hotel, name, beliefs, desires, intention, service, outputs, experience, service_name, cant_required, necesity_level, max_level):
