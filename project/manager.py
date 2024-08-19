@@ -40,10 +40,10 @@ def generate_options(beliefs, desires, env, hotel):
         if service.maintenance < prm.THRESHOLD_MAINTENANCE:
             desires['close_service_and_maintenance'] = [True, service]
             return 
-    print(beliefs_.budget)
+    #print(beliefs_.budget)
     if beliefs_.budget <= prm.MINIMUM_BUDGET:
         if beliefs_.peak_season and occup_rooms > 0.5:
-            print('Manager!!!!!!!!!!!!')
+            #print('Manager!!!!!!!!!!!!')
             desires['raise_price'] = True
             return
 
@@ -59,19 +59,18 @@ def generate_options(beliefs, desires, env, hotel):
             desires['lower_salary'] = True
             return
     
-    if env.now - beliefs_.survey > prm.SURVEY_TIME:
-        print(f'{env.now} --> SURVEYYY')
-        desires['make_survey'] = True
-
     elif hotel.complaints >= 4:
+        print(f'COMPLAINTS: {hotel.complaints}')
         desires['raise_salary'] = True
+        hotel.complaints = 0
+
+    elif env.now - beliefs_.survey > prm.SURVEY_TIME:
+        #print(f'{env.now} --> SURVEYYY')
+        desires['make_survey'] = True
         
     elif beliefs_.budget > prm.MINIMUM_BUDGET and env.now - hotel.new_services > 300:
         hotel.new_services = env.now
         desires['maximize_revenue'] = True
-
-    elif hotel.complaints >= 4:
-        desires['raise_salary'] = True
 
     else:
         desires['nothing'] = True

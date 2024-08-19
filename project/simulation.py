@@ -1,13 +1,10 @@
 import itertools
 import random
 import simpy
-import copy
 import hotel
 import params as prm
-import enums as enu
 import tourists as t
 import housemaid as hsd
-import generic_worker as gw
 import manager as mg
 import receptionist as recp
 from hotel_services import env, services_
@@ -62,7 +59,7 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
             # REVIEWS[f'{name}'] = review
             # CLASSIFICATION[f'{name}'] = classif
             break
-        outputs.append((env.now, 'aaaaaaaaaaaaaaaaa!!!!!!!!!!'))
+        #outputs.append((env.now, 'aaaaaaaaaaaaaaaaa!!!!!!!!!!'))
 
 ###############################################################################
 #------------------------- W   O   R   K   E   R   S --------------------------

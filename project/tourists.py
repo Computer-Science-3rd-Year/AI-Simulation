@@ -103,91 +103,40 @@ def execute_action_(intentions, hotel, experience, name, reserved, outputs, len_
         if not intentions:
             return
         my_room = beliefs['my_room']
+        
         for intention in intentions:
 
             if intention[0] == 'reserve_room':
-                reserved.append((name, beliefs, len_of_stay))
-                #print(reserved)
-                beliefs['using_service'] = True
-                yield env.timeout(100)
-                beliefs['has_room'] = True
-                desires['want_room'] = False
-                beliefs['using_service'] = False
-                yield hotel.env.timeout(len_of_stay)
-                
+                env.process(reserve_room(env, hotel, name, beliefs, desires, reserved, len_of_stay))
+                yield env.timeout(2)
                 break
 
             elif intention[0] == 'rest_room':
-                beliefs['using_service'] = True
-                outputs.append((env.now, f'{name}--> {my_room.name} jjjjjjjjjjjjjjjj'))
-                if my_room:
-                    necesity_level = intention[1] + '_level'
-                    cant_required = prm.NECESITY_SIZE - beliefs[necesity_level][0]
-                    if cant_required > 0:
-                        with my_room.resource.request() as request_service:
-                            yield request_service
-                            if my_room.utilities[0].container.level >= cant_required/2:                                
-                                outputs.append((env.now, f'El turista {name} accedió al servicio {my_room.name}, {beliefs[necesity_level][0]}'))
-                                beliefs[necesity_level][0] += cant_required
-                                desires['want_' + intention[1]] = False
-                                outputs.append((env.now,beliefs[necesity_level][0]))
-                                experience.append(message_for_mainten(my_room, 'room'))
-                                experience.append("The room of hotel was clean, I was able to rest fully. ")
-                                my_room.maintenance -= random.randint(2, 20)
-                                yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
-                                beliefs['using_service'] = False
-                                my_room.utilities[0].container.get(int(cant_required/2))
-                            else:
-                                hotel.complaints += 1
-                                beliefs['using_service'] = False
-                                outputs.append((env.now, f'Habitación {my_room.name} con CLEAN LEVEL = {my_room.utilities[0].container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de energy'))
-                                experience.append("The room of hotel was not very clean. I couldn't rest. ")
-                    else:
-                        with my_room.resource.request() as request_service:
-                            yield request_service
-                            outputs.append((env.now, f'El turista {name} accedió al servicio {my_room.name}, {beliefs[necesity_level][0]}'))
-                            desires['want_' + intention[1]] = False
-                            outputs.append((env.now,beliefs[necesity_level][0]))
-                            experience.append(message_for_mainten(my_room, 'room'))
-                            #experience.append("The room of this hotel was excellen. ")
-                            yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
-                            beliefs['using_service'] = False
+                necesity_level = intention[1] + '_level'
+                cant_required = prm.NECESITY_SIZE - beliefs[necesity_level][0]
+                if cant_required > 0:
+                    env.process(use_service(env, hotel, name, beliefs, desires, intention, my_room, outputs, experience, 'room', cant_required, necesity_level, False))
+                yield env.timeout(2)
+                break
+                
             else:
-                try:            
+                try:           
                     for service in hotel.services:
                         if service.name == intention[0]:
-                            beliefs['using_service'] = True
-                            service_name = service.name
+
                             necesity_level = intention[1] + '_level'
                             cant_required = prm.NECESITY_SIZE - beliefs[necesity_level][0]
-                            if cant_required > 0 or service.necesity == prm.fun:        
-                                with service.resource.request() as request_service:
-                                    #yield request_service
-                                    if service.utilities[0].container.level >= cant_required/2:
-                                        service.utilities[0].container.get(cant_required/2)
-                                        outputs.append((env.now, f'El turista {name} accedió al servicio {service.name}, {beliefs[necesity_level][0]}'))
-                                        beliefs[necesity_level][0] += cant_required
-                                        desires['want_' + intention[1]] = False
-                                        hotel.revenues[service] += service.price
-                                        hotel.budget += service.price
-                                        outputs.append((env.now,beliefs[necesity_level][0]))
-                                        if '_' in service.name:
-                                            service_name = service.name.replace('_', ' ')
-                                        # agregar opinión del turista respecto al nivel de mantenimiento  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                        
-                                        experience.append(f'The {service_name} of the hotel was good. ')
-                                        experience.append(message_for_mainten(service, service_name))
-                                        service.maintenance -= random.randint(2, 20)
-                                        yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
-                                        #beliefs['using_service'] = False
-                                    else:
-                                        #beliefs['using_service'] = False
-                                        outputs.append((env.now, f'The {service.name} con CLEAN LEVEL = {service.utilities[0].container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de {intention[1]}'))
-                                        if '_' in service.name:
-                                            service_name = service.name.replace('_', ' ')
-                                        experience.append(f'The {service_name} of this hotel was not very good. ')
-                                        experience.append(message_for_mainten(service, service_name))
-                    
-                            beliefs['using_service'] = True
+
+                            if '_' in service.name:
+                                service_name = service.name.replace('_', ' ')
+                            else: service_name = service.name
+
+                            if cant_required > 0:
+                                env.process(use_service(env, hotel, name, beliefs, desires, intention, service, outputs, experience, service_name, cant_required, necesity_level, False))
+                            elif service.necesity == prm.fun:
+                                env.process(use_service(env, hotel, name, beliefs, desires, intention, service, outputs, experience, service_name, cant_required, necesity_level, True))
+
+                            yield env.timeout(2)
                             break
                 except:
                     execute_action_(intentions, hotel, experience, name, reserved, outputs, len_of_stay, env, beliefs, desires)
@@ -242,15 +191,55 @@ def message_for_mainten(service, service_name):
         return f'The {service_name} was in terrible maintenance conditions. '
 
 def communicate(env, reserved, reserved_time, beliefs):
-     if not beliefs['using_service']:
-            for i in range(len(reserved) - 1, -1, -1):
-                tuple = reserved[i]
-                if not tuple[1]['my_room']: continue
-                if reserved_time[tuple[1]['my_room']] <= env.now: break
-                if tuple[1]['culture_level'] < beliefs['culture_level']: continue
-                for neces in enu.Necesity:
-                    set_ = set(beliefs[neces.name+'_level'][1])
-                    set.update(set(tuple[1][neces.name+'_level'][1]))
-                    beliefs[neces.name+'_level'][1] = list(set_)
-                #print('tourist is talking')
-                break  
+    if not beliefs['using_service']:
+           for i in range(len(reserved) - 1, -1, -1):
+               tuple = reserved[i]
+               if not tuple[1]['my_room']: continue
+               if reserved_time[tuple[1]['my_room']] <= env.now: break
+               if tuple[1]['culture_level'] < beliefs['culture_level']: continue
+               for neces in enu.Necesity:
+                   set_ = set(beliefs[neces.name+'_level'][1])
+                   set.update(set(tuple[1][neces.name+'_level'][1]))
+                   beliefs[neces.name+'_level'][1] = list(set_)
+               #print('tourist is talking')
+               break  
+
+def reserve_room(env, hotel, name, beliefs, desires, reserved, len_of_stay):
+    reserved.append((name, beliefs, len_of_stay))
+    print('RESERVE')
+    beliefs['using_service'] = True
+    yield env.timeout(100)
+    beliefs['has_room'] = True
+    desires['want_room'] = False
+    beliefs['using_service'] = False
+    yield hotel.env.timeout(len_of_stay)
+
+def use_service(env, hotel, name, beliefs, desires, intention, service, outputs, experience, service_name, cant_required, necesity_level, max_level):
+    beliefs['using_service'] = True
+    #outputs.append((env.now, f'{name}--> {service.name} jjjjjjjjjjjjjjjj'))
+    with service.resource.request() as request_service:
+        yield request_service
+        if service.utilities[0].container.level >= cant_required/2:                                
+            outputs.append((env.now, f'El turista {name} accedió al servicio {service.name}, {beliefs[necesity_level][0]}'))
+            if not max_level:
+                beliefs[necesity_level][0] += cant_required
+            desires['want_' + intention[1]] = False
+            outputs.append((env.now,beliefs[necesity_level][0]))
+            experience.append(message_for_mainten(service, service_name))
+            experience.append(f'The {service_name} of the hotel was good. ')
+            service.maintenance -= random.randint(2, 20)
+            yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
+            beliefs['using_service'] = False
+            if not max_level:
+                service.utilities[0].container.get(int(cant_required/2))
+        else:
+            hotel.complaints += 1
+            beliefs['using_service'] = False
+            outputs.append((env.now, f'Habitación {service.name} con CLEAN LEVEL = {service.utilities[0].container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de energy'))
+            experience.append(f'The {service_name} of this hotel was not very good. ')
+            experience.append(message_for_mainten(service, service_name))
+
+
+    beliefs['using_service'] = False
+
+        
