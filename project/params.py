@@ -1,7 +1,7 @@
 import enums as enu
 
 """ SIMULATION """
-T_INTER = [5, 7]            # intervalo entre la llegada de los turistas     
+T_INTER = [5, 20]            # intervalo entre la llegada de los turistas     
 SIM_TIME = 1000            # tiempo total de la simulación     
 
 """ NECESITY """
@@ -62,7 +62,7 @@ REPAIRMAN_TIME = 40
 SALARIES = [70, 90]
 REVENUE_TARGET = 10
 REPUTATION_TARGET = 80
-MINIMUM_BUDGET = 700  # en % lo más probable
+MINIMUM_BUDGET = 350  # en % lo más probable
 STABLE_BUDGET = 80 
 REPAIR = [10, 17]
 ROOM_PRICE = 50

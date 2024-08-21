@@ -1,6 +1,6 @@
 import tourists
 import housemaid 
-import manager 
+import manager
 
 
 class AGENT: # Agente BDI --> todas las funciones/componentes 

@@ -2,7 +2,6 @@ import random
 import params as prm
 import generic_worker as gw
 
-
 # Creencias del hotel
 def beliefs(hotel):
    beliefs_ = {}
@@ -60,13 +59,13 @@ def generate_options(beliefs, desires, env, hotel):
             return
     
     elif hotel.complaints >= 4:
-        print(f'COMPLAINTS: {hotel.complaints}')
+        #print(f'COMPLAINTS: {hotel.complaints}')
         desires['raise_salary'] = True
         hotel.complaints = 0
 
-    elif env.now - beliefs_.survey > prm.SURVEY_TIME:
-        #print(f'{env.now} --> SURVEYYY')
-        desires['make_survey'] = True
+    # elif env.now - beliefs_.survey > prm.SURVEY_TIME:
+    #     #print(f'{env.now} --> SURVEYYY')
+    #     desires['make_survey'] = True
         
     elif beliefs_.budget > prm.MINIMUM_BUDGET and env.now - hotel.new_services > 300:
         hotel.new_services = env.now
@@ -123,10 +122,10 @@ def filter(beliefs, desire):
 def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires):
         if beliefs['wait'] or beliefs['nothing']: return
 
-        if intentions[0][1] in hotel.services or intentions[0][1] in hotel.rooms.services:
-            print(intentions[0][0], intentions[0][1].name)
-        else:
-            print(intentions[0][0])
+        # if intentions[0][1] in hotel.services or intentions[0][1] in hotel.rooms.services:
+        #     print(intentions[0][0], intentions[0][1].name)
+        # else:
+        #     print(intentions[0][0])
         if not intentions: return
         #print(intentions)
         for intention in intentions:
@@ -148,7 +147,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires)
                         worker = env.process(generic_worker(env, ser_[0].name+'_worker', ser_[0], hotel, outputs))
                         ser_[0].worker = [worker, random.randint(*prm.SALARIES)]
                     else:
-                        print('len > 1')
+                        #print('len > 1')
                         hotel.services[ser_[1]] = True
                         if not ser_[1] in hotel.expenses:
                             hotel.services[ser_[1]] = True
@@ -172,7 +171,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires)
                 beliefs['working'] = False
                         
             elif intention[0] == 'raise_price':
-                print('??????????@@@@@@@')
+                #print('??????????@@@@@@@')
                 beliefs['working'] = True
                 old_price = intention[1].price
                 intention[1].price += intention[1].price/10
@@ -307,7 +306,7 @@ def calculate_service(hotel, operator):
     return service_return
 
 def check(service, hotel):
-    print(service)
+    #print(service)
     necesity_ = service.necesity
     count = 0
     for serv in hotel.services:

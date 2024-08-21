@@ -50,7 +50,7 @@ def execute_action(env, rooms, hotel, beliefs, outputs):
                 bed = room.utilities[0].container
                 #print(bed.capacity, bed.level)
                 amount = bed.capacity - bed.level
-                print(f'total: {bed.capacity}, level: {bed.level}, {room.name}')
+                #print(f'total: {bed.capacity}, level: {bed.level}, {room.name}')
                 if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 outputs.append((env.now, f'{env.now:6.1f} s: Housemaid is cleaning the {room.utilities[0].name} of the {room.name}...'))
                 hotel.revenues[room] -= room.worker[1]
@@ -59,12 +59,12 @@ def execute_action(env, rooms, hotel, beliefs, outputs):
                 #print(f'{env.now:6.1f} s: Level before clean the {room.name}: {bed.level}')---------------------------------------
                 
                 bed.put(amount)
-                outputs.append((env.now,(room.name, bed.level)))
+                #outputs.append((env.now,(room.name, bed.level)))
                 
                 
                 yield env.timeout(prm.HOUSEMAID_TIME)
-                outputs.append((env.now, (room.name, bed.level, 'bbbbbbbbbbbbbbbbbbb')))
+                #outputs.append((env.now, (room.name, bed.level, 'bbbbbbbbbbbbbbbbbbb')))
                 room.using = False
                 beliefs['working'] = False
-                outputs.append((env.now, f'{env.now:6.1f} s: Housemaid finished and the room is clean'))
+                outputs.append((env.now, f'{env.now:6.1f} s: Housemaid finished and the {room.name} is clean'))
                 outputs.append((env.now, f'Level after clean {room.name}: {bed.level}'))

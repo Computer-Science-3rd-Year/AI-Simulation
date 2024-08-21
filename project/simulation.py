@@ -1,6 +1,7 @@
 import itertools
 import random
 import simpy
+import os
 import hotel
 import params as prm
 import tourists as t
@@ -9,6 +10,7 @@ import manager as mg
 import receptionist as recp
 from hotel_services import env, services_
 import llm
+
 
 outputs = []
 reserved = [] # [(tourist_name, tourist_beliefs, len_of_stay), ...]
@@ -50,17 +52,29 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
         yield env.timeout(random.randint(1, 3))  # Tiempo de espera
 
         if env.now >= arrive_time + len_of_stay:
-            beliefs['my_room'] = None
-            outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
-            experience_ = ""
-            for sentence in experience:
-                experience_+=sentence
-            EXPERIENCES[f'{name}'] = experience_
+            #beliefs['my_room'] = None
+            #print(f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}')
+            #outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
+            #experience_ = ""
+            #for sentence in experience:
+            #    experience_+=sentence
+            #EXPERIENCES[f'{name}'] = experience_
+            #print(f'{name}: {experience_}')
+            
             # review = llm.generate_review(experience_)
             # classif = llm.classify_review(review)
             # REVIEWS[f'{name}'] = review
             # CLASSIFICATION[f'{name}'] = classif
             break
+        
+        #print(f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}')
+        outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
+        experience_ = ""
+        for sentence in experience:
+            experience_+=sentence
+        EXPERIENCES[f'{name}'] = experience_
+        #print(f'{name}: {experience_}')
+        beliefs['my_room'] = None
         #outputs.append((env.now, 'aaaaaaaaaaaaaaaaa!!!!!!!!!!'))
 
 ###############################################################################
@@ -72,6 +86,7 @@ def housemaid(env, rooms, hotel):
     #add si no tiene el salario completo no rellena al máximo el nivel de limpieza
     beliefs = hsd.beliefs(rooms)
     desires = hsd.desires(beliefs)
+    
 
     hsd.execute_action(env, rooms, hotel, beliefs, outputs)
     
@@ -102,7 +117,7 @@ def receptionist(env, hotel):
        
         recp.bad_room(dict, hotel, time, ordenated_tourist, reserved_time)
         for item in ordenated_tourist:
-            print('room', dict[item[0]])
+            ##print('room', dict[item[0]])
             item[1]['my_room'] = dict[item[0]]
             if dict[item[0]] != None:
                 hotel.revenues[dict[item[0]]] += dict[item[0]].price
@@ -163,7 +178,7 @@ def manager(env, rooms, hotel):
         if not intentions:
             if beliefs['nothing']: beliefs['nothing'] = False
             if not beliefs['wait']:
-                print('NULL INTENTIOONNNNSSSS############')
+                #print('NULL INTENTIOONNNNSSSS############')
                 yield env.timeout(40)
                 continue
 
@@ -210,11 +225,16 @@ env.process(receptionist(env, melia_hotel))
 
 # Execute!
 env.run(until=prm.SIM_TIME)
-for timestamp, message in sorted(outputs, key = lambda outputs_: outputs_[0]):
-        print(f"{timestamp}: {message}")
-
 # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# for tourist in EXPERIENCES:
-#     review = llm.generate_review(EXPERIENCES[tourist])
-#     classif = llm.classify_review(review)
-#     print(f'{tourist}:\n{review}CLASSIFICATION --> {classif}') 
+#print(EXPERIENCES)
+for tourist in EXPERIENCES:
+    review = llm.generate_review(EXPERIENCES[tourist])
+    classif = llm.classify_review(review)
+    outputs.append(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n')
+    print(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n') 
+    #print(f'{tourist}: {experience}\n')
+os.remove("output.txt")
+with open("output.txt", "a") as f:
+    for timestamp, message in sorted(outputs, key = lambda outputs_: outputs_[0]):
+            f.write(f"{timestamp}: {message}" + '\n')
+

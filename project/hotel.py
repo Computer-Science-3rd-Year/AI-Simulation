@@ -2,6 +2,7 @@ import simpy
 import params as prm
 import random
 
+
 # ROOM_CLEANING_SIZE = 200       # máximo nive de limpieza de una habitación 
 # THRESHOLD_CLEAN = 80           # mínimo de limpieza/confort (% del total)
 class Hotel:
@@ -67,13 +68,13 @@ class Hotel:
     
     def disable_service(self, old_service):
         if not old_service in self.services:
-            print(f'The {old_service.name} service does not exist in the hotel')
+            #print(f'The {old_service.name} service does not exist in the hotel')
             return
         self.services[old_service] = False 
 
     def expenses_of_service(self, service):
         if not service in self.services and not service in self.rooms.services:
-            print(f'The service {service.name} does not exist in hotel')
+            #print(f'The service {service.name} does not exist in hotel')
             return
         expense = 0
         for utility in service.utilities:

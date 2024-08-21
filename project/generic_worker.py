@@ -41,23 +41,21 @@ def execute_action(env, service, beliefs, name, hotel, outputs):
             utility = service[0].utilities[0].container
             #print(utility.capacity, utility.level)
             amount = utility.capacity - utility.level
-            print(f'total: {utility.capacity}, level: {utility.level}, {service[0].name}')
+            #print(f'total: {utility.capacity}, level: {utility.level}, {service[0].name}')
             if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            outputs.append((env.now, f'{env.now:6.1f} s: {name} is cleaning the {service[0].utilities[0].name} of the {service[0].name}...'))
+            outputs.append((env.now, f'{env.now:6.1f} s: {name} is working on the {service[0].utilities[0].name} of the {service[0].name}...'))
             hotel.revenues[service[0]] = hotel.revenues[service[0]] - service[0].worker[1]
             hotel.budget -= service[0].worker[1]
-            outputs.append((env.now, f'{env.now:6.1f} s: Level before clean the {service[0].name}: {utility.level}'))
+            outputs.append((env.now, f'{env.now:6.1f} s: Level before work the {service[0].name}: {utility.level}'))
             #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
             
             utility.put(amount)
-            outputs.append((env.now,(service[0].name, utility.level)))
+            #outputs.append((env.now,(service[0].name, utility.level)))
             
             
-            yield env.timeout(prm.HOUSEMAID_TIME)
-            outputs.append((env.now, (service[0].name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
+            yield env.timeout(4)
+            #outputs.append((env.now, (service[0].name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
             service[0].using = False
             beliefs['working'] = False
-            outputs.append((env.now, f'{env.now:6.1f} s: {name} finished and the service is clean'))
+            outputs.append((env.now, f'{env.now:6.1f} s: {name} finished and the {service[0].name} is ready'))
             outputs.append((env.now, f'Level after clean {service[0].name}: {utility.level}'))
-
-
