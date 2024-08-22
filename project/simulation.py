@@ -2,13 +2,14 @@ import itertools
 import random
 import simpy
 import os
+import scipy.stats as stats
 import hotel
 import params as prm
 import tourists as t
 import housemaid as hsd
 import manager as mg
 import receptionist as recp
-from hotel_services import env, services_
+from hotel_services import create_services, basic_services
 import llm
 
 
@@ -50,32 +51,16 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
         if beliefs['my_room'] == 1:
             return
         yield env.timeout(random.randint(1, 3))  # Tiempo de espera
-
-        if env.now >= arrive_time + len_of_stay:
-            #beliefs['my_room'] = None
-            #print(f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}')
-            #outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
-            #experience_ = ""
-            #for sentence in experience:
-            #    experience_+=sentence
-            #EXPERIENCES[f'{name}'] = experience_
-            #print(f'{name}: {experience_}')
-            
-            # review = llm.generate_review(experience_)
-            # classif = llm.classify_review(review)
-            # REVIEWS[f'{name}'] = review
-            # CLASSIFICATION[f'{name}'] = classif
-            break
         
         #print(f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}')
-        outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
-        experience_ = ""
-        for sentence in experience:
-            experience_+=sentence
-        EXPERIENCES[f'{name}'] = experience_
-        #print(f'{name}: {experience_}')
-        beliefs['my_room'] = None
-        #outputs.append((env.now, 'aaaaaaaaaaaaaaaaa!!!!!!!!!!'))
+    outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
+    experience_ = ""
+    for sentence in experience:
+        experience_+=sentence
+    EXPERIENCES[f'{name}'] = experience_
+    #print(f'{name}: {experience_}')
+    beliefs['my_room'] = None
+    #outputs.append((env.now, 'aaaaaaaaaaaaaaaaa!!!!!!!!!!'))
 
 ###############################################################################
 #------------------------- W   O   R   K   E   R   S --------------------------
@@ -133,7 +118,7 @@ def receptionist(env, hotel):
 #------------------------- M   A   N   A   G   E   R --------------------------
 ###############################################################################
 
-def manager(env, rooms, hotel):
+def manager(env, rooms, hotel, services_, test):
 
     beliefs = mg.beliefs(hotel)
     desires = mg.desires()
@@ -183,7 +168,7 @@ def manager(env, rooms, hotel):
                 continue
 
             #print(intentions)
-        env.process(mg.execute_action(env, intentions, hotel, services_, outputs, beliefs, desires))
+        env.process(mg.execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test))
         time = env.now
         yield env.timeout(40)
 
@@ -196,30 +181,14 @@ def tourist_generator(env, hotel):
         yield env.timeout(random.randint(*prm.T_INTER))
         len_of_stay = random.randint(*prm.LEN_OF_STAY)
         env.process(tourist_(env, hotel, f'Tourist_{i}', t.beliefs(hotel), t.desires(), len_of_stay, env.now))
-
+env = simpy.Environment()
+services_ = create_services(env)
 outputs.append((env.now, 'Hotel is open'))
 
-#initial services
-rest_room = hotel.Service(simpy.Resource(env, capacity = 10), 'rest_room', prm.energy, [hotel.Utility('bed', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.ROOM_PRICE)
-pool = hotel.Service(simpy.Resource(env, capacity=11), 'pool', prm.fun, [hotel.Utility('pool_utl', simpy.Container(env, prm.POOL_CLEANING_SIZE, init=prm.POOL_CLEANING_SIZE))], prm.POOL_PRICE)
-coffee = hotel.Service(simpy.Resource(env, capacity=4), 'coffee', prm.energy, [hotel.Utility('bar_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.COFFEE_PRICE)
-energy_drink = hotel.Service(simpy.Resource(env, capacity=4), 'energy_drink', prm.energy, [hotel.Utility('bar_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.ENERGY_DRINK_PRICE)
-buffet = hotel.Service(simpy.Resource(env, capacity = 10), 'buffet', prm.food, [hotel.Utility('buffet', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], prm.BUFFET_PRICE)
-snack_bar = hotel.Service(simpy.Resource(env, capacity = 7), 'snack_bar', prm.food, [hotel.Utility('snack_bar', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.SNACK_BAR_PRICE)
-room_service = hotel.Service(simpy.Resource(env, capacity = 11), 'room_service', prm.food, [hotel.Utility('room_service', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.ROOM_SERVICE_PRICE)
-restaurant = hotel.Service(simpy.Resource(env, capacity = 7), 'restaurant', prm.food, [hotel.Utility('restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.RESTAURANT_PRICE)
-ranchon = hotel.Service(simpy.Resource(env, capacity = 5), 'ranchon', prm.food, [hotel.Utility('ranchon', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.RANCHON_PRICE)
-pool_table = hotel.Service(simpy.Resource(env, capacity = 2), 'pool_table', prm.fun, [hotel.Utility('pool_table', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.POOL_TABLE_PRICE)
-table_tennis = hotel.Service(simpy.Resource(env, capacity = 2), 'table_tennis', prm.fun, [hotel.Utility('table_tennis', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.TABLE_TENNIS_PRICE)
-tennis = hotel.Service(simpy.Resource(env, capacity = 2), 'tennis', prm.fun, [hotel.Utility('tennis', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.TENNIS_PRICE)
-gym = hotel.Service(simpy.Resource(env, capacity = 11), 'gym', prm.fun, [hotel.Utility('gym', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.GYM_PRICE)
-show_time = hotel.Service(simpy.Resource(env, capacity = 11), 'show_time', prm.fun, [hotel.Utility('show_time', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.SHOW_TIME_PRICE)
-services = [rest_room, pool, coffee, energy_drink, buffet, snack_bar, room_service, restaurant, ranchon, pool_table, table_tennis, 
-            tennis, gym, show_time]
-
+services = basic_services(env)
 melia_hotel = hotel.Hotel(services, env)
 
-env.process(manager(env, melia_hotel.rooms.services, melia_hotel))
+env.process(manager(env, melia_hotel.rooms.services, melia_hotel, services_, True))
 env.process(tourist_generator(env, melia_hotel))
 env.process(receptionist(env, melia_hotel))
 
@@ -227,14 +196,67 @@ env.process(receptionist(env, melia_hotel))
 env.run(until=prm.SIM_TIME)
 # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #print(EXPERIENCES)
-for tourist in EXPERIENCES:
-    review = llm.generate_review(EXPERIENCES[tourist])
-    classif = llm.classify_review(review)
-    outputs.append(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n')
-    print(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n') 
-    #print(f'{tourist}: {experience}\n')
+#for tourist in EXPERIENCES:
+#    review = llm.generate_review(EXPERIENCES[tourist])
+#    classif = llm.classify_review(review)
+#    outputs.append(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n')
+#    print(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n') 
+#    #print(f'{tourist}: {experience}\n')
 os.remove("output.txt")
 with open("output.txt", "a") as f:
     for timestamp, message in sorted(outputs, key = lambda outputs_: outputs_[0]):
             f.write(f"{timestamp}: {message}" + '\n')
+##################################################################################
+def best_strategy(test):
+    result = []
+    global reserved
+    global reserved_bool
+    global reserved_time
+    global EXPERIENCES
+    global REVIEWS
+    global CLASSIFICATION
+    for i in range(100):
 
+        prm.HOUSEMAID_TIME = 15
+        prm.REPAIRMAN_TIME = 40
+        reserved = [] # [(tourist_name, tourist_beliefs, len_of_stay), ...]
+        reserved_bool = [] # [tourist_1, tourist_2, ...] turistas que se han hospedado en el hotel
+        reserved_time = {} # {'tourist_1': check-out time, 'tourist_2': check-out time,...}
+        #Red Social
+        EXPERIENCES = {} # {'tourist_name': experience}
+        REVIEWS = {} # {'tourist_name': review}
+        CLASSIFICATION = {} 
+        env = simpy.Environment()
+        services = basic_services(env)
+        melia_hotel = hotel.Hotel(services, env)
+        services_ = create_services(env)
+        env.process(manager(env, melia_hotel.rooms.services, melia_hotel, services_, test))
+        env.process(tourist_generator(env, melia_hotel))
+        env.process(receptionist(env, melia_hotel))
+
+        env.run(until=prm.SIM_TIME)
+        result.append(melia_hotel.budget)
+
+    return result
+
+estrategy_for_limit = best_strategy(True)
+estrategy_for_iter = best_strategy(False)
+
+# Prueba de Mann-Whitney U
+u_statistic, p_value = stats.mannwhitneyu(estrategy_for_limit, estrategy_for_iter)
+
+print("\nPrueba de Mann-Whitney U:")
+print("Estadístico U:", u_statistic)  # Mide la diferencia en los rangos de los datos
+print("Valor p:", p_value)  # Probabilidad de obtener los resultados observados si no hay diferencia real
+
+# Interpretación de los resultados:
+alpha = 0.05  # Nivel de significancia
+
+if p_value < alpha:
+    print("\nExiste una diferencia significativa en la ganancia entre las estrategias.")
+    print("Se rechaza la hipótesis nula de que no hay diferencia.")
+    print("Podemos concluir que la estrategia que produjo los datos con mayor media es mejor.")
+else:
+    print("\nNo se encontró una diferencia significativa en la ganancia entre las estrategias.")
+    print("Se acepta la hipótesis nula de que no hay diferencia.")
+    print("No podemos concluir que una estrategia sea mejor que la otra.")

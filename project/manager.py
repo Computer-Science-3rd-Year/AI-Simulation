@@ -119,7 +119,7 @@ def filter(beliefs, desire):
         intentions.append(('close_service_and_maintenance', desire['close_service_and_maintenance'][1], 'close_service_and_maintenance'))
         return intentions
 
-def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires):
+def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test):
         if beliefs['wait'] or beliefs['nothing']: return
 
         # if intentions[0][1] in hotel.services or intentions[0][1] in hotel.rooms.services:
@@ -134,7 +134,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires)
                 # Call the function of search
                 outputs.append((env.now, f'Manager call the Find AI function'))
                 desires[intention[2]] = False
-                serv = AI_function_services(hotel, services_)
+                serv = AI_function_services(hotel, services_, test)
                 if serv == None:
                     return
                 for ser_ in serv:
@@ -153,6 +153,8 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires)
                             hotel.services[ser_[1]] = True
                             hotel.expenses[ser_[1]] = {}
                             hotel.revenues[ser_[1]] = 0
+                            for utl in ser_[1].utilities:
+                                hotel.expenses[ser_[1]][utl] = 0     
                         hotel.expenses[ser_[1]][ser_[0]] = 0 
                         worker = env.process(generic_worker(env, ser_[1].name+'_worker', ser_[1], hotel, outputs))
                         ser_[1].utilities.append(ser_[0])
@@ -314,9 +316,12 @@ def check(service, hotel):
             count += 1    
     return count > 1
 
-def AI_function_services(hotel, services_):
+def AI_function_services(hotel, services_, test):
     combinations = []
-    a = combination(services_, [], 200, 0, hotel, combinations)
+    if test:
+        a = combination(services_, [], 200, 0, hotel, combinations)
+    else:
+        a = combination_iter(services_, [], 200, 0, hotel, [], [0,0])
     return a
 
 def combination(services_, combination_, budget, minor, hotel, combinations):
@@ -341,6 +346,40 @@ def combination(services_, combination_, budget, minor, hotel, combinations):
                 else:
                     new_budget = budget - (services_[i][1].cost/5)
                 result = combination(services_, combination_, new_budget, i + 1, hotel, combinations)
+                if result != None:
+                    return result
+                combination_ = combination_[:k]
+
+def combination_iter(services_, combination_, budget, minor, hotel, best_combination, best_amount):
+    if budget <= 20:
+        total = 0
+        aux = []
+        for i in combination_:
+            if len(i) == 1:
+                total += i[0].price
+                aux.append([i[0]])
+            else:
+                total += i[1].price/5
+                aux.append([i[0], i[1]])
+        if total > best_amount[0]:
+            best_amount[0] = total
+            best_combination.append(aux)
+            
+        best_amount[1] += 1
+
+        if best_amount[1] == 100000:
+            return best_combination[-1]
+        return None
+    else:
+        for i in range(minor, len(services_)):
+            k = len(combination_)
+            if services_[i][0] not in hotel.services or not hotel.services[services_[i][0]] or (len(services_[i]) > 1 and ((services_[i][1] in hotel.services and hotel.services[services_[i][1]]) or services_[i][1] in combination_)):
+                combination_.append(services_[i])
+                if len(services_[i]) == 1:
+                    new_budget = budget - services_[i][0].cost
+                else:
+                    new_budget = budget - (services_[i][1].cost/5)
+                result = combination_iter(services_, combination_, new_budget, i + 1, hotel, best_combination, best_amount)
                 if result != None:
                     return result
                 combination_ = combination_[:k]
