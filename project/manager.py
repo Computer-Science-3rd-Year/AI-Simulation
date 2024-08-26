@@ -121,13 +121,8 @@ def filter(beliefs, desire):
 
 def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test):
         if beliefs['wait'] or beliefs['nothing']: return
-
-        # if intentions[0][1] in hotel.services or intentions[0][1] in hotel.rooms.services:
-        #     print(intentions[0][0], intentions[0][1].name)
-        # else:
-        #     print(intentions[0][0])
         if not intentions: return
-        #print(intentions)
+
         for intention in intentions:
             if intention[0] == 'call_IA_Find':
                 beliefs['working'] = True
@@ -139,6 +134,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                     return
                 for ser_ in serv:
                     if len(ser_) == 1:
+                        hotel.use_services[ser_[0]] = 0
                         hotel.services[ser_[0]] = True
                         hotel.revenues[ser_[0]] = 0
                         hotel.expenses[ser_[0]] = {}
@@ -151,6 +147,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                         hotel.services[ser_[1]] = True
                         if not ser_[1] in hotel.expenses:
                             hotel.services[ser_[1]] = True
+                            hotel.use_services[ser_[1]] = 0
                             hotel.expenses[ser_[1]] = {}
                             hotel.revenues[ser_[1]] = 0
                             for utl in ser_[1].utilities:
@@ -173,7 +170,6 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 beliefs['working'] = False
                         
             elif intention[0] == 'raise_price':
-                #print('??????????@@@@@@@')
                 beliefs['working'] = True
                 old_price = intention[1].price
                 intention[1].price += intention[1].price/10
@@ -245,19 +241,15 @@ def repairman(env, service, hotel, outputs):
     with service.resource.request() as rq:
                 service.using = True
                 yield rq
-                #print(f'{env.now:6.1f} s: Housemaid is cleaning the {service.utilities.name} of the {service.name}...')-----------------------------
-                #print(utility.capacity, utility.level)
                 amount = prm.MAXIMUM_MAINTENANCE - service.maintenance
-                if amount == 0: return # PARCHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if amount == 0: return 
                 outputs.append((env.now, f'{env.now:6.1f} s: repairman is reapiring the {service.name}...'))
                 
                 outputs.append((env.now, f'{env.now:6.1f} s: Level before repair the {service.name}: {service.maintenance}'))
-                #print(f'{env.now:6.1f} s: Level before clean the {service.name}: {utility.level}')---------------------------------------
-                
                 service.maintenance += amount
-                #outputs.append((env.now,(service[0].name, utility.level)))              
+                              
                 yield env.timeout(prm.REPAIRMAN_TIME)
-                #outputs.append((env.now, (service.name, utility.level, 'bbbbbbbbbbbbbbbbbbb')))
+               
                 hotel.services[service] = True
                 service.using = False
                 outputs.append((env.now, f'{env.now:6.1f} s: repairman finished and the service is ready'))
@@ -308,7 +300,6 @@ def calculate_service(hotel, operator):
     return service_return
 
 def check(service, hotel):
-    #print(service)
     necesity_ = service.necesity
     count = 0
     for serv in hotel.services:

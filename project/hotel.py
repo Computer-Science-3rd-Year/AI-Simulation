@@ -9,6 +9,7 @@ class Hotel:
     def __init__(self, services, env, budget = 100, competition = 'media'):
         self.env = env
         self.services = {} # {'service_1': availability, 'service_2': availability,..., 'service_n': availability} *service_i existió en el hotel al menos 1 vez
+        self.use_services = {}
         self.init_services(services)
         self.rooms = None
         self.init_rooms()
@@ -16,6 +17,7 @@ class Hotel:
         self.init_revenues()
         self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
+        #### Esta propiedad no se esta usando
         self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
         self.peak_season = True
         self.peak_season_time = 0
@@ -25,10 +27,14 @@ class Hotel:
         self.survey = 0
         self.complaints = 0
         self.new_services = 0
+        self.reserved = []
+        self.reserved_bool = []
+        self.reserved_time = {}
     
     def init_services(self, services):
         for service in services:
             self.services[service] = True
+            self.use_services[service] = 0
     
     def init_rooms(self):
         self.rooms = Services_set(self.env, 50, 'room', 'energy', ['bed'])#, Utility('bed', simpy.Container(self.env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE)))
@@ -68,13 +74,11 @@ class Hotel:
     
     def disable_service(self, old_service):
         if not old_service in self.services:
-            #print(f'The {old_service.name} service does not exist in the hotel')
             return
         self.services[old_service] = False 
 
     def expenses_of_service(self, service):
         if not service in self.services and not service in self.rooms.services:
-            #print(f'The service {service.name} does not exist in hotel')
             return
         expense = 0
         for utility in service.utilities:

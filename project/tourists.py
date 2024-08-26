@@ -217,20 +217,25 @@ def reserve_room(env, hotel, name, beliefs, desires, reserved, len_of_stay):
 
 def use_service(env, hotel, name, beliefs, desires, intention, service, outputs, experience, service_name, cant_required, necesity_level, max_level):
     beliefs['using_service'] = True
-    #outputs.append((env.now, f'{name}--> {service.name} jjjjjjjjjjjjjjjj'))
     with service.resource.request() as request_service:
         yield request_service
         if service.utilities[0].container.level >= cant_required/10:                                
+            if service not in hotel.use_services:
+                hotel.use_services[service] = 0    
+            
+            hotel.use_services[service] += 1
             outputs.append((env.now, f'El turista {name} accedió al servicio {service_name}, {beliefs[necesity_level][0]}'))
+            
             if not max_level:
                 beliefs[necesity_level][0] += cant_required
+            
             desires['want_' + intention[1]] = False
-            #outputs.append((env.now,beliefs[necesity_level][0]))
-            #print('aaaa')
             experience.append(message_for_mainten(service, service_name))
             experience.append(f'The {service_name} of the hotel was good. ')
             service.maintenance -= random.randint(1, 2)
+           
             yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
+            
             beliefs['using_service'] = False
             if not max_level:
                 if intention[0] != 'rest_room':

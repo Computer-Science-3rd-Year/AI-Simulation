@@ -20,7 +20,6 @@ def create_services(env):
     gym = hotel.Service(simpy.Resource(env, capacity = 11), 'gym', prm.fun, [hotel.Utility('gym', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.GYM_PRICE)
     show_time = hotel.Service(simpy.Resource(env, capacity = 11), 'show_time', prm.fun, [hotel.Utility('show_time', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.SHOW_TIME_PRICE)
 
-    #pool = hotel.Service(simpy.Resource(env, capacity=11), 'pool', prm.fun, [hotel.Utility('pool_utl', simpy.Container(env, prm.POOL_CLEANING_SIZE, init=prm.POOL_CLEANING_SIZE))], prm.POOL_PRICE)
     ironing_service = hotel.Service(simpy.Resource(env, capacity= 7), 'ironing_service', prm.comfort,[hotel.Utility('ironing_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], prm.IRONING_SERVICE_PRICE, 40)
     laundry_service = hotel.Service(simpy.Resource(env, capacity= 10), 'laundry_service', prm.comfort,[hotel.Utility('laundry_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 50)
     wi_fi = hotel.Service(simpy.Resource(env, capacity= 10), 'wi_fi', prm.fun,[hotel.Utility('wi_fi_utl', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 71)
@@ -31,7 +30,7 @@ def create_services(env):
     buffet_breakfast = hotel.Utility('buffet_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
     carte_breakfast = hotel.Utility('carte_breakfast', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
     carte_dinner = hotel.Utility('carte_dinner', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
-    #########################################################################
+    
     tasting_menu = hotel.Utility('tasting_menu', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))
     local_cuisine_restaurant = hotel.Service(simpy.Resource(env, capacity= 10), 'local_cuisine_restaurant', prm.food,[hotel.Utility('local_cuisine_restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 80)
     International_cuisine_restaurant = hotel.Service(simpy.Resource(env, capacity= 10), 'International_cuisine_restaurant', prm.food,[hotel.Utility('International_cuisine_restaurant', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init= prm.ROOM_CLEANING_SIZE))], random.randint(20, 100), 90)
@@ -106,5 +105,3 @@ def basic_services(env):
     show_time = hotel.Service(simpy.Resource(env, capacity = 11), 'show_time', prm.fun, [hotel.Utility('show_time', simpy.Container(env, prm.ROOM_CLEANING_SIZE, init=prm.ROOM_CLEANING_SIZE))], prm.SHOW_TIME_PRICE)
     return [rest_room, pool, coffee, energy_drink, buffet, snack_bar, room_service, restaurant, ranchon, pool_table, table_tennis, 
             tennis, gym, show_time]
-#Corrwgir utilidades
-#[continental_breakfast, restaurant], [buffet_breakfast,restaurant], [carte_breakfast, restaurant], [carte_dinner, restaurant], [tasting_menu, restaurant]

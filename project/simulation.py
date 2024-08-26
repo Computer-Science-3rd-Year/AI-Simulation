@@ -14,13 +14,11 @@ import llm
 
 
 outputs = []
-reserved = [] # [(tourist_name, tourist_beliefs, len_of_stay), ...]
-reserved_bool = [] # [tourist_1, tourist_2, ...] turistas que se han hospedado en el hotel
-reserved_time = {} # {'tourist_1': check-out time, 'tourist_2': check-out time,...}
 #Red Social
 EXPERIENCES = {} # {'tourist_name': experience}
 REVIEWS = {} # {'tourist_name': review}
 CLASSIFICATION = {} # {'tourist_name': calssifications of review}
+
 ###############################################################################
 #-------------------------T   O   U   R   I   S   T----------------------------
 ###############################################################################
@@ -33,11 +31,9 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
         prm.comfort: []
     }
     experience = []
-    global reserved 
-    #outputs.append((env.now, beliefs))
-    
+   
     while env.now < arrive_time + len_of_stay:
-        t.communicate(env, reserved, reserved_time, beliefs)            
+        t.communicate(env, hotel.reserved, hotel.reserved_time, beliefs)            
         t.brf(hotel, perception, beliefs)
         t.generate_option(beliefs, desires, env)
         intentions = t.filter(beliefs, desires, perception)
@@ -47,21 +43,19 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
             continue       
         while beliefs['using_service']:
             yield env.timeout(1)
-        env.process(t.execute_action_(intentions, hotel, experience, name, reserved, outputs, len_of_stay, env, beliefs, desires))
+        env.process(t.execute_action_(intentions, hotel, experience, name, hotel.reserved, outputs, len_of_stay, env, beliefs, desires))
         if beliefs['my_room'] == 1:
             return
         yield env.timeout(random.randint(1, 3))  # Tiempo de espera
         
-        #print(f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}')
     outputs.append((env.now, f'{name} left the hotel at {env.now}\narrive: {arrive_time}\nlen of stay: {len_of_stay}'))
     experience_ = ""
+
     for sentence in experience:
         experience_+=sentence
     EXPERIENCES[f'{name}'] = experience_
-    #print(f'{name}: {experience_}')
     beliefs['my_room'] = None
-    #outputs.append((env.now, 'aaaaaaaaaaaaaaaaa!!!!!!!!!!'))
-
+    
 ###############################################################################
 #------------------------- W   O   R   K   E   R   S --------------------------
 ###############################################################################
@@ -92,25 +86,25 @@ def receptionist(env, hotel):
     while time < prm.SIM_TIME:
 
         reserved_ = []
-        for item in reserved:
-            if item[0] in reserved_bool:
+        for item in hotel.reserved:
+            if item[0] in hotel.reserved_bool:
                 continue
             reserved_.append(item)
             
         ordenated_tourist = sorted(reserved_, key= lambda tupla: len(tupla[1]['restrictions']))
-        dict = recp.rooms_distributions(ordenated_tourist, 0, {}, time, hotel, reserved_time)
+        dict = recp.rooms_distributions(ordenated_tourist, 0, {}, time, hotel, hotel.reserved_time)
        
-        recp.bad_room(dict, hotel, time, ordenated_tourist, reserved_time)
+        recp.bad_room(dict, hotel, time, ordenated_tourist, hotel.reserved_time)
         for item in ordenated_tourist:
-            ##print('room', dict[item[0]])
             item[1]['my_room'] = dict[item[0]]
             if dict[item[0]] != None:
                 hotel.revenues[dict[item[0]]] += dict[item[0]].price
                 hotel.budget += dict[item[0]].price
                 outputs.append((env.now,f'El turista {item[0]} accedió a la habitación {dict[item[0]].name}.')) 
                 outputs.append((env.now,f'LEVEL OF CLEAN OF {dict[item[0]].name}: {dict[item[0]].utilities[0].container.level}'))
-                reserved_time[dict[item[0]]] = env.now + item[2]
-                reserved_bool.append(item[0])
+                hotel.reserved_time[dict[item[0]]] = env.now + item[2]
+                hotel.reserved_bool.append(item[0])
+        
         yield env.timeout(70)
         time = env.now
 
@@ -163,11 +157,9 @@ def manager(env, rooms, hotel, services_, test):
         if not intentions:
             if beliefs['nothing']: beliefs['nothing'] = False
             if not beliefs['wait']:
-                #print('NULL INTENTIOONNNNSSSS############')
                 yield env.timeout(40)
                 continue
 
-            #print(intentions)
         env.process(mg.execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test))
         time = env.now
         yield env.timeout(40)
@@ -194,6 +186,7 @@ env.process(receptionist(env, melia_hotel))
 
 # Execute!
 env.run(until=prm.SIM_TIME)
+
 # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #print(EXPERIENCES)
 #for tourist in EXPERIENCES:
@@ -202,61 +195,8 @@ env.run(until=prm.SIM_TIME)
 #    outputs.append(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n')
 #    print(f'{tourist}:\n{review}\nCLASSIFICATION --> {classif}\n') 
 #    #print(f'{tourist}: {experience}\n')
+
 os.remove("output.txt")
 with open("output.txt", "a") as f:
     for timestamp, message in sorted(outputs, key = lambda outputs_: outputs_[0]):
             f.write(f"{timestamp}: {message}" + '\n')
-##################################################################################
-def best_strategy(test):
-    result = []
-    global reserved
-    global reserved_bool
-    global reserved_time
-    global EXPERIENCES
-    global REVIEWS
-    global CLASSIFICATION
-    for i in range(100):
-
-        prm.HOUSEMAID_TIME = 15
-        prm.REPAIRMAN_TIME = 40
-        reserved = [] # [(tourist_name, tourist_beliefs, len_of_stay), ...]
-        reserved_bool = [] # [tourist_1, tourist_2, ...] turistas que se han hospedado en el hotel
-        reserved_time = {} # {'tourist_1': check-out time, 'tourist_2': check-out time,...}
-        #Red Social
-        EXPERIENCES = {} # {'tourist_name': experience}
-        REVIEWS = {} # {'tourist_name': review}
-        CLASSIFICATION = {} 
-        env = simpy.Environment()
-        services = basic_services(env)
-        melia_hotel = hotel.Hotel(services, env)
-        services_ = create_services(env)
-        env.process(manager(env, melia_hotel.rooms.services, melia_hotel, services_, test))
-        env.process(tourist_generator(env, melia_hotel))
-        env.process(receptionist(env, melia_hotel))
-
-        env.run(until=prm.SIM_TIME)
-        result.append(melia_hotel.budget)
-
-    return result
-
-estrategy_for_limit = best_strategy(True)
-estrategy_for_iter = best_strategy(False)
-
-# Prueba de Mann-Whitney U
-u_statistic, p_value = stats.mannwhitneyu(estrategy_for_limit, estrategy_for_iter)
-
-print("\nPrueba de Mann-Whitney U:")
-print("Estadístico U:", u_statistic)  # Mide la diferencia en los rangos de los datos
-print("Valor p:", p_value)  # Probabilidad de obtener los resultados observados si no hay diferencia real
-
-# Interpretación de los resultados:
-alpha = 0.05  # Nivel de significancia
-
-if p_value < alpha:
-    print("\nExiste una diferencia significativa en la ganancia entre las estrategias.")
-    print("Se rechaza la hipótesis nula de que no hay diferencia.")
-    print("Podemos concluir que la estrategia que produjo los datos con mayor media es mejor.")
-else:
-    print("\nNo se encontró una diferencia significativa en la ganancia entre las estrategias.")
-    print("Se acepta la hipótesis nula de que no hay diferencia.")
-    print("No podemos concluir que una estrategia sea mejor que la otra.")
