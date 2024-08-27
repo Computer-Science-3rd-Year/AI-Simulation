@@ -114,7 +114,7 @@ def receptionist(env, hotel):
 #------------------------- M   A   N   A   G   E   R --------------------------
 ###############################################################################
 
-def manager(env, rooms, hotel, services_, test):
+def manager(env, rooms, hotel, services_, test, active = True):
 
     beliefs = mg.beliefs(hotel)
     desires = mg.desires()
@@ -162,7 +162,7 @@ def manager(env, rooms, hotel, services_, test):
                 yield env.timeout(40)
                 continue
 
-        env.process(mg.execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test))
+        env.process(mg.execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test, active))
         time = env.now
         yield env.timeout(40)
 
@@ -193,13 +193,13 @@ def run_simulation():
 
     # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #print(melia_hotel.experiences)
-    for tourist in melia_hotel.experiences:
-       review = llm.generate_review(melia_hotel.experiences[tourist])
-       melia_hotel.reviews[tourist] = review
-       classif = llm.classify_review(review).lower()
-       melia_hotel.classifications[tourist] = classif
-       outputs.append((sys.maxsize, f'{tourist}:\nREVIEW --> {review}\nCLASSIFICATION --> {classif}\n'))
-       print(tourist, classif, melia_hotel.tourist_register[tourist]['satisfaction'])
+    #for tourist in melia_hotel.experiences:
+    #   review = llm.generate_review(melia_hotel.experiences[tourist])
+    #   melia_hotel.reviews[tourist] = review
+    #   classif = llm.classify_review(review).lower()
+    #   melia_hotel.classifications[tourist] = classif
+    #   outputs.append((sys.maxsize, f'{tourist}:\nREVIEW --> {review}\nCLASSIFICATION --> {classif}\n'))
+    #   print(tourist, classif, melia_hotel.tourist_register[tourist]['satisfaction'])
 
     os.remove("output.txt")
     with open("output.txt", "a") as f:
@@ -207,3 +207,5 @@ def run_simulation():
                 f.write(f"{timestamp}: {message}" + '\n')
     
     return melia_hotel
+
+run_simulation()

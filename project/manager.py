@@ -1,6 +1,7 @@
 import random
 import params as prm
 import generic_worker as gw
+from utils import *
 
 # Creencias del hotel
 def beliefs(hotel):
@@ -118,13 +119,14 @@ def filter(beliefs, desire):
     if desire['close_service_and_maintenance'][0]:
         intentions.append(('close_service_and_maintenance', desire['close_service_and_maintenance'][1], 'close_service_and_maintenance'))
         return intentions
+    return None
 
-def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test):
+def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires, test, active):
         if beliefs['wait'] or beliefs['nothing']: return
         if not intentions: return
 
         for intention in intentions:
-            if intention[0] == 'call_IA_Find':
+            if intention[0] == 'call_IA_Find' and active:
                 beliefs['working'] = True
                 # Call the function of search
                 outputs.append((env.now, f'Manager call the Find AI function'))
@@ -143,7 +145,6 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                         worker = env.process(generic_worker(env, ser_[0].name+'_worker', ser_[0], hotel, outputs))
                         ser_[0].worker = [worker, random.randint(*prm.SALARIES)]
                     else:
-                        #print('len > 1')
                         hotel.services[ser_[1]] = True
                         if not ser_[1] in hotel.expenses:
                             hotel.services[ser_[1]] = True
@@ -160,7 +161,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 yield env.timeout(10)
                 beliefs['working'] = False
             
-            elif intention[0] == 'call_function_Survey':
+            elif intention[0] == 'call_function_Survey' and active:
                 beliefs['working'] = True
                 # Call the function of survey
                 beliefs['hotel'].survey = env.now
@@ -169,7 +170,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 yield env.timeout(10)
                 beliefs['working'] = False
                         
-            elif intention[0] == 'raise_price':
+            elif intention[0] == 'raise_price' and active:
                 beliefs['working'] = True
                 old_price = intention[1].price
                 intention[1].price += intention[1].price/10
@@ -178,7 +179,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 yield env.timeout(10)
                 beliefs['working'] = False
 
-            elif intention[0] == 'lower_price':
+            elif intention[0] == 'lower_price' and active:
                 beliefs['working'] = True
                 old_price = intention[1].price
                 intention[1].price -= intention[1].price/10
@@ -187,7 +188,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 yield env.timeout(10)
                 beliefs['working'] = False
 
-            elif intention[0] == 'close_service':
+            elif intention[0] == 'close_service' and active:
                 beliefs['working'] = True
                 hotel.services[intention[1]] = False
                 outputs.append((env.now, f'Manager disable the {intention[1].name} service for strategy.'))
@@ -195,7 +196,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 yield env.timeout(10)
                 beliefs['working'] = False
 
-            elif intention[0] == 'raise_salary':
+            elif intention[0] == 'raise_salary' and active:
                 beliefs['working'] = True
                 Lower_raise_salary(hotel, True)
                 outputs.append((env.now, f'Manager raise the salaries.'))
@@ -203,7 +204,7 @@ def execute_action(env, intentions, hotel, services_, outputs, beliefs, desires,
                 yield env.timeout(10)
                 beliefs['working'] = False
 
-            elif intention[0] == 'lower_salary':
+            elif intention[0] == 'lower_salary' and active:
                 beliefs['working'] = True
                 Lower_raise_salary(hotel, False)
                 outputs.append((env.now, f'Manager low the salaries.'))
@@ -256,121 +257,3 @@ def repairman(env, service, hotel, outputs):
                 outputs.append((env.now, f'Level after repair {service.name}: {service.maintenance}'))
                 hotel.budget -= random.randint(*prm.REPAIR)  
 
-def Lower_raise_salary(hotel, operator):
-    for room in hotel.rooms.services:
-        if operator:
-            room.worker[1] += room.worker[1]/10
-        else:
-            room.worker[1] -= room.worker[1]/10
-    for service in hotel.services:
-        if operator:
-            service.worker[1] += service.worker[1]/10
-        else:
-            service.worker[1] += service.worker[1]/10
-    if operator:
-        prm.HOUSEMAID_TIME -= 1
-        prm.HOUSEMAID_TIME = max(3, prm.HOUSEMAID_TIME)
-    else:
-        prm.HOUSEMAID_TIME += 1
-
-def occupate_rooms(hotel):
-    count = 0
-    for room in hotel.rooms.services:
-        if room.resource.count == 0:
-            continue
-        count += 1
-    return count/len(hotel.rooms.services)
-
-def calculate_service(hotel, operator):
-    if operator:
-        max_revenue = 0
-    else:
-        max_revenue = 1000000000000
-    service_return = None
-    for service in hotel.revenues:
-        if not service in hotel.rooms.services and hotel.services[service]:
-            value = hotel.revenues[service]
-            cost = hotel.expenses_of_service(service)
-            if value - cost >= max_revenue and operator:
-                max_revenue = value - cost
-                service_return = service
-            if value - cost <= max_revenue and not operator:
-                max_revenue = value - cost
-                service_return = service
-    return service_return
-
-def check(service, hotel):
-    necesity_ = service.necesity
-    count = 0
-    for serv in hotel.services:
-        if serv.necesity == necesity_ and hotel.services[service]:
-            count += 1    
-    return count > 1
-
-def AI_function_services(hotel, services_, test):
-    combinations = []
-    if test:
-        a = combination(services_, [], 200, 0, hotel, combinations)
-    else:
-        a = combination_iter(services_, [], 200, 0, hotel, [], [0,0])
-    return a
-
-def combination(services_, combination_, budget, minor, hotel, combinations):
-    if budget <= 20:
-        total = 0
-        for i in combination_:
-            if len(i) == 1:
-                total += i[0].price
-            else:
-                total += i[1].price/5
-        if total > 250:
-            return combination_
-        else:
-            return None
-    else:
-        for i in range(minor, len(services_)):
-            k = len(combination_)
-            if services_[i][0] not in hotel.services or not hotel.services[services_[i][0]] or (len(services_[i]) > 1 and ((services_[i][1] in hotel.services and hotel.services[services_[i][1]]) or services_[i][1] in combination_)):
-                combination_.append(services_[i])
-                if len(services_[i]) == 1:
-                    new_budget = budget - services_[i][0].cost
-                else:
-                    new_budget = budget - (services_[i][1].cost/5)
-                result = combination(services_, combination_, new_budget, i + 1, hotel, combinations)
-                if result != None:
-                    return result
-                combination_ = combination_[:k]
-
-def combination_iter(services_, combination_, budget, minor, hotel, best_combination, best_amount):
-    if budget <= 20:
-        total = 0
-        aux = []
-        for i in combination_:
-            if len(i) == 1:
-                total += i[0].price
-                aux.append([i[0]])
-            else:
-                total += i[1].price/5
-                aux.append([i[0], i[1]])
-        if total > best_amount[0]:
-            best_amount[0] = total
-            best_combination.append(aux)
-            
-        best_amount[1] += 1
-
-        if best_amount[1] == 100000:
-            return best_combination[-1]
-        return None
-    else:
-        for i in range(minor, len(services_)):
-            k = len(combination_)
-            if services_[i][0] not in hotel.services or not hotel.services[services_[i][0]] or (len(services_[i]) > 1 and ((services_[i][1] in hotel.services and hotel.services[services_[i][1]]) or services_[i][1] in combination_)):
-                combination_.append(services_[i])
-                if len(services_[i]) == 1:
-                    new_budget = budget - services_[i][0].cost
-                else:
-                    new_budget = budget - (services_[i][1].cost/5)
-                result = combination_iter(services_, combination_, new_budget, i + 1, hotel, best_combination, best_amount)
-                if result != None:
-                    return result
-                combination_ = combination_[:k]
