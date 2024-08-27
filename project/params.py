@@ -2,7 +2,7 @@ import enums as enu
 
 """ SIMULATION """
 T_INTER = [5, 20]            # intervalo entre la llegada de los turistas     
-SIM_TIME = 1000            # tiempo total de la simulación     
+SIM_TIME = 500            # tiempo total de la simulación     
 
 """ NECESITY """
 energy = enu.Necesity.energy.name

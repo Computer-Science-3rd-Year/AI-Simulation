@@ -17,8 +17,7 @@ class Hotel:
         self.init_revenues()
         self.expenses = {} # {'service_1': {'utility_1': expense, 'utility_2: expense',...},  'service_2': {'utility_1': expense, 'utility_2: expense',...}, ...} => 1 dict for each service
         self.init_expenses()
-        #### Esta propiedad no se esta usando
-        self.tourist_register = {} # {'tourist_name': (state_when_arrive, state_when_go), ...}
+        self.tourist_register = {} # {'tourist_name': state_when_go, ...}  state == beliefs_del tourist
         self.peak_season = True
         self.peak_season_time = 0
         self.budget = budget
@@ -30,6 +29,9 @@ class Hotel:
         self.reserved = []
         self.reserved_bool = []
         self.reserved_time = {}
+        self.experiences = {} # {'tourist_name': experience}
+        self.reviews = {} # {'tourist_name': review}
+        self.classifications = {} # {'tourist_name': calssifications of review}
     
     def init_services(self, services):
         for service in services:
@@ -85,6 +87,12 @@ class Hotel:
             expense += self.expenses[service][utility]
         
         return expense
+    
+    def get_average_level(self):
+        total_level = 0
+        for service in self.services:
+            total_level += service.maintenance  #  Suponiendo que "level" es el atributo de la clase service
+        return total_level / len(self.services)
 
     
 

@@ -1,40 +1,44 @@
-# pip install --upgrade openai
-from openai import OpenAI
+import enums as enu
 
-def generate_review(user_content):
-    client = OpenAI(
-           api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiY2U4MGY4NzgtMzJlMy00OTgzLWJmYTMtOWQxZjVmNDg4YTViIiwiZXhwIjoyNTM0MDIzMDA3OTl9.0xN8acFvMbKKs9IiTMziS7PwWCRX09WMJzn7ch0kgko",
-           base_url="https://apigateway.avangenio.net",
-         )
+print(enu.Satisfaction_classif['very_good'])
 
-    completion = client.chat.completions.create(
-           messages=[
-             { "role": "system", "content": "You are a Tourist writing a review about the Hotel Banana" },
-             { "role": "user", "content": f'{user_content}' }
-           ],
-           model="spark",
-         )
+# # pip install --upgrade openai
+# from openai import OpenAI
+
+# def generate_review(user_content):
+#     client = OpenAI(
+#            api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiY2U4MGY4NzgtMzJlMy00OTgzLWJmYTMtOWQxZjVmNDg4YTViIiwiZXhwIjoyNTM0MDIzMDA3OTl9.0xN8acFvMbKKs9IiTMziS7PwWCRX09WMJzn7ch0kgko",
+#            base_url="https://apigateway.avangenio.net",
+#          )
+
+#     completion = client.chat.completions.create(
+#            messages=[
+#              { "role": "system", "content": "You are a Tourist writing a review about the Hotel Banana" },
+#              { "role": "user", "content": f'{user_content}' }
+#            ],
+#            model="spark",
+#          )
      
-    return completion.choices[0].message.content
+#     return completion.choices[0].message.content
 
 
-#print(generate_review(user_content))
+# #print(generate_review(user_content))
 
-def classif_review(user_content):
-    client = OpenAI(
-           api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiY2U4MGY4NzgtMzJlMy00OTgzLWJmYTMtOWQxZjVmNDg4YTViIiwiZXhwIjoyNTM0MDIzMDA3OTl9.0xN8acFvMbKKs9IiTMziS7PwWCRX09WMJzn7ch0kgko",
-           base_url="https://apigateway.avangenio.net",
-         )
+# def classif_review(user_content):
+#     client = OpenAI(
+#            api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiY2U4MGY4NzgtMzJlMy00OTgzLWJmYTMtOWQxZjVmNDg4YTViIiwiZXhwIjoyNTM0MDIzMDA3OTl9.0xN8acFvMbKKs9IiTMziS7PwWCRX09WMJzn7ch0kgko",
+#            base_url="https://apigateway.avangenio.net",
+#          )
 
-    completion = client.chat.completions.create(
-           messages=[
-             { "role": "system", "content": "You can classify a tourist's experience into 'very good', 'good', 'fair', 'bad' or 'very bad' (without giving explanations, only the classification) based on their review" },
-             { "role": "user", "content": f'{user_content}' }
-           ],
-           model="spark",
-         )
+#     completion = client.chat.completions.create(
+#            messages=[
+#              { "role": "system", "content": "You can classify a tourist's experience into 'very good', 'good', 'fair', 'bad' or 'very bad' (without giving explanations, only the classification) based on their review" },
+#              { "role": "user", "content": f'{user_content}' }
+#            ],
+#            model="spark",
+#          )
      
-    return completion.choices[0].message.content
+#     return completion.choices[0].message.content
 
 # user_content_ = """ I recently had the pleasure of staying at the Hotel Riviera, and while my overall experience was quite enjoyable, there was one aspect that left me feeling a bit disappointed. I was excited to try their special energy drink, which they claim is a unique blend of local ingredients and flavors. Unfortunately, the energy drink was nohe energy drink was not to my liking. The taste was unpleasantly sweet and the aftertaste lingered for too long.
 

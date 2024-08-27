@@ -8,7 +8,7 @@ def generate_review(user_content):
 
     completion = client.chat.completions.create(
            messages=[
-             { "role": "system", "content": "You are a Tourist writing a review about the Hotel Banana" },
+             { "role": "system", "content": "You are a Tourist writing a review about the Melia Hotel" },
              { "role": "user", "content": f'{user_content}' }
            ],
            model="spark",
@@ -28,7 +28,7 @@ def classify_review(user_content):
 
     completion = client.chat.completions.create(
            messages=[
-             { "role": "system", "content": "You can classify a tourist's experience into 'very good', 'good', 'fair', 'bad' or 'very bad' (without giving explanations, only the classification) based on their review" },
+             { "role": "system", "content": "You can classify a tourist's experience into 'excellent', 'very good', 'good', 'bad' or 'very bad' (without giving explanations, without add another character like "" or ** or '', without sentence, ONLY ONE THE CLASSIFICATION) based on their review" },
              { "role": "user", "content": f'{user_content}' }
            ],
            model="spark",

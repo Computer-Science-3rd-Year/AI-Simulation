@@ -80,3 +80,9 @@ class Services_name(Enum):
     boat_rides = 70
     kayak_rental = 71
 
+class Satisfaction_classif(Enum):
+    very_bad = 0
+    bad = 1
+    good = 2
+    very_good = 3 
+    excellent = 4
