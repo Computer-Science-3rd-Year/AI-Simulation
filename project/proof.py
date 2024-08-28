@@ -1,6 +1,6 @@
-import enums as enu
+import random
 
-print(enu.Satisfaction_classif['very_good'])
+arr = ['m', 'a', 's']
 
 # # pip install --upgrade openai
 # from openai import OpenAI

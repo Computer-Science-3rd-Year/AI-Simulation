@@ -25,10 +25,15 @@ table_tennis = enu.Services_name.table_tennis.name
 tennis = enu.Services_name.tennis.name
 gym = enu.Services_name.gym.name
 show_time = enu.Services_name.show_time.name
+ironing_service = enu.Services_name.ironing_service.name
+laundry_service = enu.Services_name.laundry_service.name
+steam_room = enu.Services_name.steam_room.name
+hair_salon = enu.Services_name.hair_salon.name
 
 """ SERVICES """
 MAXIMUM_MAINTENANCE = 100
 THRESHOLD_MAINTENANCE = 70
+
 
 
 """ ROOM """
@@ -45,12 +50,14 @@ TOURIST_ENERGY_LEVEL = [20, 50]  # nivel inicial de energía de los turistas (me
 TOURIST_FOOD_LEVEL = [20, 50]   # nivel inicial de hambre de los turistas (menor_nivel => más_hambre)    
 TOURIST_FUN_LEVEL = [20, 50]      # nivel inicial de diversión de los turistas                             
 TOURIST_COMFORT_LEVEL = [20, 50] # nivel inicial de confort de los turistas (menor_energía => más_sueño)
+REDUCE_NECESITY_LEVEL = [2, 10] # cantidad de reducción de necesidad (cada vez que se actualizan los beliefs se disminuye el nivel de necesidad)
 THRESHOLD_ENERGY = 50
 THRESHOLD_FOOD = 60
 THRESHOLD_FUN = 40
+THRESHOLD_COMFORT = 40
 ATTRIBUTES = ['pool', 'TV', 'safe', 'jacuzzi', 'bar', 'stunning_view', 'balcony']
 
-LEN_OF_STAY = [170, 300]  #   
+LEN_OF_STAY = [170, 300]     
 SPEED_OF_USING_SERVICE = [15, 30]      # tiempo que demora usar un servicio determinado
 
 """ WORKER """

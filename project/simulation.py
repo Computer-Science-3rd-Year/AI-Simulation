@@ -55,8 +55,9 @@ def tourist_(env, hotel, name, beliefs, desires, len_of_stay, arrive_time):
     if not name in hotel.experiences:
         hotel.experiences[f'{name}'] = experience_
     beliefs['my_room'] = None
-    t.claculate_satisfaction(beliefs)
+    #t.claculate_satisfaction(beliefs)
     hotel.tourist_register[name] = beliefs
+    #print(beliefs['satisfaction'])
     
 ###############################################################################
 #------------------------- W   O   R   K   E   R   S --------------------------
@@ -191,9 +192,9 @@ def run_simulation():
     # Execute!
     env.run(until=prm.SIM_TIME)
 
-    # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #print(melia_hotel.experiences)
-    #for tourist in melia_hotel.experiences:
+    # # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # #print(melia_hotel.experiences)
+    # for tourist in melia_hotel.experiences:
     #   review = llm.generate_review(melia_hotel.experiences[tourist])
     #   melia_hotel.reviews[tourist] = review
     #   classif = llm.classify_review(review).lower()

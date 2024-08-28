@@ -1,23 +1,23 @@
 import random
 import params as prm
 import enums as enu
-import copy
 
 services = {prm.energy: {prm.coffee, prm.rest_room, prm.energy_drink},
-            #prm.energy: {prm.rest_room},
             prm.food: {prm.buffet, prm.snack_bar, prm.room_service, prm.restaurant, prm.ranchon},
-            prm.fun: {prm.pool, prm.pool_table, prm.table_tennis, prm.tennis, prm.gym, prm.show_time}
+            prm.fun: {prm.pool, prm.pool_table, prm.table_tennis, prm.tennis, prm.gym, prm.show_time},
+            prm.comfort: {prm.ironing_service, prm.laundry_service}, #, prm.hair_salon, prm.steam_room}
             }
 
 
 # servicios que un turista en particular necesita para satisfacer sus necesidades
 def beliefs(hotel):
-    Update_services(hotel)
+    update_services(hotel)
+    print(services)
     return {
-            'energy_level': [random.randint(*prm.TOURIST_ENERGY_LEVEL), random.sample(list(services[prm.energy]), random.randint(1, len(services[prm.energy])))],
-            'food_level':   [random.randint(*prm.TOURIST_FOOD_LEVEL), random.sample(list(services[prm.food]), random.randint(1, len(services[prm.food])))],
-            'fun_level':    [random.randint(*prm.TOURIST_FUN_LEVEL), random.sample(list(services[prm.fun]), random.randint(1, len(services[prm.fun])))],
-            'comfort_level': [random.randint(*prm.TOURIST_COMFORT_LEVEL), random.sample(list(services[prm.fun]), random.randint(1, len(services[prm.fun])))],
+            'energy_level': init_necesity_level(prm.TOURIST_ENERGY_LEVEL, prm.energy),
+            'food_level':  init_necesity_level(prm.TOURIST_FOOD_LEVEL, prm.food),
+            'fun_level': init_necesity_level(prm.TOURIST_FUN_LEVEL, prm.fun),
+            'comfort_level': init_necesity_level(prm.TOURIST_COMFORT_LEVEL, prm.comfort),
             'has_room': False,
             'my_room': None,
             'room_cleanliness': None,
@@ -28,13 +28,13 @@ def beliefs(hotel):
             'budget': random.randint(*prm.TOURIST_BUDGET),
             'complaints': 0,
             #----BELIEFS PARA LA ENCUESTA-----
-            'room_features': None,    # alguno de los niveles que están en survey.py
-            'room_clean_mainten': None,#  ''
-            'general_quality': None, #  ''
-            'used_services': {}, # servicios usados por el turista
-            'amenities_variety': None,
-            'staff_friendliness': None,
-            'quality_price': None
+            # 'room_features': None,    # alguno de los niveles que están en survey.py
+            # 'room_clean_mainten': None,#  ''
+            # 'general_quality': None, #  ''
+            # 'used_services': {}, # servicios usados por el turista
+            # 'amenities_variety': None,
+            # 'staff_friendliness': None,
+            # 'quality_price': None
             }
 
 def desires():
@@ -44,8 +44,8 @@ def desires():
             'want_fun': False,
             'want_comfort': False,
             'want_room': False,
-            'be_honest': True,
-            'do_survey': True,
+            # 'be_honest': True,
+            # 'do_survey': True,
             }
 
 def brf(hotel, perception, beliefs):
@@ -60,10 +60,9 @@ def brf(hotel, perception, beliefs):
            perception[s_necesity].remove(s_name)
     
     # bajar el nivel de las necesidades
+    low_necesity_level(beliefs)
 
-    for necesity in enu.Necesity:
-        actual_level = beliefs[necesity.name + '_level'][0]
-        actual_level = max(0,  actual_level - random.randint(2, 10))
+    claculate_satisfaction(beliefs, hotel.get_average_level())
 
 def generate_option(beliefs, desires):
     if not beliefs['has_room']:
@@ -74,35 +73,46 @@ def generate_option(beliefs, desires):
         desires['want_food'] = True
     elif beliefs['fun_level'][0] < prm.THRESHOLD_FUN:
         desires['want_fun'] = True
+    elif beliefs['comfort_level'][0] < prm.THRESHOLD_COMFORT:
+        desires['want_comfort'] = True
     else:
         desires['want_fun'] = True
 
 def filter(beliefs, desires, perception):
+        none_intentions = False
         if beliefs['using_service']: return None
 
         if desires['want_room']:
-            intentions = [('reserve_room', prm.energy)]            
-        if desires['want_energy']:
-            try:
-                intentions = [(random.choice(list(set(beliefs['energy_level'][1]).intersection(set(perception[prm.energy])))), prm.energy)]
-            except:
-                intentions = [(find_available_service(perception, prm.energy), prm.energy)]
-            if intentions[0][0] == prm.rest_room and  (beliefs['my_room'] == 1 or beliefs['my_room'] == None or beliefs['my_room'].using):
-                intentions = None
-        if desires['want_food']:
-            try:
-                intentions = [(random.choice(list(set(beliefs['food_level'][1]).intersection(set(perception[prm.food])))), prm.food)]        
-            except:
-                intentions = [(find_available_service(perception, prm.food), prm.food)]
-        if desires['want_fun']:
-            try:
-                intentions = [(random.choice(list(set(beliefs['fun_level'][1]).intersection(set(perception[prm.fun])))), prm.fun)]        
-            except:
-                intentions = [(find_available_service(perception, prm.fun), prm.fun)]
+            choiced_serv = 'reserve_room'
+            necesity = prm.energy
+
+        elif desires['want_energy']:
+            necesity = prm.energy
+            choiced_serv = choice_service_to_use(beliefs, perception, 'energy_level', necesity)
+            # if intentions[0][0] == prm.rest_room and  (beliefs['my_room'] == 1 or beliefs['my_room'] == None or beliefs['my_room'].using):
+            #     none_intentions = True
+
+        elif desires['want_food']:
+            necesity = prm.food
+            choiced_serv = choice_service_to_use(beliefs, perception, 'food_level', necesity)
+
+        elif desires['want_comfort']:
+            necesity = prm.comfort
+            choiced_serv = choice_service_to_use(beliefs, perception, 'comfort_level', necesity)
+
+        elif desires['want_fun']:
+            necesity = prm.fun
+            choiced_serv = choice_service_to_use(beliefs, perception, 'fun_level', necesity)
+
+        if none_intentions:
+            intentions = None
+        else:
+            intentions = [(choiced_serv, necesity)]
+
         return intentions
 
 def execute_action_(intentions, hotel, experience, name, outputs, len_of_stay, env, beliefs, desires):
-        if not intentions:
+        if not intentions or not intentions[0]:
             return
         my_room = beliefs['my_room']
         
@@ -144,8 +154,7 @@ def execute_action_(intentions, hotel, experience, name, outputs, len_of_stay, e
 
 def find_available_service(perception, necesity):
     for service in perception[necesity]:
-        return service
-    
+        return service  
 
 def room_clean_mainten_(beliefs):
     clean_level = 0
@@ -154,17 +163,31 @@ def room_clean_mainten_(beliefs):
         
     clean_level = clean_level/ len(beliefs['my_room'].utilities)
 
-def claculate_satisfaction(beliefs): # Tratar de que esto se maneje en brf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    sum = 0
+def claculate_satisfaction(beliefs, service_quality):
+    sum_needs = 0
     necesities_count = 0
     for necesity in enu.Necesity:
         necesities_count += 1
-        sum += beliefs[necesity.name + '_level'][0]
-    result = sum/necesities_count - 2*beliefs['complaints']
+        sum_needs += beliefs[necesity.name + '_level'][0]
     
-    beliefs['satisfaction'] = result
+    # Ponderación de las necesidades
+    needs_score = sum_needs / necesities_count
 
-def Update_services(hotel):
+    # Ponderación de las quejas
+    complaint_score = beliefs['complaints'] * 0.25 #complaint_weight 
+
+    # Ponderación de la calidad del servicio
+    service_score = service_quality * 0.25 #service_weight
+
+    # Cálculo final
+    result = max(0, (needs_score + service_score - complaint_score) / 2)
+
+    beliefs['satisfaction'] = result
+    # result = max(0, sum_needs/necesities_count - 2*beliefs['complaints'])
+    
+    # beliefs['satisfaction'] = result
+
+def update_services(hotel):
     services[prm.energy] = set()
     services[prm.food] = set()
     services[prm.fun] = set()
@@ -236,13 +259,12 @@ def use_service(env, hotel, name, beliefs, desires, intention, service, outputs,
                 beliefs['budget'] -= price ##### PRESUPUESTO DEL TURISTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             outputs.append((env.now, f'El turista {name} accedió al servicio {service_name}, {beliefs[necesity_level][0]}'))
             
-            
             if not max_level:
                 beliefs[necesity_level][0] += cant_required
             
             desires['want_' + intention[1]] = False
             experience.append(message_for_mainten(service, service_name))
-            experience.append(f'The {service_name} of the hotel was good') #{random.choice(['excellent', 'very good', 'good', 'bad', 'very bad' ])}. ')
+            #experience.append(f'The {service_name} of the hotel was good') #{random.choice(['excellent', 'very good', 'good', 'bad', 'very bad' ])}. ')
             service.maintenance -= random.randint(1, 2)
            
             yield hotel.env.timeout(random.randint(*prm.SPEED_OF_USING_SERVICE))
@@ -258,10 +280,33 @@ def use_service(env, hotel, name, beliefs, desires, intention, service, outputs,
             beliefs['complaints'] += 1
             beliefs['using_service'] = False
             outputs.append((env.now, f'Servicio {service_name} con CLEAN LEVEL = {service.utilities[0].container.level}\n y {name} necesita {prm.NECESITY_SIZE - beliefs[necesity_level][0]} de energy'))
-            experience.append(f'The {service_name} of this hotel was not very good. ')
+            #experience.append(f'The {service_name} of this hotel was not very good. ')
             experience.append(message_for_mainten(service, service_name))
 
 
     beliefs['using_service'] = False
 
-        
+def low_necesity_level(beliefs):
+    for necesity in enu.Necesity:
+        necesity_ = necesity.name + '_level'
+        actual_level = beliefs[necesity_][0]
+
+        cant = random.randint(*prm.REDUCE_NECESITY_LEVEL)
+        actual_level = max(0,  actual_level - cant)
+
+def choice_service_to_use(beliefs, perception, blfs_necesity, necesity):
+    try:
+        service = random.choice(list(set(beliefs[blfs_necesity][1]).intersection(set(perception[necesity]))))
+    except:
+        service = find_available_service(perception, necesity)
+    return service
+
+def init_necesity_level(range, necesity):
+    level = random.randint(*range)
+
+    if not services[necesity]:
+        result = [level, services[necesity]]
+    else:
+        servs_list = random.sample(list(services[necesity]), random.randint(1, len(services[necesity])))
+        result = [level, servs_list]
+    return result
