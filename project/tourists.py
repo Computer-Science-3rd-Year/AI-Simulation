@@ -12,7 +12,7 @@ services = {prm.energy: {prm.coffee, prm.rest_room, prm.energy_drink},
 # servicios que un turista en particular necesita para satisfacer sus necesidades
 def beliefs(hotel):
     update_services(hotel)
-    print(services)
+    #print(services)
     return {
             'energy_level': init_necesity_level(prm.TOURIST_ENERGY_LEVEL, prm.energy),
             'food_level':  init_necesity_level(prm.TOURIST_FOOD_LEVEL, prm.food),
@@ -198,7 +198,7 @@ def update_services(hotel):
         elif service.necesity == prm.food:
             services[prm.food].add(service.name)
         elif service.necesity == prm.comfort:
-            pass
+            services[prm.comfort].add(service.name)
         else:
             services[prm.fun].add(service.name)
 
