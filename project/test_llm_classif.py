@@ -3,6 +3,7 @@ from simulation import *
 import matplotlib.pyplot as plt
 from scipy.stats import spearmanr
 import numpy as np
+import pandas as pd
 
 def llm_and_real_classification():
     result = [] #[(real_classif, llm_classif), ...]
@@ -15,10 +16,10 @@ def llm_and_real_classification():
             services_level = melia_hotel.get_average_level()  # Obtener nivel de servicio
             result.append((real_classif, llm_classif, services_level)) # (int, string, float)
 
-    return result 
-# Cambio de prueba, probandiiinnnnnG!!!!!!!!!!!!!!!!!!!!!!!!1
+    return result
+
 def compare_classifications(real, llm, reals, llm_classif):
-    #llm_classif_name = replace_(llm) 
+    #llm_classif_name = replace_(llm)
     llm_classif.append(enu.Satisfaction_classif[llm].value)
 
     if real <= 20:
@@ -84,30 +85,83 @@ sizes = [asserts, len(errors)]
 plt.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90)
 plt.title("Porcentaje de Aserción vs. Error")
 
-# 3. Matriz de Correlación
-plt.subplot(2, 2, 3)  # 2 filas, 2 columnas, posición 3
-correlation, p_value = spearmanr(reals, llm_classif)
-corr_matrix = np.array([[1, correlation], [correlation, 1]])
-plt.imshow(corr_matrix, cmap='Blues')
-plt.colorbar()
-plt.xticks(range(2), ['Clasificación Real', 'Clasificación LLM'])
-plt.yticks(range(2), ['Clasificación Real', 'Clasificación LLM'])
-plt.title("Matriz de Correlación de Spearman")
+data = {
+    'satisfaction_real': reals,
+    'llm_classification': llm_classif
+}
+df = pd.DataFrame(data)
 
-# 4. Gráfica de Dispersión con Líneas de Referencia
-plt.subplot(2, 2, 4)  # 2 filas, 2 columnas, posición 4
-plt.scatter(reals, llm_classif, s=50, c='blue', alpha=0.7)
-plt.title("Aserción de la Clasificación del LLM")
-plt.xlabel("Clasificación Real")
-plt.ylabel("Clasificación del LLM")
-plt.xticks(range(5), ["Very Bad", "Bad", "Good", "Very Good", "Excellent"])
-plt.yticks(range(5), ["Very Bad", "Bad", "Good", "Very Good", "Excellent"])
-plt.grid(True)
-# Líneas de referencia para indicar una clasificación perfecta
-plt.plot([0, 4], [0, 4], color='red', linestyle='--')
+# Realizando el ANOVA
+f_statistic, p_value = stats.f_oneway(df['satisfaction_real'], df['llm_classification'])
 
-plt.tight_layout()
+
+alpha = 0.05
+# Interpretación de los resultados
+if p_value < alpha:
+    interpretacion = (
+        f"El valor p ({p_value:.3f}) es menor que el nivel de significancia ({alpha}). "
+        f"Se rechaza la hipótesis nula. Existe evidencia estadística de que las clasificaciones del LLM "
+        f"y la satisfacción real de los turistas son diferentes."
+    )
+else:
+    interpretacion = (
+        f"El valor p ({p_value:.3f}) es mayor que el nivel de significancia ({alpha}). "
+        f"No se rechaza la hipótesis nula. No hay evidencia estadística suficiente para afirmar que "
+        f"las clasificaciones del LLM y la satisfacción real de los turistas son diferentes."
+    )
+    
+# Imprimir los resultados
+print(f"Valor F: {f_statistic:.2f}")
+print(f"Valor p: {p_value:.3f}")
+print(interpretacion)
+
+# Generar diagrama de cajas
+plt.boxplot([df['satisfaction_real'], df['llm_classification']], labels=['Real', 'LLM'])
+plt.title('Comparación de Clasificaciones')
+plt.ylabel('Clasificación')
 plt.show()
+
+# Generar un histograma
+plt.hist(df['satisfaction_real'], bins=5, alpha=0.5, label='Real')
+plt.hist(df['llm_classification'], bins=5, alpha=0.5, label='LLM')
+plt.title('Frecuencia de Clasificaciones')
+plt.xlabel('Clasificación')
+plt.ylabel('Frecuencia')
+plt.legend()
+plt.show()
+
+# Generar un diagrama de dispersión
+plt.scatter(df['satisfaction_real'], df['llm_classification'])
+plt.title('Relación entre Clasificaciones')
+plt.xlabel('Satisfacción Real')
+plt.ylabel('Clasificación del LLM')
+plt.show()
+
+
+# # 3. Matriz de Correlación
+# plt.subplot(2, 2, 3)  # 2 filas, 2 columnas, posición 3
+# correlation, p_value = spearmanr(reals, llm_classif)
+# corr_matrix = np.array([[1, correlation], [correlation, 1]])
+# plt.imshow(corr_matrix, cmap='Blues')
+# plt.colorbar()
+# plt.xticks(range(2), ['Clasificación Real', 'Clasificación LLM'])
+# plt.yticks(range(2), ['Clasificación Real', 'Clasificación LLM'])
+# plt.title("Matriz de Correlación de Spearman")
+
+# # 4. Gráfica de Dispersión con Líneas de Referencia
+# plt.subplot(2, 2, 4)  # 2 filas, 2 columnas, posición 4
+# plt.scatter(reals, llm_classif, s=50, c='blue', alpha=0.7)
+# plt.title("Aserción de la Clasificación del LLM")
+# plt.xlabel("Clasificación Real")
+# plt.ylabel("Clasificación del LLM")
+# plt.xticks(range(5), ["Very Bad", "Bad", "Good", "Very Good", "Excellent"])
+# plt.yticks(range(5), ["Very Bad", "Bad", "Good", "Very Good", "Excellent"])
+# plt.grid(True)
+# # Líneas de referencia para indicar una clasificación perfecta
+# plt.plot([0, 4], [0, 4], color='red', linestyle='--')
+
+# plt.tight_layout()
+# plt.show()
 
 # # Gráfica de Aserción
 # plt.figure(figsize=(8, 6))
