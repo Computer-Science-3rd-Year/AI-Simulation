@@ -1,0 +1,7 @@
+- añadir el cálculo de la varianza en la estadística del LLM, en vez de calculrar a mano las diferencias de los errores
+- arreglar el cálculo de satisfacción para involucrar solamente los servicios usados por el turista
+- involucrar más el dinero en la simulación: hallar promedio de costo, diferencias servicios de lujo de servicios medios, añadir afectación de un turista a causa del precio.
+- correr varias veces la simulación para analizar las varianzas de los criterios de parada y saber y quedarse con la moda. Variar algunas variables que pueden influir en estos cambios, analizar si hay factores que influyen en este cambio de rersultado.
+- generar mensajes ambiguous (que mezclen palabras claves pero que al entendimiento humano se pueda discerner con facilidad la polaridad) y generar mensajes más claros y analizar cómo influye en los resultados del LLM.
+- que el manager tome todas las estrategias de negocio y vaya guardando los reusultados: los resultados estarán dados principalmente en forma de ganancia y variables activas (las mismas que se usan ahora) para en base a eso formar los 'if'. Si se complica mucho, pues solo evaluar la ganancia en la simulación y que esta sea tenida en cuenta para utilizer un algoritmo genético que genere un nuevo conjunto de reglas basándose en la ganancia. EN este ultimo caso, las variables que pueden influir en un resultado u otro, pueden pasar a formar parte del análisis estadístico.
+- que el pago que realice el turista por el servicio sea de acuerdo al porcentaje de mantenimiento

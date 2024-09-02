@@ -1,808 +1,815 @@
 0: Hotel is open
-70: El turista Tourist_3 accedió a la habitación room_0.
+70: El turista Tourist_0 accedió a la habitación room_0.
 70: LEVEL OF CLEAN OF room_0: 100
-70: El turista Tourist_0 accedió a la habitación room_3.
+70: El turista Tourist_1 accedió a la habitación room_1.
+70: LEVEL OF CLEAN OF room_1: 100
+70: El turista Tourist_2 accedió a la habitación room_2.
+70: LEVEL OF CLEAN OF room_2: 100
+70: El turista Tourist_4 accedió a la habitación room_3.
 70: LEVEL OF CLEAN OF room_3: 100
-70: El turista Tourist_2 accedió a la habitación room_6.
-70: LEVEL OF CLEAN OF room_6: 100
-70: El turista Tourist_1 accedió a la habitación room_15.
-70: LEVEL OF CLEAN OF room_15: 100
+70: El turista Tourist_3 accedió a la habitación room_21.
+70: LEVEL OF CLEAN OF room_21: 100
 83: Manager low the salaries.
-122: El turista Tourist_0 accedió al servicio room, 24
-123: Manager low the salaries.
-136: El turista Tourist_1 accedió al servicio room, 35
-140: El turista Tourist_6 accedió a la habitación room_2.
-140: LEVEL OF CLEAN OF room_2: 100
-140: El turista Tourist_8 accedió a la habitación room_5.
-140: LEVEL OF CLEAN OF room_5: 100
-140: El turista Tourist_7 accedió a la habitación room_7.
-140: LEVEL OF CLEAN OF room_7: 100
-140: El turista Tourist_5 accedió a la habitación room_9.
-140: LEVEL OF CLEAN OF room_9: 100
-140: El turista Tourist_9 accedió a la habitación room_16.
+107: El turista Tourist_0 accedió al servicio energy drink, 48
+125: El turista Tourist_1 accedió al servicio coffee, 35
+134: El turista Tourist_2 accedió al servicio energy drink, 29
+138: El turista Tourist_0 accedió al servicio room service, 22
+140: El turista Tourist_7 accedió a la habitación room_4.
+140: LEVEL OF CLEAN OF room_4: 100
+140: El turista Tourist_6 accedió a la habitación room_27.
+140: LEVEL OF CLEAN OF room_27: 100
+140: El turista Tourist_8 accedió a la habitación room_16.
 140: LEVEL OF CLEAN OF room_16: 100
-140: El turista Tourist_4 accedió a la habitación room_28.
-140: LEVEL OF CLEAN OF room_28: 100
-145: El turista Tourist_0 accedió al servicio restaurant, 30
-146:  146.0 s: Housemaid is cleaning the bed of the room_3...
-146:  146.0 s: Level before clean the room_3: 24
-150: El turista Tourist_2 accedió al servicio energy drink, 42
-157:  157.0 s: Housemaid is cleaning the bed of the room_15...
-157:  157.0 s: Level before clean the room_15: 35
-159: El turista Tourist_1 accedió al servicio snack bar, 42
-163:  163.0 s: Housemaid finished and the room_3 is clean
-163: Level after clean room_3: 100
-163: El turista Tourist_3 accedió al servicio room, 20
-172: El turista Tourist_2 accedió al servicio room service, 40
-174:  174.0 s: Housemaid finished and the room_15 is clean
-174: Level after clean room_15: 100
-176: El turista Tourist_0 accedió al servicio gym, 42
-179: El turista Tourist_4 accedió al servicio coffee, 26
-180: El turista Tourist_1 accedió al servicio ironing service, 28
-184: El turista Tourist_3 accedió al servicio buffet, 26
-185:  185.0 s: Housemaid is cleaning the bed of the room_0...
-185:  185.0 s: Level before clean the room_0: 20
-193: El turista Tourist_2 accedió al servicio pool, 35
-194: El turista Tourist_5 accedió al servicio energy drink, 43
-199: El turista Tourist_0 accedió al servicio gym, 100
-202:  202.0 s: Housemaid finished and the room_0 is clean
-202: Level after clean room_0: 100
-202: El turista Tourist_6 accedió al servicio coffee, 26
-210: El turista Tourist_12 accedió a la habitación room_12.
-210: LEVEL OF CLEAN OF room_12: 100
+140: El turista Tourist_5 accedió a la habitación room_8.
+140: LEVEL OF CLEAN OF room_8: 100
+140: El turista Tourist_9 accedió a la habitación room_35.
+140: LEVEL OF CLEAN OF room_35: 100
+149: El turista Tourist_3 accedió al servicio energy drink, 23
+156: El turista Tourist_1 accedió al servicio ranchon, 29
+161: El turista Tourist_0 accedió al servicio show time, 31
+167: El turista Tourist_4 accedió al servicio energy drink, 33
+167: El turista Tourist_2 accedió al servicio buffet, 40
+177: El turista Tourist_5 accedió al servicio energy drink, 25
+178: El turista Tourist_1 accedió al servicio pool, 47
+181: El turista Tourist_3 accedió al servicio room service, 23
+186: El turista Tourist_6 accedió al servicio room, 35
+194: El turista Tourist_0 accedió al servicio ironing service, 31
+198: El turista Tourist_2 accedió al servicio table tennis, 29
+199: El turista Tourist_4 accedió al servicio ranchon, 37
+200: Tourist_1 left the hotel at 200
+arrive: 24
+len of stay: 170
+205: El turista Tourist_7 accedió al servicio room, 27
+210: El turista Tourist_12 accedió a la habitación room_5.
+210: LEVEL OF CLEAN OF room_5: 100
+210: El turista Tourist_13 accedió a la habitación room_6.
+210: LEVEL OF CLEAN OF room_6: 100
+210: El turista Tourist_11 accedió a la habitación room_29.
+210: LEVEL OF CLEAN OF room_29: 100
+210: El turista Tourist_10 accedió a la habitación room_37.
+210: LEVEL OF CLEAN OF room_37: 100
 210: El turista Tourist_14 accedió a la habitación room_22.
 210: LEVEL OF CLEAN OF room_22: 100
-210: El turista Tourist_10 accedió a la habitación room_31.
-210: LEVEL OF CLEAN OF room_31: 100
-210: El turista Tourist_11 accedió a la habitación room_37.
-210: LEVEL OF CLEAN OF room_37: 100
-210: El turista Tourist_15 accedió a la habitación room_39.
-210: LEVEL OF CLEAN OF room_39: 100
-210: El turista Tourist_13 accedió a la habitación room_1.
-210: LEVEL OF CLEAN OF room_1: 100
-211: El turista Tourist_1 accedió al servicio show time, 45
-212: El turista Tourist_4 accedió al servicio ranchon, 26
-215: El turista Tourist_3 accedió al servicio tennis, 42
-216: El turista Tourist_2 accedió al servicio hair salon, 24
-217: El turista Tourist_5 accedió al servicio buffet, 38
-219: El turista Tourist_7 accedió al servicio coffee, 23
-220: El turista Tourist_0 accedió al servicio pool table, 100
-225: El turista Tourist_8 accedió al servicio energy drink, 36
-232: El turista Tourist_9 accedió al servicio energy drink, 45
-233: El turista Tourist_6 accedió al servicio room service, 22
-234: El turista Tourist_4 accedió al servicio hair salon, 39
-237: El turista Tourist_3 accedió al servicio tennis, 100
-239: El turista Tourist_2 accedió al servicio pool, 100
-240: El turista Tourist_7 accedió al servicio buffet, 35
-243: El turista Tourist_0 accedió al servicio pool table, 100
-244: El turista Tourist_1 accedió al servicio table tennis, 100
-246: El turista Tourist_10 accedió al servicio energy drink, 39
-248: El turista Tourist_5 accedió al servicio pool table, 33
-255: El turista Tourist_6 accedió al servicio tennis, 30
-256: Tourist_0 left the hotel at 256
-arrive: 19
-len of stay: 229
-256: El turista Tourist_8 accedió al servicio restaurant, 39
-259: El turista Tourist_11 accedió al servicio energy drink, 26
-259: El turista Tourist_3 accedió al servicio tennis, 100
-261: El turista Tourist_2 accedió al servicio table tennis, 100
-264: El turista Tourist_9 accedió al servicio snack bar, 40
-265: El turista Tourist_4 accedió al servicio gym, 50
-265: El turista Tourist_1 accedió al servicio pool, 100
-269: El turista Tourist_10 accedió al servicio buffet, 34
-269: El turista Tourist_5 accedió al servicio pool, 100
-270: Tourist_3 left the hotel at 270
-arrive: 62
-len of stay: 199
-273: El turista Tourist_7 accedió al servicio table tennis, 25
-274: El turista Tourist_12 accedió al servicio energy drink, 31
-276: Tourist_4 left the hotel at 276
-arrive: 78
-len of stay: 195
-280: El turista Tourist_17 accedió a la habitación room_0.
-280: LEVEL OF CLEAN OF room_0: 100
-280: El turista Tourist_21 accedió a la habitación room_10.
-280: LEVEL OF CLEAN OF room_10: 100
-280: El turista Tourist_18 accedió a la habitación room_24.
-280: LEVEL OF CLEAN OF room_24: 100
-280: El turista Tourist_16 accedió a la habitación room_29.
-280: LEVEL OF CLEAN OF room_29: 100
-280: El turista Tourist_20 accedió a la habitación room_36.
-280: LEVEL OF CLEAN OF room_36: 100
-280: El turista Tourist_19 accedió a la habitación room_4.
-280: LEVEL OF CLEAN OF room_4: 100
-283: Tourist_2 left the hotel at 283
+210: El turista Tourist_5 accedió al servicio room service, 49
+213: El turista Tourist_3 accedió al servicio tennis, 28
+213:  213.0 s: Housemaid is cleaning the bed of the room_27...
+213:  213.0 s: Level before clean the room_27: 35
+216: El turista Tourist_0 accedió al servicio gym, 100
+218: El turista Tourist_6 accedió al servicio ranchon, 26
+219: El turista Tourist_8 accedió al servicio room, 46
+221: El turista Tourist_2 accedió al servicio hair salon, 39
+229:  229.0 s: Housemaid finished and the room_27 is clean
+229: Level after clean room_27: 100
+231: El turista Tourist_4 accedió al servicio table tennis, 25
+231: El turista Tourist_5 accedió al servicio table tennis, 46
+232:  232.0 s: Housemaid is cleaning the bed of the room_4...
+232:  232.0 s: Level before clean the room_4: 27
+234: Tourist_3 left the hotel at 234
 arrive: 47
-len of stay: 235
-286: El turista Tourist_13 accedió al servicio room, 43
-286: El turista Tourist_6 accedió al servicio ironing service, 38
-287: El turista Tourist_8 accedió al servicio table tennis, 28
-292: El turista Tourist_11 accedió al servicio buffet, 21
-293: El turista Tourist_14 accedió al servicio room, 27
-294: El turista Tourist_7 accedió al servicio laundry service, 23
-297: El turista Tourist_9 accedió al servicio table tennis, 26
-298: El turista Tourist_15 accedió al servicio energy drink, 38
-300: El turista Tourist_5 accedió al servicio pool table, 100
-301: El turista Tourist_10 accedió al servicio show time, 43
-306: El turista Tourist_12 accedió al servicio restaurant, 31
-307: El turista Tourist_13 accedió al servicio snack bar, 32
-313: El turista Tourist_16 accedió al servicio room, 27
-313: El turista Tourist_11 accedió al servicio show time, 20
-313: El turista Tourist_1 accedió al servicio table tennis, 100
-317: El turista Tourist_6 accedió al servicio pool table, 100
-318: El turista Tourist_8 accedió al servicio ironing service, 29
-321:  321.0 s: Housemaid is cleaning the bed of the room_22...
-321:  321.0 s: Level before clean the room_22: 27
+len of stay: 183
+236: El turista Tourist_7 accedió al servicio buffet, 46
+239: El turista Tourist_9 accedió al servicio room, 28
+242: Tourist_2 left the hotel at 242
+arrive: 31
+len of stay: 209
+243:  243.0 s: Housemaid is cleaning the bed of the room_16...
+243:  243.0 s: Level before clean the room_16: 46
+247: El turista Tourist_0 accedió al servicio show time, 100
+248:  248.0 s: Housemaid finished and the room_4 is clean
+248: Level after clean room_4: 100
+251: El turista Tourist_6 accedió al servicio table tennis, 39
+252: El turista Tourist_8 accedió al servicio buffet, 50
+257: El turista Tourist_10 accedió al servicio energy drink, 26
+257:  257.0 s: Housemaid is cleaning the bed of the room_35...
+257:  257.0 s: Level before clean the room_35: 28
+259:  259.0 s: Housemaid finished and the room_16 is clean
+259: Level after clean room_16: 100
+259: El turista Tourist_5 accedió al servicio table tennis, 100
+262: El turista Tourist_9 accedió al servicio restaurant, 40
+263: El turista Tourist_4 accedió al servicio laundry service, 38
+267: El turista Tourist_7 accedió al servicio show time, 22
+273:  273.0 s: Housemaid finished and the room_35 is clean
+273: Level after clean room_35: 100
+274: El turista Tourist_11 accedió al servicio coffee, 44
+274: El turista Tourist_8 accedió al servicio pool, 22
+279: El turista Tourist_0 accedió al servicio table tennis, 100
+279: El turista Tourist_10 accedió al servicio room service, 49
+280: El turista Tourist_15 accedió a la habitación room_9.
+280: LEVEL OF CLEAN OF room_9: 100
+280: El turista Tourist_17 accedió a la habitación room_10.
+280: LEVEL OF CLEAN OF room_10: 100
+280: El turista Tourist_18 accedió a la habitación room_21.
+280: LEVEL OF CLEAN OF room_21: 100
+280: El turista Tourist_16 accedió a la habitación room_24.
+280: LEVEL OF CLEAN OF room_24: 100
+284: El turista Tourist_6 accedió al servicio steam room, 32
+284: El turista Tourist_5 accedió al servicio tennis, 100
+286: Tourist_4 left the hotel at 286
+arrive: 65
+len of stay: 218
+293: El turista Tourist_12 accedió al servicio energy drink, 40
+294: El turista Tourist_9 accedió al servicio steam room, 29
+296: Tourist_5 left the hotel at 296
+arrive: 75
+len of stay: 221
+297: El turista Tourist_8 accedió al servicio tennis, 100
+298: El turista Tourist_13 accedió al servicio coffee, 29
+298: El turista Tourist_7 accedió al servicio pool table, 100
+301: El turista Tourist_0 accedió al servicio gym, 100
+302: El turista Tourist_10 accedió al servicio gym, 29
+305: El turista Tourist_14 accedió al servicio coffee, 25
+306: El turista Tourist_11 accedió al servicio restaurant, 28
+306: El turista Tourist_6 accedió al servicio pool, 100
+313: Tourist_0 left the hotel at 313
+arrive: 6
+len of stay: 300
+317: El turista Tourist_15 accedió al servicio room, 20
+319: El turista Tourist_13 accedió al servicio snack bar, 44
+320: Tourist_8 left the hotel at 320
+arrive: 116
+len of stay: 202
+320: Tourist_7 left the hotel at 320
+arrive: 104
+len of stay: 212
 323: Manager call the Find AI function
-326: El turista Tourist_14 accedió al servicio snack bar, 47
-327: El turista Tourist_12 accedió al servicio gym, 39
-329: Tourist_1 left the hotel at 329
-arrive: 34
-len of stay: 293
-329: El turista Tourist_9 accedió al servicio steam room, 36
-330: Tourist_7 left the hotel at 330
-arrive: 117
-len of stay: 211
-330: El turista Tourist_15 accedió al servicio restaurant, 35
-330: El turista Tourist_13 accedió al servicio pool, 36
-330: El turista Tourist_7 accedió al servicio pool table, 100
-332: El turista Tourist_5 accedió al servicio pool, 100
-333: El turista Tourist_17 accedió al servicio coffee, 46
-333: El turista Tourist_10 accedió al servicio tennis, 100
-336: El turista Tourist_16 accedió al servicio buffet, 48
-337: El turista Tourist_18 accedió al servicio coffee, 21
-338:  338.0 s: Housemaid finished and the room_22 is clean
-338: Level after clean room_22: 100
-339: El turista Tourist_6 accedió al servicio tennis, 100
-339:  339.0 s: Housemaid is cleaning the bed of the room_29...
-339:  339.0 s: Level before clean the room_29: 27
-340: El turista Tourist_8 accedió al servicio pool table, 100
-341: Tourist_9 left the hotel at 341
-arrive: 130
-len of stay: 204
-344: El turista Tourist_11 accedió al servicio ironing service, 29
-347: El turista Tourist_14 accedió al servicio table tennis, 22
-350: El turista Tourist_27 accedió a la habitación room_6.
-350: LEVEL OF CLEAN OF room_6: 100
-350: El turista Tourist_25 accedió a la habitación room_3.
-350: LEVEL OF CLEAN OF room_3: 100
-350: El turista Tourist_23 accedió a la habitación room_16.
-350: LEVEL OF CLEAN OF room_16: 100
-350: El turista Tourist_28 accedió a la habitación room_18.
-350: LEVEL OF CLEAN OF room_18: 100
-350: El turista Tourist_24 accedió a la habitación room_28.
-350: LEVEL OF CLEAN OF room_28: 100
-350: El turista Tourist_26 accedió a la habitación room_8.
-350: LEVEL OF CLEAN OF room_8: 100
-350: El turista Tourist_22 accedió a la habitación room_11.
-350: LEVEL OF CLEAN OF room_11: 100
-351: El turista Tourist_15 accedió al servicio gym, 33
-355: Tourist_5 left the hotel at 355
-arrive: 91
-len of stay: 262
-355: El turista Tourist_17 accedió al servicio ranchon, 37
-356:  356.0 s: Housemaid finished and the room_29 is clean
-356: Level after clean room_29: 100
-357: El turista Tourist_16 accedió al servicio pool table, 27
-358: El turista Tourist_19 accedió al servicio energy drink, 48
-360: El turista Tourist_12 accedió al servicio gym, 100
-360: El turista Tourist_18 accedió al servicio room service, 32
-361: Tourist_6 left the hotel at 361
-arrive: 101
-len of stay: 257
-363: El turista Tourist_13 accedió al servicio pool, 100
-366: El turista Tourist_10 accedió al servicio show time, 100
-366: El turista Tourist_11 accedió al servicio tennis, 100
-368: Tourist_14 left the hotel at 368
-arrive: 192
-len of stay: 172
-369: Tourist_10 left the hotel at 369
-arrive: 143
-len of stay: 225
-370: El turista Tourist_20 accedió al servicio room, 44
-372: El turista Tourist_8 accedió al servicio pool table, 100
-374: El turista Tourist_15 accedió al servicio ironing service, 36
-379: El turista Tourist_21 accedió al servicio coffee, 24
-379: El turista Tourist_16 accedió al servicio steam room, 30
-381: El turista Tourist_19 accedió al servicio ranchon, 40
-382: El turista Tourist_12 accedió al servicio gym, 100
-383: El turista Tourist_18 accedió al servicio hair salon, 22
-383:  383.0 s: energy_drink_worker is working on the bar_utl of the energy_drink...
-383:  383.0 s: Level before work the energy_drink: 49
-387:  387.0 s: energy_drink_worker finished and the energy_drink is ready
-387: Level after clean energy_drink: 100
-388: El turista Tourist_22 accedió al servicio energy drink, 22
-388: El turista Tourist_17 accedió al servicio pool, 21
-389: El turista Tourist_11 accedió al servicio tennis, 100
-392: El turista Tourist_20 accedió al servicio ranchon, 42
-393:  393.0 s: Housemaid is cleaning the bed of the room_36...
-393:  393.0 s: Level before clean the room_36: 44
-394: El turista Tourist_13 accedió al servicio pool, 100
-395: El turista Tourist_15 accedió al servicio gym, 100
-400: El turista Tourist_23 accedió al servicio room, 38
-402: El turista Tourist_21 accedió al servicio ranchon, 26
-404: El turista Tourist_19 accedió al servicio pool, 23
-404: El turista Tourist_12 accedió al servicio gym, 100
-405: El turista Tourist_8 accedió al servicio pool table, 100
-406: El turista Tourist_18 accedió al servicio gym, 44
-407: Tourist_13 left the hotel at 407
-arrive: 183
-len of stay: 216
-407: El turista Tourist_24 accedió al servicio room, 45
-410:  410.0 s: Housemaid finished and the room_36 is clean
-410: Level after clean room_36: 100
-412: El turista Tourist_16 accedió al servicio gym, 100
-417: Tourist_8 left the hotel at 417
-arrive: 123
-len of stay: 286
-417: El turista Tourist_25 accedió al servicio coffee, 39
-420: El turista Tourist_31 accedió a la habitación room_2.
-420: LEVEL OF CLEAN OF room_2: 100
-420: El turista Tourist_32 accedió a la habitación room_9.
-420: LEVEL OF CLEAN OF room_9: 100
-420: El turista Tourist_29 accedió a la habitación room_15.
-420: LEVEL OF CLEAN OF room_15: 100
-420: El turista Tourist_30 accedió a la habitación room_7.
-420: LEVEL OF CLEAN OF room_7: 100
-420: El turista Tourist_17 accedió al servicio laundry service, 32
-421: El turista Tourist_22 accedió al servicio buffet, 44
-421: El turista Tourist_11 accedió al servicio tennis, 100
-423: El turista Tourist_20 accedió al servicio tennis, 22
-425: El turista Tourist_12 accedió al servicio pool table, 100
-427: El turista Tourist_26 accedió al servicio energy drink, 36
-427: El turista Tourist_18 accedió al servicio table tennis, 100
-428: El turista Tourist_15 accedió al servicio table tennis, 100
-428: El turista Tourist_24 accedió al servicio snack bar, 43
-432: El turista Tourist_23 accedió al servicio ranchon, 34
-433:  433.0 s: Housemaid is cleaning the bed of the room_16...
-433:  433.0 s: Level before clean the room_16: 38
-434: El turista Tourist_21 accedió al servicio gym, 22
-437: El turista Tourist_19 accedió al servicio steam room, 35
-439: Tourist_18 left the hotel at 439
-arrive: 236
-len of stay: 200
-441: El turista Tourist_27 accedió al servicio coffee, 30
-442: El turista Tourist_17 accedió al servicio pool, 100
-442: El turista Tourist_22 accedió al servicio tennis, 24
-442: El turista Tourist_11 accedió al servicio show time, 100
-444: Tourist_11 left the hotel at 444
-arrive: 158
-len of stay: 286
-445: El turista Tourist_20 accedió al servicio laundry service, 37
-446: El turista Tourist_16 accedió al servicio table tennis, 100
-450:  450.0 s: Housemaid finished and the room_16 is clean
-450: Level after clean room_16: 100
-450: El turista Tourist_25 accedió al servicio ranchon, 38
-451: El turista Tourist_28 accedió al servicio coffee, 35
-453: El turista Tourist_23 accedió al servicio tennis, 25
-457: Tourist_12 left the hotel at 457
-arrive: 172
-len of stay: 280
-458: El turista Tourist_19 accedió al servicio gym, 100
-459: El turista Tourist_26 accedió al servicio restaurant, 25
-459: El turista Tourist_24 accedió al servicio show time, 45
-461: El turista Tourist_15 accedió al servicio show time, 100
-462: El turista Tourist_27 accedió al servicio buffet, 25
-462:  462.0 s: coffee_worker is working on the bar_utl of the coffee...
-462:  462.0 s: Level before work the coffee: 47
-466:  466.0 s: coffee_worker finished and the coffee is ready
-466: Level after clean coffee: 100
-466: El turista Tourist_29 accedió al servicio coffee, 42
-466: El turista Tourist_21 accedió al servicio hair salon, 34
-467: El turista Tourist_20 accedió al servicio pool table, 100
-472: El turista Tourist_25 accedió al servicio pool, 31
-473: El turista Tourist_22 accedió al servicio laundry service, 22
-475: El turista Tourist_17 accedió al servicio pool, 100
-477: El turista Tourist_16 accedió al servicio table tennis, 100
-480: Tourist_19 left the hotel at 480
-arrive: 256
-len of stay: 222
-482: Tourist_15 left the hotel at 482
-arrive: 197
-len of stay: 276
-482: El turista Tourist_26 accedió al servicio tennis, 33
-484: El turista Tourist_28 accedió al servicio restaurant, 23
-484: El turista Tourist_23 accedió al servicio hair salon, 34
-485: El turista Tourist_30 accedió al servicio coffee, 34
-488: El turista Tourist_21 accedió al servicio tennis, 100
-490: El turista Tourist_33 accedió a la habitación room_1.
-490: LEVEL OF CLEAN OF room_1: 43
-490: El turista Tourist_34 accedió a la habitación room_22.
-490: LEVEL OF CLEAN OF room_22: 100
-490: El turista Tourist_35 accedió a la habitación room_5.
-490: LEVEL OF CLEAN OF room_5: 100
-490: El turista Tourist_36 accedió a la habitación room_39.
-490: LEVEL OF CLEAN OF room_39: 100
-490: El turista Tourist_20 accedió al servicio table tennis, 100
-491: El turista Tourist_24 accedió al servicio show time, 100
-494: El turista Tourist_27 accedió al servicio spa, 30
-497: El turista Tourist_17 accedió al servicio pool, 100
-499: El turista Tourist_29 accedió al servicio room service, 26
-500: Tourist_16 left the hotel at 500
-arrive: 210
-len of stay: 285
-500: Tourist_21 left the hotel at 500
-arrive: 277
-len of stay: 222
-500: Tourist_17 left the hotel at 500
-arrive: 230
-len of stay: 268
-501: El turista Tourist_31 accedió al servicio coffee, 22
-502: Tourist_20 left the hotel at 502
-arrive: 267
-len of stay: 228
-503: El turista Tourist_26 accedió al servicio pool table, 100
-503: El turista Tourist_22 accedió al servicio tennis, 100
-504: El turista Tourist_25 accedió al servicio laundry service, 30
-510: El turista Tourist_32 accedió al servicio room, 45
-513: Tourist_24 left the hotel at 513
-arrive: 304
-len of stay: 201
-515: El turista Tourist_28 accedió al servicio table tennis, 37
-516: El turista Tourist_23 accedió al servicio pool, 100
-516: El turista Tourist_30 accedió al servicio buffet, 20
-524: Tourist_26 left the hotel at 524
-arrive: 325
+323: El turista Tourist_10 accedió al servicio laundry service, 24
+324: El turista Tourist_12 accedió al servicio restaurant, 39
+325: El turista Tourist_9 accedió al servicio gym, 43
+327: El turista Tourist_11 accedió al servicio show time, 23
+328: Tourist_6 left the hotel at 328
+arrive: 84
+len of stay: 241
+328: El turista Tourist_14 accedió al servicio snack bar, 21
+330: El turista Tourist_16 accedió al servicio room, 24
+337: Tourist_9 left the hotel at 337
+arrive: 136
 len of stay: 195
-525: El turista Tourist_27 accedió al servicio tennis, 100
-527: Tourist_25 left the hotel at 527
-arrive: 314
-len of stay: 213
-527: El turista Tourist_33 accedió al servicio energy drink, 40
-528: El turista Tourist_22 accedió al servicio tennis, 100
-530: El turista Tourist_29 accedió al servicio gym, 34
-534: El turista Tourist_31 accedió al servicio restaurant, 42
-534:  534.0 s: Housemaid is cleaning the bed of the room_9...
-534:  534.0 s: Level before clean the room_9: 45
-534:  534.0 s: buffet_worker is working on the buffet of the buffet...
-534:  534.0 s: Level before work the buffet: 43
-538: Tourist_28 left the hotel at 538
-arrive: 349
-len of stay: 184
-538:  538.0 s: buffet_worker finished and the buffet is ready
-538: Level after clean buffet: 100
-540: Tourist_22 left the hotel at 540
-arrive: 285
-len of stay: 246
-543: El turista Tourist_32 accedió al servicio buffet, 45
-547: El turista Tourist_34 accedió al servicio coffee, 42
-547: El turista Tourist_23 accedió al servicio show time, 100
-548: El turista Tourist_33 accedió al servicio restaurant, 34
-550: El turista Tourist_30 accedió al servicio tennis, 40
-551:  551.0 s: Housemaid finished and the room_9 is clean
-551: Level after clean room_9: 100
-552: Tourist_29 left the hotel at 552
-arrive: 364
-len of stay: 180
-556: El turista Tourist_27 accedió al servicio spa, 100
-557: El turista Tourist_31 accedió al servicio tennis, 22
-560: El turista Tourist_37 accedió a la habitación room_12.
-560: LEVEL OF CLEAN OF room_12: 100
-560: El turista Tourist_38 accedió a la habitación room_28.
-560: LEVEL OF CLEAN OF room_28: 45
-560: El turista Tourist_41 accedió a la habitación room_36.
-560: LEVEL OF CLEAN OF room_36: 100
-560: El turista Tourist_39 accedió a la habitación room_0.
-560: LEVEL OF CLEAN OF room_0: 100
-560: El turista Tourist_40 accedió a la habitación room_4.
-560: LEVEL OF CLEAN OF room_4: 100
-564: El turista Tourist_35 accedió al servicio coffee, 25
-564: El turista Tourist_32 accedió al servicio pool, 24
-570: El turista Tourist_34 accedió al servicio room service, 43
-570: El turista Tourist_33 accedió al servicio information bureau, 34
-571: El turista Tourist_30 accedió al servicio gym, 100
-576:  576.0 s: tennis_worker is working on the tennis of the tennis...
-576:  576.0 s: Level before work the tennis: 48
-578: El turista Tourist_23 accedió al servicio show time, 100
-579: El turista Tourist_27 accedió al servicio pool, 100
-580:  580.0 s: tennis_worker finished and the tennis is ready
-580: Level after clean tennis: 100
-580: Tourist_23 left the hotel at 580
-arrive: 298
-len of stay: 281
-580: El turista Tourist_36 accedió al servicio room, 44
-580: El turista Tourist_31 accedió al servicio information bureau, 36
-585: El turista Tourist_35 accedió al servicio restaurant, 34
-592: El turista Tourist_34 accedió al servicio tennis, 25
-594: El turista Tourist_30 accedió al servicio gym, 100
-596: El turista Tourist_32 accedió al servicio ironing service, 28
-599:  599.0 s: Housemaid is cleaning the bed of the room_39...
-599:  599.0 s: Level before clean the room_39: 44
-600: El turista Tourist_37 accedió al servicio coffee, 35
-602: El turista Tourist_36 accedió al servicio ranchon, 30
-603: El turista Tourist_33 accedió al servicio tennis, 48
-607: El turista Tourist_35 accedió al servicio information bureau, 34
-607:  607.0 s: restaurant_worker is working on the restaurant of the restaurant...
-607:  607.0 s: Level before work the restaurant: 44
-607: El turista Tourist_31 accedió al servicio tennis, 100
-611:  611.0 s: restaurant_worker finished and the restaurant is ready
-611: Level after clean restaurant: 100
-611: El turista Tourist_27 accedió al servicio pool table, 100
-613: Tourist_27 left the hotel at 613
-arrive: 338
-len of stay: 275
-615: Tourist_31 left the hotel at 615
-arrive: 400
-len of stay: 214
-616:  616.0 s: Housemaid finished and the room_39 is clean
-616: Level after clean room_39: 100
-618: El turista Tourist_32 accedió al servicio pool, 100
-619: El turista Tourist_38 accedió al servicio room, 45
-625: El turista Tourist_30 accedió al servicio gym, 100
-629: El turista Tourist_34 accedió al servicio tennis, 100
-630: El turista Tourist_45 accedió a la habitación room_3.
-630: LEVEL OF CLEAN OF room_3: 100
-630: El turista Tourist_46 accedió a la habitación room_6.
-630: LEVEL OF CLEAN OF room_6: 100
-630: El turista Tourist_43 accedió a la habitación room_15.
-630: LEVEL OF CLEAN OF room_15: 100
-630: El turista Tourist_42 accedió a la habitación room_31.
-630: LEVEL OF CLEAN OF room_31: 100
-630: El turista Tourist_44 accedió a la habitación room_8.
-630: LEVEL OF CLEAN OF room_8: 100
-632: El turista Tourist_37 accedió al servicio ranchon, 34
-635: El turista Tourist_36 accedió al servicio spa, 28
-635: El turista Tourist_33 accedió al servicio spa, 100
-636: El turista Tourist_39 accedió al servicio room, 46
-639: El turista Tourist_35 accedió al servicio pool, 42
-643: Manager close the tennis service for maintenance.
-643:  643.0 s: repairman is reapiring the tennis...
-643:  643.0 s: Level before repair the tennis: 67
-646: El turista Tourist_40 accedió al servicio room, 29
-647: Tourist_33 left the hotel at 647
-arrive: 425
+346: El turista Tourist_17 accedió al servicio energy drink, 32
+346: El turista Tourist_10 accedió al servicio gym, 100
+347:  347.0 s: Housemaid is cleaning the bed of the room_24...
+347:  347.0 s: Level before clean the room_24: 24
+349:  349.0 s: Housemaid is cleaning the bed of the room_9...
+349:  349.0 s: Level before clean the room_9: 20
+350: El turista Tourist_19 accedió a la habitación room_12.
+350: LEVEL OF CLEAN OF room_12: 100
+350: El turista Tourist_20 accedió a la habitación room_1.
+350: LEVEL OF CLEAN OF room_1: 100
+350: El turista Tourist_23 accedió a la habitación room_35.
+350: LEVEL OF CLEAN OF room_35: 100
+350: El turista Tourist_21 accedió a la habitación room_47.
+350: LEVEL OF CLEAN OF room_47: 100
+350: El turista Tourist_22 accedió a la habitación room_49.
+350: LEVEL OF CLEAN OF room_49: 100
+350: El turista Tourist_15 accedió al servicio room service, 47
+350: El turista Tourist_13 accedió al servicio tennis, 38
+351: El turista Tourist_14 accedió al servicio ironing service, 36
+353: El turista Tourist_16 accedió al servicio snack bar, 41
+357: El turista Tourist_12 accedió al servicio table tennis, 25
+360: El turista Tourist_11 accedió al servicio laundry service, 36
+363:  363.0 s: Housemaid finished and the room_24 is clean
+363: Level after clean room_24: 100
+365:  365.0 s: Housemaid finished and the room_9 is clean
+365: Level after clean room_9: 100
+365: El turista Tourist_18 accedió al servicio energy drink, 35
+368: El turista Tourist_10 accedió al servicio pool table, 100
+368:  368.0 s: energy_drink_worker is working on the bar_utl of the energy_drink...
+368:  368.0 s: Level before work the energy_drink: 49
+369: El turista Tourist_17 accedió al servicio room service, 20
+371: El turista Tourist_15 accedió al servicio steam room, 37
+372:  372.0 s: energy_drink_worker finished and the energy_drink is ready
+372: Level after clean energy_drink: 100
+379: Tourist_10 left the hotel at 379
+arrive: 156
 len of stay: 217
-647: El turista Tourist_30 accedió al servicio gym, 100
-649: El turista Tourist_32 accedió al servicio table tennis, 100
-651: El turista Tourist_38 accedió al servicio restaurant, 25
-658:  658.0 s: ranchon_worker is working on the ranchon of the ranchon...
-658:  658.0 s: Level before work the ranchon: 44
-659: El turista Tourist_41 accedió al servicio energy drink, 32
-660: Tourist_32 left the hotel at 660
-arrive: 409
-len of stay: 250
-661: El turista Tourist_35 accedió al servicio pool table, 100
-662:  662.0 s: ranchon_worker finished and the ranchon is ready
-662: Level after clean ranchon: 100
-665: El turista Tourist_34 accedió al servicio pool, 100
-665: El turista Tourist_37 accedió al servicio pool table, 30
-667: El turista Tourist_36 accedió al servicio ironing service, 36
-669: El turista Tourist_39 accedió al servicio ranchon, 34
-672: El turista Tourist_42 accedió al servicio room, 48
-672:  672.0 s: Housemaid is cleaning the bed of the room_4...
-672:  672.0 s: Level before clean the room_4: 29
-673: El turista Tourist_38 accedió al servicio gym, 39
-677: El turista Tourist_40 accedió al servicio buffet, 26
-679: El turista Tourist_30 accedió al servicio gym, 100
-680: El turista Tourist_41 accedió al servicio room service, 25
-682: Tourist_30 left the hotel at 682
-arrive: 384
-len of stay: 296
-683: Manager call the Find AI function
-683:  683.0 s: repairman finished and the service is ready
-683: Level after repair tennis: 100
-686: Tourist_34 left the hotel at 686
-arrive: 444
-len of stay: 235
-686: El turista Tourist_37 accedió al servicio show time, 100
-689:  689.0 s: Housemaid finished and the room_4 is clean
-689: Level after clean room_4: 100
-691: El turista Tourist_39 accedió al servicio information bureau, 34
-692: El turista Tourist_43 accedió al servicio room, 42
-693: El turista Tourist_35 accedió al servicio spa, 100
-699: El turista Tourist_40 accedió al servicio table tennis, 24
-700: El turista Tourist_47 accedió a la habitación room_9.
-700: LEVEL OF CLEAN OF room_9: 100
-700: El turista Tourist_52 accedió a la habitación room_13.
-700: LEVEL OF CLEAN OF room_13: 100
-700: El turista Tourist_48 accedió a la habitación room_16.
-700: LEVEL OF CLEAN OF room_16: 100
-700: El turista Tourist_49 accedió a la habitación room_29.
-700: LEVEL OF CLEAN OF room_29: 100
-700: El turista Tourist_50 accedió a la habitación room_2.
-700: LEVEL OF CLEAN OF room_2: 100
-700: El turista Tourist_51 accedió a la habitación room_43.
-700: LEVEL OF CLEAN OF room_43: 100
-700: El turista Tourist_44 accedió al servicio energy drink, 26
-700: El turista Tourist_36 accedió al servicio show time, 100
-700:  700.0 s: Housemaid is cleaning the bed of the room_31...
-700:  700.0 s: Level before clean the room_31: 48
-703: El turista Tourist_41 accedió al servicio pool table, 20
-704: El turista Tourist_42 accedió al servicio buffet, 28
-704: El turista Tourist_38 accedió al servicio information bureau, 24
-706: El turista Tourist_45 accedió al servicio room, 47
-708: Tourist_37 left the hotel at 708
-arrive: 499
-len of stay: 208
-715: El turista Tourist_46 accedió al servicio coffee, 38
-716: El turista Tourist_35 accedió al servicio spa, 100
-717:  717.0 s: Housemaid finished and the room_31 is clean
-717: Level after clean room_31: 100
-720: El turista Tourist_40 accedió al servicio table tennis, 100
-723: El turista Tourist_43 accedió al servicio room service, 43
-724: El turista Tourist_39 accedió al servicio table tennis, 41
-726: El turista Tourist_42 accedió al servicio spa, 26
-731: El turista Tourist_36 accedió al servicio pool, 100
-733: El turista Tourist_44 accedió al servicio ranchon, 43
-734: El turista Tourist_47 accedió al servicio energy drink, 34
-735: Tourist_39 left the hotel at 735
-arrive: 533
-len of stay: 200
-735: El turista Tourist_41 accedió al servicio pool, 100
-736: El turista Tourist_46 accedió al servicio room service, 20
-737: Tourist_35 left the hotel at 737
-arrive: 461
+381: El turista Tourist_13 accedió al servicio tennis, 100
+382: El turista Tourist_14 accedió al servicio pool table, 45
+385: El turista Tourist_16 accedió al servicio laundry service, 38
+386: El turista Tourist_19 accedió al servicio coffee, 47
+388: El turista Tourist_12 accedió al servicio steam room, 26
+392: El turista Tourist_17 accedió al servicio table tennis, 38
+393: El turista Tourist_11 accedió al servicio show time, 100
+395: El turista Tourist_20 accedió al servicio room, 42
+396: El turista Tourist_18 accedió al servicio room service, 41
+402: El turista Tourist_13 accedió al servicio tennis, 100
+404: El turista Tourist_15 accedió al servicio tennis, 47
+406: El turista Tourist_16 accedió al servicio show time, 43
+410: El turista Tourist_12 accedió al servicio pool table, 100
+411: El turista Tourist_21 accedió al servicio coffee, 35
+414: El turista Tourist_17 accedió al servicio table tennis, 100
+415: El turista Tourist_14 accedió al servicio pool table, 100
+415: El turista Tourist_11 accedió al servicio show time, 100
+417: El turista Tourist_19 accedió al servicio room service, 20
+418: El turista Tourist_20 accedió al servicio ranchon, 25
+420: El turista Tourist_25 accedió a la habitación room_3.
+420: LEVEL OF CLEAN OF room_3: 100
+420: El turista Tourist_26 accedió a la habitación room_0.
+420: LEVEL OF CLEAN OF room_0: 100
+420: El turista Tourist_27 accedió a la habitación room_42.
+420: LEVEL OF CLEAN OF room_42: 100
+420: El turista Tourist_24 accedió a la habitación room_2.
+420: LEVEL OF CLEAN OF room_2: 100
+420: El turista Tourist_28 accedió a la habitación room_4.
+420: LEVEL OF CLEAN OF room_4: 100
+420: El turista Tourist_29 accedió a la habitación room_7.
+420: LEVEL OF CLEAN OF room_7: 100
+420:  420.0 s: Housemaid is cleaning the bed of the room_1...
+420:  420.0 s: Level before clean the room_1: 42
+425: El turista Tourist_15 accedió al servicio tennis, 100
+426: Tourist_11 left the hotel at 426
+arrive: 173
+len of stay: 251
+427: El turista Tourist_18 accedió al servicio gym, 33
+428: El turista Tourist_22 accedió al servicio room, 33
+429: El turista Tourist_16 accedió al servicio show time, 100
+435: El turista Tourist_13 accedió al servicio tennis, 100
+436:  436.0 s: Housemaid finished and the room_1 is clean
+436: Level after clean room_1: 100
+436: El turista Tourist_17 accedió al servicio table tennis, 100
+438: El turista Tourist_19 accedió al servicio gym, 39
+441: El turista Tourist_12 accedió al servicio table tennis, 100
+444: El turista Tourist_21 accedió al servicio ranchon, 31
+445: El turista Tourist_23 accedió al servicio energy drink, 40
+447: El turista Tourist_14 accedió al servicio pool table, 100
+448: El turista Tourist_15 accedió al servicio tennis, 100
+449: Tourist_17 left the hotel at 449
+arrive: 245
+len of stay: 198
+449: El turista Tourist_20 accedió al servicio gym, 21
+449: El turista Tourist_18 accedió al servicio steam room, 22
+449: El turista Tourist_22 accedió al servicio room service, 28
+449:  449.0 s: Housemaid is cleaning the bed of the room_49...
+449:  449.0 s: Level before clean the room_49: 33
+456: El turista Tourist_24 accedió al servicio coffee, 38
+459: El turista Tourist_19 accedió al servicio hair salon, 20
+462: El turista Tourist_16 accedió al servicio gym, 100
+465:  465.0 s: Housemaid finished and the room_49 is clean
+465: Level after clean room_49: 100
+468: Tourist_13 left the hotel at 468
+arrive: 196
+len of stay: 268
+468: El turista Tourist_25 accedió al servicio room, 24
+468: El turista Tourist_14 accedió al servicio pool table, 100
+470: El turista Tourist_22 accedió al servicio hair salon, 25
+471:  471.0 s: room_service_worker is working on the room_service of the room_service...
+471:  471.0 s: Level before work the room_service: 43
+472: El turista Tourist_18 accedió al servicio tennis, 100
+474: Tourist_12 left the hotel at 474
+arrive: 191
+len of stay: 283
+475:  475.0 s: room_service_worker finished and the room_service is ready
+475: Level after clean room_service: 100
+476: El turista Tourist_23 accedió al servicio restaurant, 29
+477: El turista Tourist_21 accedió al servicio laundry service, 38
+479: El turista Tourist_26 accedió al servicio energy drink, 33
+481: Tourist_20 left the hotel at 481
+arrive: 292
+len of stay: 180
+481: Tourist_14 left the hotel at 481
+arrive: 203
 len of stay: 276
-739: El turista Tourist_45 accedió al servicio restaurant, 24
-743: El turista Tourist_38 accedió al servicio table tennis, 100
-746: El turista Tourist_43 accedió al servicio show time, 43
-747: El turista Tourist_42 accedió al servicio hair salon, 31
-750: El turista Tourist_48 accedió al servicio energy drink, 22
-752: El turista Tourist_40 accedió al servicio spa, 100
-753: Tourist_36 left the hotel at 753
-arrive: 479
-len of stay: 265
-756: El turista Tourist_47 accedió al servicio ranchon, 33
-760: Tourist_42 left the hotel at 760
-arrive: 570
-len of stay: 190
-761: El turista Tourist_45 accedió al servicio gym, 40
+481: El turista Tourist_15 accedió al servicio tennis, 100
+489: El turista Tourist_24 accedió al servicio room service, 44
+490: El turista Tourist_30 accedió a la habitación room_10.
+490: LEVEL OF CLEAN OF room_10: 100
+490: El turista Tourist_31 accedió a la habitación room_8.
+490: LEVEL OF CLEAN OF room_8: 100
+490: El turista Tourist_35 accedió a la habitación room_16.
+490: LEVEL OF CLEAN OF room_16: 100
+490: El turista Tourist_34 accedió a la habitación room_25.
+490: LEVEL OF CLEAN OF room_25: 100
+490: El turista Tourist_32 accedió a la habitación room_37.
+490: LEVEL OF CLEAN OF room_37: 100
+490: El turista Tourist_33 accedió a la habitación room_6.
+490: LEVEL OF CLEAN OF room_6: 100
+491: El turista Tourist_27 accedió al servicio energy drink, 41
+491: El turista Tourist_19 accedió al servicio table tennis, 100
+492: El turista Tourist_22 accedió al servicio pool, 42
+493: El turista Tourist_16 accedió al servicio show time, 100
+494: Tourist_15 left the hotel at 494
+arrive: 215
+len of stay: 278
+496:  496.0 s: Housemaid is cleaning the bed of the room_3...
+496:  496.0 s: Level before clean the room_3: 24
+499: El turista Tourist_23 accedió al servicio pool table, 45
+499: El turista Tourist_21 accedió al servicio show time, 48
+501: El turista Tourist_28 accedió al servicio room, 45
+501: El turista Tourist_25 accedió al servicio buffet, 22
+504: El turista Tourist_18 accedió al servicio gym, 100
+510: El turista Tourist_24 accedió al servicio transfer service, 33
+511: El turista Tourist_26 accedió al servicio buffet, 40
+512:  512.0 s: Housemaid finished and the room_3 is clean
+512: Level after clean room_3: 100
+513: El turista Tourist_27 accedió al servicio buffet, 47
+513: El turista Tourist_19 accedió al servicio tennis, 100
+514: El turista Tourist_29 accedió al servicio room, 39
+515: Tourist_18 left the hotel at 515
+arrive: 264
+len of stay: 243
+515: El turista Tourist_16 accedió al servicio tennis, 100
+521: El turista Tourist_21 accedió al servicio gym, 100
+522: El turista Tourist_30 accedió al servicio room, 28
+522: El turista Tourist_23 accedió al servicio pool, 100
+523: El turista Tourist_22 accedió al servicio pool, 100
+523: El turista Tourist_25 accedió al servicio pool, 46
+528: El turista Tourist_31 accedió al servicio coffee, 31
+533: El turista Tourist_28 accedió al servicio buffet, 24
+533: El turista Tourist_24 accedió al servicio pool table, 42
+533:  533.0 s: Housemaid is cleaning the bed of the room_7...
+533:  533.0 s: Level before clean the room_7: 39
+534: Tourist_19 left the hotel at 534
+arrive: 284
+len of stay: 250
+536: Tourist_16 left the hotel at 536
+arrive: 228
+len of stay: 299
+536: El turista Tourist_27 accedió al servicio excursion, 45
+537: El turista Tourist_29 accedió al servicio buffet, 26
+542: El turista Tourist_21 accedió al servicio pool table, 100
+543: Tourist_23 left the hotel at 543
+arrive: 342
+len of stay: 195
+543: El turista Tourist_32 accedió al servicio room, 49
+543: El turista Tourist_26 accedió al servicio steam room, 35
+544: El turista Tourist_25 accedió al servicio tennis, 100
+545: El turista Tourist_30 accedió al servicio buffet, 34
+545: El turista Tourist_22 accedió al servicio pool, 100
+545:  545.0 s: Housemaid is cleaning the bed of the room_10...
+545:  545.0 s: Level before clean the room_10: 28
+549:  549.0 s: Housemaid finished and the room_7 is clean
+549: Level after clean room_7: 100
+550: El turista Tourist_31 accedió al servicio ranchon, 21
+554: Tourist_21 left the hotel at 554
+arrive: 310
+len of stay: 239
+555: El turista Tourist_28 accedió al servicio pool, 31
+560: El turista Tourist_38 accedió a la habitación room_1.
+560: LEVEL OF CLEAN OF room_1: 100
+560: El turista Tourist_39 accedió a la habitación room_9.
+560: LEVEL OF CLEAN OF room_9: 100
+560: El turista Tourist_40 accedió a la habitación room_18.
+560: LEVEL OF CLEAN OF room_18: 100
+560: El turista Tourist_41 accedió a la habitación room_15.
+560: LEVEL OF CLEAN OF room_15: 100
+560: El turista Tourist_36 accedió a la habitación room_21.
+560: LEVEL OF CLEAN OF room_21: 100
+560: El turista Tourist_37 accedió a la habitación room_35.
+560: LEVEL OF CLEAN OF room_35: 100
+560: El turista Tourist_42 accedió a la habitación room_5.
+560: LEVEL OF CLEAN OF room_5: 100
+561:  561.0 s: Housemaid finished and the room_10 is clean
+561: Level after clean room_10: 100
+561: El turista Tourist_33 accedió al servicio coffee, 27
+563:  563.0 s: Housemaid is cleaning the bed of the room_37...
+563:  563.0 s: Level before clean the room_37: 49
+565: Tourist_25 left the hotel at 565
+arrive: 367
+len of stay: 197
+566: El turista Tourist_24 accedió al servicio show time, 100
+566: El turista Tourist_32 accedió al servicio buffet, 25
+567: El turista Tourist_27 accedió al servicio show time, 100
+567: El turista Tourist_22 accedió al servicio gym, 100
+568: El turista Tourist_29 accedió al servicio ironing service, 38
+571: El turista Tourist_31 accedió al servicio hair salon, 24
+572: El turista Tourist_34 accedió al servicio energy drink, 24
+574:  574.0 s: buffet_worker is working on the buffet of the buffet...
+574:  574.0 s: Level before work the buffet: 46
+575: El turista Tourist_26 accedió al servicio pool table, 43
+577: El turista Tourist_30 accedió al servicio pool table, 38
+578:  578.0 s: buffet_worker finished and the buffet is ready
+578: Level after clean buffet: 100
+578: El turista Tourist_28 accedió al servicio table tennis, 100
+579:  579.0 s: Housemaid finished and the room_37 is clean
+579: Level after clean room_37: 100
+583: El turista Tourist_35 accedió al servicio energy drink, 39
+589: El turista Tourist_32 accedió al servicio tennis, 27
+589: El turista Tourist_27 accedió al servicio table tennis, 100
+591: Tourist_29 left the hotel at 591
+arrive: 411
+len of stay: 179
+592:  592.0 s: coffee_worker is working on the bar_utl of the coffee...
+592:  592.0 s: Level before work the coffee: 45
+593: El turista Tourist_36 accedió al servicio restaurant, 33
+593: El turista Tourist_31 accedió al servicio tennis, 49
+594: El turista Tourist_33 accedió al servicio buffet, 24
+595: El turista Tourist_34 accedió al servicio snack bar, 36
+596:  596.0 s: coffee_worker finished and the coffee is ready
+596: Level after clean coffee: 100
+598: Tourist_26 left the hotel at 598
+arrive: 377
+len of stay: 215
+598: El turista Tourist_24 accedió al servicio pool table, 100
+598: El turista Tourist_22 accedió al servicio gym, 100
+599: El turista Tourist_37 accedió al servicio room, 33
+604: Tourist_31 left the hotel at 604
+arrive: 427
+len of stay: 170
+604: El turista Tourist_38 accedió al servicio room, 30
+608: El turista Tourist_30 accedió al servicio steam room, 38
+610: Tourist_28 left the hotel at 610
+arrive: 399
+len of stay: 205
+612: Tourist_27 left the hotel at 612
+arrive: 389
+len of stay: 215
+612: El turista Tourist_32 accedió al servicio table tennis, 100
+614: El turista Tourist_35 accedió al servicio room service, 43
+616: El turista Tourist_36 accedió al servicio pool, 32
+620: El turista Tourist_39 accedió al servicio energy drink, 35
+621: Tourist_22 left the hotel at 621
+arrive: 327
+len of stay: 288
+621: El turista Tourist_37 accedió al servicio buffet, 38
+627: El turista Tourist_33 accedió al servicio show time, 45
+627: El turista Tourist_34 accedió al servicio excursion, 27
+627: El turista Tourist_38 accedió al servicio snack bar, 22
+630: El turista Tourist_43 accedió a la habitación room_3.
+630: LEVEL OF CLEAN OF room_3: 100
+630: El turista Tourist_47 accedió a la habitación room_4.
+630: LEVEL OF CLEAN OF room_4: 45
+630: El turista Tourist_45 accedió a la habitación room_12.
+630: LEVEL OF CLEAN OF room_12: 100
+630: El turista Tourist_44 accedió a la habitación room_27.
+630: LEVEL OF CLEAN OF room_27: 100
+630: El turista Tourist_48 accedió a la habitación room_24.
+630: LEVEL OF CLEAN OF room_24: 100
+630: El turista Tourist_46 accedió a la habitación room_47.
+630: LEVEL OF CLEAN OF room_47: 100
+630: Tourist_24 left the hotel at 630
+arrive: 353
+len of stay: 270
+630: El turista Tourist_40 accedió al servicio energy drink, 28
+635: El turista Tourist_32 accedió al servicio pool, 100
+635: El turista Tourist_35 accedió al servicio laundry service, 29
+638: El turista Tourist_41 accedió al servicio coffee, 41
+641: Tourist_30 left the hotel at 641
+arrive: 421
+len of stay: 216
+643: Manager call the Find AI function
+643: El turista Tourist_39 accedió al servicio room service, 38
+647: El turista Tourist_36 accedió al servicio hair salon, 21
+652: El turista Tourist_37 accedió al servicio laundry service, 28
+655: El turista Tourist_42 accedió al servicio coffee, 46
+658: El turista Tourist_34 accedió al servicio laundry service, 32
+658: El turista Tourist_38 accedió al servicio gym, 34
+658: El turista Tourist_35 accedió al servicio pool table, 40
+659: El turista Tourist_33 accedió al servicio table tennis, 100
+661: El turista Tourist_40 accedió al servicio buffet, 27
+661: El turista Tourist_41 accedió al servicio snack bar, 50
+667: El turista Tourist_32 accedió al servicio pool, 100
+669: El turista Tourist_36 accedió al servicio pool, 100
+674: El turista Tourist_39 accedió al servicio ironing service, 38
+675:  675.0 s: laundry_service_worker is working on the laundry_utl of the laundry_service...
+675:  675.0 s: Level before work the laundry_service: 49
+676: El turista Tourist_43 accedió al servicio energy drink, 27
+677: El turista Tourist_42 accedió al servicio restaurant, 44
+679:  679.0 s: laundry_service_worker finished and the laundry_service is ready
+679: Level after clean laundry_service: 100
+679: El turista Tourist_44 accedió al servicio coffee, 41
+679: El turista Tourist_34 accedió al servicio pool, 100
+681: El turista Tourist_35 accedió al servicio pool, 100
+681: El turista Tourist_33 accedió al servicio table tennis, 100
+683: El turista Tourist_37 accedió al servicio show time, 43
+684: El turista Tourist_40 accedió al servicio hair salon, 39
+684: El turista Tourist_41 accedió al servicio gym, 22
+688: El turista Tourist_32 accedió al servicio table tennis, 100
+690: El turista Tourist_38 accedió al servicio steam room, 33
+691: Tourist_34 left the hotel at 691
+arrive: 470
+len of stay: 217
+695: El turista Tourist_39 accedió al servicio pool, 47
+699: El turista Tourist_42 accedió al servicio pool table, 23
+700: El turista Tourist_53 accedió a la habitación room_0.
+700: LEVEL OF CLEAN OF room_0: 100
+700: El turista Tourist_50 accedió a la habitación room_23.
+700: LEVEL OF CLEAN OF room_23: 100
+700: El turista Tourist_51 accedió a la habitación room_22.
+700: LEVEL OF CLEAN OF room_22: 100
+700: El turista Tourist_54 accedió a la habitación room_29.
+700: LEVEL OF CLEAN OF room_29: 100
+700: El turista Tourist_52 accedió a la habitación room_42.
+700: LEVEL OF CLEAN OF room_42: 100
+700: El turista Tourist_49 accedió a la habitación room_49.
+700: LEVEL OF CLEAN OF room_49: 100
+700: El turista Tourist_45 accedió al servicio coffee, 44
+700: El turista Tourist_36 accedió al servicio pool table, 100
+701: El turista Tourist_44 accedió al servicio restaurant, 33
+704: Tourist_37 left the hotel at 704
+arrive: 496
+len of stay: 208
+705: El turista Tourist_40 accedió al servicio pool, 44
+706: El turista Tourist_46 accedió al servicio energy drink, 35
+709: El turista Tourist_43 accedió al servicio restaurant, 33
+712: Tourist_33 left the hotel at 712
+arrive: 458
+len of stay: 254
+712: Tourist_36 left the hotel at 712
+arrive: 491
+len of stay: 214
+712: El turista Tourist_35 accedió al servicio table tennis, 100
+713: El turista Tourist_47 accedió al servicio ranchon, 39
+715: El turista Tourist_41 accedió al servicio transfer service, 37
+717: El turista Tourist_39 accedió al servicio pool, 100
+720: El turista Tourist_32 accedió al servicio tennis, 100
+720: El turista Tourist_42 accedió al servicio pool table, 100
+721: El turista Tourist_45 accedió al servicio buffet, 50
+721:  721.0 s: steam_room_worker is working on the steam_room of the steam_room...
+721:  721.0 s: Level before work the steam_room: 49
+723: El turista Tourist_38 accedió al servicio gym, 100
+725:  725.0 s: steam_room_worker finished and the steam_room is ready
+725: Level after clean steam_room: 100
+726: Tourist_41 left the hotel at 726
+arrive: 537
+len of stay: 184
+727: El turista Tourist_40 accedió al servicio show time, 100
+728: El turista Tourist_48 accedió al servicio coffee, 29
+733: Tourist_32 left the hotel at 733
+arrive: 442
+len of stay: 287
+733: El turista Tourist_44 accedió al servicio pool table, 30
+734: El turista Tourist_47 accedió al servicio steam room, 26
+735: Tourist_35 left the hotel at 735
+arrive: 482
+len of stay: 251
+738: El turista Tourist_46 accedió al servicio buffet, 26
+738: El turista Tourist_39 accedió al servicio pool, 100
+739: Tourist_40 left the hotel at 739
+arrive: 529
+len of stay: 210
+741: El turista Tourist_43 accedió al servicio pool, 21
+742: El turista Tourist_42 accedió al servicio gym, 100
+743: El turista Tourist_49 accedió al servicio room, 46
+743: El turista Tourist_45 accedió al servicio show time, 39
+745: Tourist_38 left the hotel at 745
+arrive: 502
+len of stay: 238
+750: El turista Tourist_50 accedió al servicio energy drink, 30
+751: El turista Tourist_48 accedió al servicio room service, 33
+761: El turista Tourist_39 accedió al servicio excursion, 100
 763: Manager close the pool service for maintenance.
 763:  763.0 s: repairman is reapiring the pool...
 763:  763.0 s: Level before repair the pool: 69
-764: El turista Tourist_49 accedió al servicio coffee, 21
-765: El turista Tourist_44 accedió al servicio ironing service, 31
-766:  766.0 s: room_service_worker is working on the room_service of the room_service...
-766:  766.0 s: Level before work the room_service: 49
-767: El turista Tourist_41 accedió al servicio pool, 100
-768: El turista Tourist_46 accedió al servicio table tennis, 26
-768: El turista Tourist_43 accedió al servicio spa, 100
-770: El turista Tourist_53 accedió a la habitación room_5.
-770: LEVEL OF CLEAN OF room_5: 100
-770: El turista Tourist_54 accedió a la habitación room_1.
-770: LEVEL OF CLEAN OF room_1: 43
+764: El turista Tourist_42 accedió al servicio excursion, 100
+764: El turista Tourist_45 accedió al servicio pool table, 100
+765: El turista Tourist_44 accedió al servicio excursion, 100
+766: El turista Tourist_47 accedió al servicio show time, 48
+766:  766.0 s: pool_worker is working on the pool_utl of the pool...
+766:  766.0 s: Level before work the pool: 49
+768: El turista Tourist_51 accedió al servicio coffee, 42
+770: El turista Tourist_58 accedió a la habitación room_2.
+770: LEVEL OF CLEAN OF room_2: 100
 770: El turista Tourist_55 accedió a la habitación room_10.
 770: LEVEL OF CLEAN OF room_10: 100
-770: El turista Tourist_56 accedió a la habitación room_18.
-770: LEVEL OF CLEAN OF room_18: 100
-770: El turista Tourist_57 accedió a la habitación room_37.
-770: LEVEL OF CLEAN OF room_37: 100
-770:  770.0 s: room_service_worker finished and the room_service is ready
-770: Level after clean room_service: 100
-775: Tourist_40 left the hotel at 775
-arrive: 545
-len of stay: 225
-777: El turista Tourist_47 accedió al servicio spa, 32
-777:  777.0 s: gym_worker is working on the gym of the gym...
-777:  777.0 s: Level before work the gym: 48
-778: El turista Tourist_38 accedió al servicio table tennis, 100
-781:  781.0 s: gym_worker finished and the gym is ready
-781: Level after clean gym: 100
-783: El turista Tourist_50 accedió al servicio restaurant, 34
-783: El turista Tourist_48 accedió al servicio ranchon, 21
-783: El turista Tourist_45 accedió al servicio pool table, 100
-786: El turista Tourist_49 accedió al servicio snack bar, 28
-789: El turista Tourist_51 accedió al servicio room, 35
-789: El turista Tourist_41 accedió al servicio show time, 100
-794:  794.0 s: ironing_service_worker is working on the ironing_utl of the ironing_service...
-794:  794.0 s: Level before work the ironing_service: 48
-795:  795.0 s: table_tennis_worker is working on the table_tennis of the table_tennis...
-795:  795.0 s: Level before work the table_tennis: 47
-798:  798.0 s: ironing_service_worker finished and the ironing_service is ready
-798: Level after clean ironing_service: 100
-798: El turista Tourist_44 accedió al servicio pool, 42
-799:  799.0 s: table_tennis_worker finished and the table_tennis is ready
-799: Level after clean table_tennis: 100
-799: El turista Tourist_46 accedió al servicio table tennis, 100
-801: El turista Tourist_52 accedió al servicio room, 24
-801: El turista Tourist_43 accedió al servicio spa, 100
-803: Manager close the gym service for maintenance.
+770: El turista Tourist_57 accedió a la habitación room_8.
+770: LEVEL OF CLEAN OF room_8: 100
+770: El turista Tourist_56 accedió a la habitación room_35.
+770: LEVEL OF CLEAN OF room_35: 33
+770:  770.0 s: pool_worker finished and the pool is ready
+770: Level after clean pool: 100
+771: El turista Tourist_46 accedió al servicio show time, 28
+772: El turista Tourist_48 accedió al servicio gym, 27
+774: El turista Tourist_43 accedió al servicio show time, 100
+775: El turista Tourist_49 accedió al servicio restaurant, 50
+777: El turista Tourist_52 accedió al servicio room, 30
+782: El turista Tourist_50 accedió al servicio restaurant, 20
+783: El turista Tourist_53 accedió al servicio coffee, 44
+785: Tourist_42 left the hotel at 785
+arrive: 553
+len of stay: 229
+792: El turista Tourist_46 accedió al servicio transfer service, 21
+793:  793.0 s: show_time_worker is working on the show_time of the show_time...
+793:  793.0 s: Level before work the show_time: 42
+794: Tourist_39 left the hotel at 794
+arrive: 518
+len of stay: 275
+795: El turista Tourist_45 accedió al servicio show time, 100
+796: El turista Tourist_44 accedió al servicio tennis, 100
+797:  797.0 s: show_time_worker finished and the show_time is ready
+797: Level after clean show_time: 100
+797: El turista Tourist_47 accedió al servicio pool, 100
+797:  797.0 s: gym_worker is working on the gym of the gym...
+797:  797.0 s: Level before work the gym: 49
+799: El turista Tourist_51 accedió al servicio snack bar, 37
+801:  801.0 s: gym_worker finished and the gym is ready
+801: Level after clean gym: 100
+801: El turista Tourist_54 accedió al servicio room, 32
+801:  801.0 s: Housemaid is cleaning the bed of the room_42...
+801:  801.0 s: Level before clean the room_42: 30
 803:  803.0 s: repairman finished and the service is ready
 803: Level after repair pool: 98
-803:  803.0 s: repairman is reapiring the gym...
-803:  803.0 s: Level before repair the gym: 69
-806: El turista Tourist_48 accedió al servicio spa, 35
-807: El turista Tourist_53 accedió al servicio ranchon, 30
-809: El turista Tourist_49 accedió al servicio information bureau, 35
-810: El turista Tourist_47 accedió al servicio information bureau, 34
-810: El turista Tourist_38 accedió al servicio pool table, 100
-810: El turista Tourist_41 accedió al servicio show time, 100
-811:  811.0 s: Housemaid is cleaning the bed of the room_43...
-811:  811.0 s: Level before clean the room_43: 35
-812: Tourist_41 left the hotel at 812
-arrive: 558
-len of stay: 254
-812: El turista Tourist_51 accedió al servicio buffet, 44
-814: El turista Tourist_50 accedió al servicio spa, 24
-814: El turista Tourist_45 accedió al servicio tennis, 100
-817: El turista Tourist_54 accedió al servicio room, 25
-820: El turista Tourist_46 accedió al servicio pool, 100
-822: Tourist_38 left the hotel at 822
-arrive: 517
-len of stay: 297
-824: El turista Tourist_43 accedió al servicio table tennis, 100
-828:  828.0 s: Housemaid finished and the room_43 is clean
-828: Level after clean room_43: 100
-828: El turista Tourist_48 accedió al servicio spa, 100
-828: El turista Tourist_53 accedió al servicio pool, 31
-830: El turista Tourist_44 accedió al servicio pool, 100
-831:  831.0 s: Housemaid is cleaning the bed of the room_13...
-831:  831.0 s: Level before clean the room_13: 24
-832: El turista Tourist_49 accedió al servicio spa, 48
-833: El turista Tourist_55 accedió al servicio room, 24
-833: El turista Tourist_52 accedió al servicio buffet, 28
-837: El turista Tourist_45 accedió al servicio pool table, 100
-840: El turista Tourist_61 accedió a la habitación room_0.
-840: LEVEL OF CLEAN OF room_0: 46
-840: El turista Tourist_59 accedió a la habitación room_12.
-840: LEVEL OF CLEAN OF room_12: 100
-840: El turista Tourist_60 accedió a la habitación room_22.
-840: LEVEL OF CLEAN OF room_22: 100
-840: El turista Tourist_58 accedió a la habitación room_39.
-840: LEVEL OF CLEAN OF room_39: 100
-841: Tourist_44 left the hotel at 841
-arrive: 598
-len of stay: 235
-841: El turista Tourist_47 accedió al servicio tennis, 100
-841: El turista Tourist_46 accedió al servicio table tennis, 100
-843: Manager close the pool_table service for maintenance.
-843:  843.0 s: repairman finished and the service is ready
-843: Level after repair gym: 100
-843:  843.0 s: repairman is reapiring the pool_table...
-843:  843.0 s: Level before repair the pool_table: 67
-843: El turista Tourist_51 accedió al servicio ironing service, 22
-846: El turista Tourist_56 accedió al servicio coffee, 37
-847: El turista Tourist_50 accedió al servicio hair salon, 29
-848:  848.0 s: Housemaid finished and the room_13 is clean
-848: Level after clean room_13: 100
-848: El turista Tourist_54 accedió al servicio pool bar, 31
-850:  850.0 s: Housemaid is cleaning the bed of the room_10...
-850:  850.0 s: Level before clean the room_10: 24
-851: El turista Tourist_48 accedió al servicio gym, 100
-853: Tourist_47 left the hotel at 853
-arrive: 631
-len of stay: 219
-853: El turista Tourist_49 accedió al servicio spa, 100
-855: El turista Tourist_43 accedió al servicio spa, 100
-855: El turista Tourist_55 accedió al servicio buffet, 21
-856:  856.0 s: pool_worker is working on the pool_utl of the pool...
-856:  856.0 s: Level before work the pool: 45
-858: El turista Tourist_45 accedió al servicio show time, 100
-860:  860.0 s: pool_worker finished and the pool is ready
-860: Level after clean pool: 100
-860: El turista Tourist_53 accedió al servicio laundry service, 32
-863: El turista Tourist_57 accedió al servicio energy drink, 43
-865: El turista Tourist_52 accedió al servicio ironing service, 30
-866: Tourist_43 left the hotel at 866
-arrive: 589
-len of stay: 273
-866: El turista Tourist_51 accedió al servicio pool, 48
-867:  867.0 s: Housemaid finished and the room_10 is clean
-867: Level after clean room_10: 100
-869: El turista Tourist_50 accedió al servicio gym, 100
-869: El turista Tourist_54 accedió al servicio gym, 24
-874: El turista Tourist_46 accedió al servicio tennis, 100
-874: El turista Tourist_48 accedió al servicio spa, 100
-875: El turista Tourist_49 accedió al servicio spa, 100
-879: El turista Tourist_56 accedió al servicio ranchon, 24
-882: El turista Tourist_53 accedió al servicio pool, 100
-883: Manager close the table_tennis service for maintenance.
-883:  883.0 s: repairman finished and the service is ready
-883: Level after repair pool_table: 100
-883:  883.0 s: repairman is reapiring the table_tennis...
-883:  883.0 s: Level before repair the table_tennis: 68
-884: El turista Tourist_58 accedió al servicio room, 39
-884: El turista Tourist_57 accedió al servicio pool bar, 38
-886: Tourist_46 left the hotel at 886
-arrive: 613
-len of stay: 267
-886: Tourist_48 left the hotel at 886
-arrive: 648
-len of stay: 229
-886: Tourist_49 left the hotel at 886
-arrive: 663
-len of stay: 220
-886: El turista Tourist_55 accedió al servicio pool table, 38
-887: Tourist_52 left the hotel at 887
-arrive: 698
-len of stay: 186
-889: Tourist_45 left the hotel at 889
+805: Tourist_48 left the hotel at 805
+arrive: 626
+len of stay: 174
+805: El turista Tourist_43 accedió al servicio pool table, 100
+806: El turista Tourist_53 accedió al servicio ranchon, 37
+807: El turista Tourist_49 accedió al servicio tennis, 38
+807:  807.0 s: restaurant_worker is working on the restaurant of the restaurant...
+807:  807.0 s: Level before work the restaurant: 38
+808: El turista Tourist_52 accedió al servicio buffet, 38
+811:  811.0 s: restaurant_worker finished and the restaurant is ready
+811: Level after clean restaurant: 100
+813: El turista Tourist_50 accedió al servicio show time, 26
+816: El turista Tourist_55 accedió al servicio ranchon, 41
+817:  817.0 s: Housemaid finished and the room_42 is clean
+817: Level after clean room_42: 100
+820: El turista Tourist_47 accedió al servicio table tennis, 100
+823: El turista Tourist_46 accedió al servicio show time, 100
+827: El turista Tourist_44 accedió al servicio excursion, 100
+828: El turista Tourist_45 accedió al servicio table tennis, 100
+828: El turista Tourist_43 accedió al servicio pool, 100
+828:  828.0 s: ranchon_worker is working on the ranchon of the ranchon...
+828:  828.0 s: Level before work the ranchon: 48
+829: El turista Tourist_53 accedió al servicio excursion, 33
+829: El turista Tourist_49 accedió al servicio laundry service, 37
+829:  829.0 s: Housemaid is cleaning the bed of the room_29...
+829:  829.0 s: Level before clean the room_29: 32
+832:  832.0 s: ranchon_worker finished and the ranchon is ready
+832: Level after clean ranchon: 100
+832: El turista Tourist_51 accedió al servicio gym, 35
+834: El turista Tourist_54 accedió al servicio restaurant, 25
+835: El turista Tourist_56 accedió al servicio snack bar, 33
+837: El turista Tourist_55 accedió al servicio hair salon, 29
+839: El turista Tourist_52 accedió al servicio show time, 20
+840: El turista Tourist_63 accedió a la habitación room_1.
+840: LEVEL OF CLEAN OF room_1: 30
+840: El turista Tourist_59 accedió a la habitación room_9.
+840: LEVEL OF CLEAN OF room_9: 100
+840: El turista Tourist_61 accedió a la habitación room_21.
+840: LEVEL OF CLEAN OF room_21: 100
+840: El turista Tourist_64 accedió a la habitación room_37.
+840: LEVEL OF CLEAN OF room_37: 100
+840: El turista Tourist_62 accedió a la habitación room_5.
+840: LEVEL OF CLEAN OF room_5: 100
+840: El turista Tourist_60 accedió a la habitación room_6.
+840: LEVEL OF CLEAN OF room_6: 100
+841: El turista Tourist_57 accedió al servicio energy drink, 35
+843: Manager close the show_time service for maintenance.
+843:  843.0 s: repairman is reapiring the show_time...
+843:  843.0 s: Level before repair the show_time: 67
+844: El turista Tourist_46 accedió al servicio pool table, 100
+845:  845.0 s: Housemaid finished and the room_29 is clean
+845: Level after clean room_29: 100
+845: El turista Tourist_50 accedió al servicio steam room, 32
+850: El turista Tourist_43 accedió al servicio pool, 100
+851: El turista Tourist_45 accedió al servicio table tennis, 100
+852: El turista Tourist_49 accedió al servicio tennis, 100
+853: El turista Tourist_47 accedió al servicio tennis, 100
+855: El turista Tourist_51 accedió al servicio information bureau, 34
+857: El turista Tourist_58 accedió al servicio energy drink, 42
+857: El turista Tourist_54 accedió al servicio table tennis, 31
+860: El turista Tourist_44 accedió al servicio excursion, 100
+860: El turista Tourist_53 accedió al servicio excursion, 100
+860: El turista Tourist_55 accedió al servicio excursion, 48
+862: Tourist_43 left the hotel at 862
+arrive: 573
+len of stay: 288
+862: Tourist_45 left the hotel at 862
+arrive: 597
+len of stay: 261
+864: El turista Tourist_57 accedió al servicio restaurant, 23
+865: Tourist_46 left the hotel at 865
 arrive: 603
-len of stay: 277
-897: El turista Tourist_51 accedió al servicio pool, 100
-901: El turista Tourist_59 accedió al servicio energy drink, 24
-901: El turista Tourist_50 accedió al servicio pool, 100
-902: El turista Tourist_54 accedió al servicio steam room, 36
-902: El turista Tourist_56 accedió al servicio pool, 37
-904: El turista Tourist_53 accedió al servicio pool, 100
-905: El turista Tourist_58 accedió al servicio ranchon, 48
-905: El turista Tourist_57 accedió al servicio gym, 23
-910: El turista Tourist_63 accedió a la habitación room_3.
-910: LEVEL OF CLEAN OF room_3: 47
-910: El turista Tourist_62 accedió a la habitación room_6.
-910: LEVEL OF CLEAN OF room_6: 100
-910: El turista Tourist_64 accedió a la habitación room_13.
-910: LEVEL OF CLEAN OF room_13: 100
-910: El turista Tourist_66 accedió a la habitación room_15.
-910: LEVEL OF CLEAN OF room_15: 42
-910: El turista Tourist_65 accedió a la habitación room_28.
-910: LEVEL OF CLEAN OF room_28: 45
-910: Tourist_51 left the hotel at 910
-arrive: 686
-len of stay: 218
-917: El turista Tourist_55 accedió al servicio ironing service, 38
-921: El turista Tourist_60 accedió al servicio room, 41
-923:  923.0 s: repairman finished and the service is ready
-923: Level after repair table_tennis: 100
-923: El turista Tourist_54 accedió al servicio spa, 100
-923: El turista Tourist_56 accedió al servicio tennis, 100
-924: El turista Tourist_59 accedió al servicio ranchon, 25
-924: El turista Tourist_50 accedió al servicio pool, 100
-926: El turista Tourist_57 accedió al servicio laundry service, 21
-927: El turista Tourist_53 accedió al servicio pool, 100
-936: El turista Tourist_58 accedió al servicio pool table, 39
-937: El turista Tourist_61 accedió al servicio coffee, 37
-942: El turista Tourist_60 accedió al servicio pool bar, 27
-944: El turista Tourist_54 accedió al servicio spa, 100
-945: El turista Tourist_56 accedió al servicio tennis, 100
-948: El turista Tourist_55 accedió al servicio pool, 100
-948: El turista Tourist_57 accedió al servicio table tennis, 100
-951: Tourist_55 left the hotel at 951
-arrive: 732
-len of stay: 218
-954: El turista Tourist_62 accedió al servicio room, 25
-955: El turista Tourist_59 accedió al servicio hair salon, 38
-956: El turista Tourist_50 accedió al servicio show time, 100
-959: El turista Tourist_53 accedió al servicio show time, 100
-963: Manager close the coffee service for maintenance.
-963:  963.0 s: repairman is reapiring the coffee...
-963:  963.0 s: Level before repair the coffee: 68
-964: El turista Tourist_60 accedió al servicio pool table, 37
-966: El turista Tourist_56 accedió al servicio tennis, 100
-967: El turista Tourist_58 accedió al servicio steam room, 34
-969: El turista Tourist_61 accedió al servicio buffet, 44
-971: El turista Tourist_57 accedió al servicio table tennis, 100
-972: El turista Tourist_63 accedió al servicio coffee, 32
-975: El turista Tourist_62 accedió al servicio room service, 43
-977: El turista Tourist_64 accedió al servicio room, 36
-977: El turista Tourist_54 accedió al servicio spa, 100
-978: Tourist_50 left the hotel at 978
-arrive: 681
-len of stay: 295
-978:  978.0 s: Housemaid is cleaning the bed of the room_6...
-978:  978.0 s: Level before clean the room_6: 25
-980: El turista Tourist_72 accedió a la habitación room_4.
-980: LEVEL OF CLEAN OF room_4: 100
-980: El turista Tourist_67 accedió a la habitación room_8.
-980: LEVEL OF CLEAN OF room_8: 100
-980: El turista Tourist_70 accedió a la habitación room_9.
-980: LEVEL OF CLEAN OF room_9: 100
-980: El turista Tourist_71 accedió a la habitación room_7.
-980: LEVEL OF CLEAN OF room_7: 100
-980: El turista Tourist_68 accedió a la habitación room_16.
-980: LEVEL OF CLEAN OF room_16: 100
-980: El turista Tourist_69 accedió a la habitación room_43.
-980: LEVEL OF CLEAN OF room_43: 100
-982: Tourist_53 left the hotel at 982
-arrive: 704
-len of stay: 273
-982:  982.0 s: hair_salon_worker is working on the hair_salon of the hair_salon...
-982:  982.0 s: Level before work the hair_salon: 49
-986: Tourist_59 left the hotel at 986
-arrive: 800
-len of stay: 178
-986:  986.0 s: hair_salon_worker finished and the hair_salon is ready
-986: Level after clean hair_salon: 100
-987: El turista Tourist_60 accedió al servicio laundry service, 28
-988: El turista Tourist_56 accedió al servicio tennis, 100
-988: El turista Tourist_58 accedió al servicio table tennis, 100
-990: Tourist_54 left the hotel at 990
+len of stay: 255
+870: El turista Tourist_56 accedió al servicio table tennis, 26
+872: Tourist_52 left the hotel at 872
+arrive: 675
+len of stay: 196
+876: El turista Tourist_59 accedió al servicio coffee, 35
+881: Tourist_44 left the hotel at 881
+arrive: 578
+len of stay: 298
+882: El turista Tourist_53 accedió al servicio excursion, 100
+883: Manager close the pool_table service for maintenance.
+883:  883.0 s: repairman finished and the service is ready
+883: Level after repair show_time: 100
+883:  883.0 s: repairman is reapiring the pool_table...
+883:  883.0 s: Level before repair the pool_table: 69
+883: El turista Tourist_49 accedió al servicio tennis, 100
+883: El turista Tourist_55 accedió al servicio show time, 100
+883: El turista Tourist_50 accedió al servicio table tennis, 100
+885: El turista Tourist_47 accedió al servicio show time, 100
+886: Tourist_49 left the hotel at 886
+arrive: 642
+len of stay: 244
+889: El turista Tourist_60 accedió al servicio room, 37
+889: El turista Tourist_58 accedió al servicio ranchon, 47
+889: El turista Tourist_54 accedió al servicio steam room, 20
+896: Tourist_55 left the hotel at 896
 arrive: 714
-len of stay: 269
-993: El turista Tourist_65 accedió al servicio coffee, 40
-993: El turista Tourist_57 accedió al servicio gym, 100
-995:  995.0 s: Housemaid finished and the room_6 is clean
-995: Level after clean room_6: 100
-999: Tourist_60 left the hotel at 999
-arrive: 820
-len of stay: 178
+len of stay: 182
+898: Tourist_47 left the hotel at 898
+arrive: 611
+len of stay: 282
+900: El turista Tourist_51 accedió al servicio table tennis, 100
+901: Tourist_50 left the hotel at 901
+arrive: 649
+len of stay: 249
+902: El turista Tourist_61 accedió al servicio room, 42
+903: El turista Tourist_57 accedió al servicio table tennis, 21
+908: El turista Tourist_59 accedió al servicio snack bar, 44
+909: El turista Tourist_56 accedió al servicio gym, 100
+910: El turista Tourist_66 accedió a la habitación room_7.
+910: LEVEL OF CLEAN OF room_7: 100
+910: El turista Tourist_70 accedió a la habitación room_11.
+910: LEVEL OF CLEAN OF room_11: 100
+910: El turista Tourist_67 accedió a la habitación room_12.
+910: LEVEL OF CLEAN OF room_12: 100
+910: El turista Tourist_69 accedió a la habitación room_17.
+910: LEVEL OF CLEAN OF room_17: 100
+910: El turista Tourist_68 accedió a la habitación room_24.
+910: LEVEL OF CLEAN OF room_24: 100
+910: El turista Tourist_65 accedió a la habitación room_42.
+910: LEVEL OF CLEAN OF room_42: 100
+911: El turista Tourist_54 accedió al servicio pool, 100
+912: El turista Tourist_62 accedió al servicio room, 31
+921: Tourist_51 left the hotel at 921
+arrive: 667
+len of stay: 250
+921: El turista Tourist_63 accedió al servicio energy drink, 20
+921: El turista Tourist_60 accedió al servicio room service, 37
+923: Manager close the energy_drink service for maintenance.
+923:  923.0 s: repairman finished and the service is ready
+923: Level after repair pool_table: 100
+923:  923.0 s: repairman is reapiring the energy_drink...
+923:  923.0 s: Level before repair the energy_drink: 68
+927:  927.0 s: table_tennis_worker is working on the table_tennis of the table_tennis...
+927:  927.0 s: Level before work the table_tennis: 42
+928: El turista Tourist_53 accedió al servicio table tennis, 100
+931:  931.0 s: table_tennis_worker finished and the table_tennis is ready
+931: Level after clean table_tennis: 100
+931: El turista Tourist_58 accedió al servicio table tennis, 24
+932: El turista Tourist_56 accedió al servicio tennis, 100
+933: El turista Tourist_62 accedió al servicio snack bar, 30
+934: El turista Tourist_61 accedió al servicio restaurant, 27
+934: El turista Tourist_54 accedió al servicio live music service, 100
+935:  935.0 s: Housemaid is cleaning the bed of the room_21...
+935:  935.0 s: Level before clean the room_21: 42
+937: Tourist_53 left the hotel at 937
+arrive: 681
+len of stay: 254
+939: El turista Tourist_64 accedió al servicio coffee, 43
+940: El turista Tourist_59 accedió al servicio karaoke, 33
+940:  940.0 s: snack_bar_worker is working on the snack_bar of the snack_bar...
+940:  940.0 s: Level before work the snack_bar: 48
+944:  944.0 s: snack_bar_worker finished and the snack_bar is ready
+944: Level after clean snack_bar: 100
+945: Tourist_56 left the hotel at 945
+arrive: 733
+len of stay: 212
+950: El turista Tourist_57 accedió al servicio table tennis, 100
+951:  951.0 s: Housemaid finished and the room_21 is clean
+951: Level after clean room_21: 100
+952:  952.0 s: table_tennis_worker is working on the table_tennis of the table_tennis...
+952:  952.0 s: Level before work the table_tennis: 93
+953: El turista Tourist_65 accedió al servicio coffee, 20
+953: El turista Tourist_58 accedió al servicio transfer service, 29
+953: El turista Tourist_63 accedió al servicio restaurant, 39
+953: El turista Tourist_60 accedió al servicio gym, 38
+955: El turista Tourist_62 accedió al servicio karaoke, 39
+956:  956.0 s: table_tennis_worker finished and the table_tennis is ready
+956: Level after clean table_tennis: 100
+956: El turista Tourist_61 accedió al servicio table tennis, 26
+957: El turista Tourist_54 accedió al servicio tennis, 100
+963: Manager close the table_tennis service for maintenance.
+963:  963.0 s: repairman finished and the service is ready
+963: Level after repair energy_drink: 100
+963: El turista Tourist_59 accedió al servicio information bureau, 20
+965: El turista Tourist_66 accedió al servicio energy drink, 27
+972: El turista Tourist_67 accedió al servicio coffee, 29
+972: El turista Tourist_64 accedió al servicio restaurant, 25
+975: El turista Tourist_60 accedió al servicio tennis, 100
+976: El turista Tourist_63 accedió al servicio show time, 39
+978:  978.0 s: repairman is reapiring the table_tennis...
+978:  978.0 s: Level before repair the table_tennis: 59
+979: El turista Tourist_57 accedió al servicio live music service, 100
+980: El turista Tourist_73 accedió a la habitación room_0.
+980: LEVEL OF CLEAN OF room_0: 100
+980: El turista Tourist_74 accedió a la habitación room_3.
+980: LEVEL OF CLEAN OF room_3: 100
+980: El turista Tourist_71 accedió a la habitación room_10.
+980: LEVEL OF CLEAN OF room_10: 100
+980: El turista Tourist_76 accedió a la habitación room_4.
+980: LEVEL OF CLEAN OF room_4: 45
+980: El turista Tourist_72 accedió a la habitación room_47.
+980: LEVEL OF CLEAN OF room_47: 100
+980: El turista Tourist_75 accedió a la habitación room_49.
+980: LEVEL OF CLEAN OF room_49: 46
+981: Tourist_57 left the hotel at 981
+arrive: 739
+len of stay: 242
+982: El turista Tourist_68 accedió al servicio energy drink, 35
+985: El turista Tourist_58 accedió al servicio karaoke, 100
+986: El turista Tourist_65 accedió al servicio snack bar, 27
+986: El turista Tourist_62 accedió al servicio steam room, 34
+986: El turista Tourist_59 accedió al servicio gym, 100
+987: Tourist_60 left the hotel at 987
+arrive: 788
+len of stay: 195
+988: El turista Tourist_66 accedió al servicio ranchon, 28
+989: Tourist_54 left the hotel at 989
+arrive: 698
+len of stay: 286
+989: El turista Tourist_61 accedió al servicio tennis, 100
+993: El turista Tourist_67 accedió al servicio restaurant, 43
+995: El turista Tourist_64 accedió al servicio show time, 31
+997: Servicio energy drink con CLEAN LEVEL = 5
+ y Tourist_69 necesita 53 de energy

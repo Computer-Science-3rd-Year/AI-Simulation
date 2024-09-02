@@ -1,0 +1,42 @@
+Título y datos de los autores
+	Título del informe en español e inglés
+	Nombres completos de los autores
+	Institución(es) a la que pertenecen los autores
+	Fecha de realización del estudio
+Resumen y Abstract
+	Resumen en español (máximo 100 palabras)
+	Palabras clave en español (5-10)
+	Abstract en inglés (traducción literal del resumen)
+	Keywords en inglés (5-10)
+Introducción
+	Planteamiento del problema o tema de investigación
+	Contextualización y justificación del estudio
+	Objetivos generales y específicos
+	Preguntas de investigación o hipótesis
+Marco teórico
+	Revisión crítica de la literatura existente sobre el tema
+	Conceptos clave relacionados con el objeto de estudio
+	Teorías relevantes que sustentan la investigación
+Método
+	Diseño metodológico utilizado
+	Muestra y población de estudio
+	Instrumentos y técnicas de recolección de datos
+	Procedimiento para la obtención y análisis de los datos
+Resultados
+	Presentación sistemática de los hallazgos obtenidos
+	Tablas, gráficos y figuras que ilustren los resultados principales
+Discusión
+	Interpretación de los resultados en relación con las hipótesis planteadas
+	Comparación con estudios previos similares
+	Implicaciones prácticas y teóricas de los hallazgos
+Conclusiones
+	Resumen conciso de los principales hallazgos
+	Cumplimiento de los objetivos propuestos
+	Limitaciones del estudio
+Recomendaciones
+	Propuestas para futuras investigaciones
+	Aplicaciones prácticas de los resultados obtenidos
+Referencias bibliográficas
+	Lista detallada de todas las fuentes citadas en el texto
+Anexos
+	Material complementario que apoye el informe principal (opcional)
