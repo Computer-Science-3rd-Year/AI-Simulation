@@ -15,10 +15,10 @@ def llm_and_real_classification():
             services_level = melia_hotel.get_average_level()  # Obtener nivel de servicio
             result.append((real_classif, llm_classif, services_level)) # (int, string, float)
 
-    return result
-
+    return result 
+# Cambio de prueba, probandiiinnnnnG!!!!!!!!!!!!!!!!!!!!!!!!1
 def compare_classifications(real, llm, reals, llm_classif):
-    #llm_classif_name = replace_(llm)
+    #llm_classif_name = replace_(llm) 
     llm_classif.append(enu.Satisfaction_classif[llm].value)
 
     if real <= 20:
