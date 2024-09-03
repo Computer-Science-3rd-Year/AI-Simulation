@@ -5,7 +5,6 @@ import numpy as np
 def best_strategy(test, uses_services, money_services, active = True):
     result = []
     for _ in range(100):
-
         prm.HOUSEMAID_TIME = 15
         prm.REPAIRMAN_TIME = 40
         env = simpy.Environment()
@@ -82,24 +81,37 @@ else:
 
 names = []
 values = []
+values_price = []
 for service in uses_services:
     result = sum(uses_services[service])/len(uses_services[service])
     if result > 30:
         names.append(service.name)
         values.append(result)
+        values_price.append(service.price)
 
 names_1 = []
 values_1 = []
+values_price_1 = []
 for service in money_service:
     result = sum(money_service[service])/len(money_service[service])
     if result > 2200:
         names_1.append(service.name)
         values_1.append(result)
+        values_price_1.append(service.price)
 
 plt.bar(names, values)
 plt.title("Popularidad")
 plt.show()
 
+plt.bar(names, values_price)
+plt.title("Price of the most popular services")
+plt.show()
+
+
 plt.bar(names_1, values_1)
 plt.title("Mayor Ganancia")
+plt.show()
+
+plt.bar(names_1, values_price_1)
+plt.title("Price of highest profit services")
 plt.show()

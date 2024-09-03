@@ -211,4 +211,4 @@ def run_simulation():
     
     return melia_hotel
 
-run_simulation()
+#run_simulation()
