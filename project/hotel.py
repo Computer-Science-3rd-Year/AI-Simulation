@@ -93,6 +93,13 @@ class Hotel:
         for service in self.services:
             total_level += service.maintenance  #  Suponiendo que "level" es el atributo de la clase service
         return total_level / len(self.services)
+    
+    def get_average_level_service(self, services):
+        total_level = 0
+        for service in self.services:
+            if not service in services: continue
+            total_level += service.maintenance  #  Suponiendo que "level" es el atributo de la clase service
+        return total_level / len(self.services)
 
     
 

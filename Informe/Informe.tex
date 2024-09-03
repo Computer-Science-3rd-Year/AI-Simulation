@@ -79,16 +79,21 @@ $H_1$: Hay diferencia entre las medias de las ganancias producidas aplicando cad
 \subsubsection{Servicio más popular y servicio que reporta mayores ganancias}
 Resulta necesario para el negocio de la hotelería saber cuál es el servicio más usado por los huéspedes así como el que reporta mayores ganancias. Con 100 simulaciones realizadas aplicando un criterio de parada, y luego 100 simulaciones más aplicando el otro criterio de parada, se analizó asimismo si el servicio más popular y el que reporta mayor ganancia están relacionados con este cambio en el algoritmo de metaheurística.
 \subsubsection{Análisis de la influencia en las ganancias que tienen las estrategias tomadas por el gerente}
-Es necesario saber si las estrategias tomadas por el manager implican algún cambio positiva en las ganancias del hotel. Para este análisis, primero se realizaron 100 simulaciones donde la única regla del gerente es mantener el nivel de mantenimiento (valga la redundancia) de los servicios en un porciento aceptable. En otras 100 simulaciones el manager ha tomado todas las estrategis que ha considerado en base a sus reglas de negocio. De cada experimento se almacenan las ganancias obtenidas y se realiza una prueba de Mann-Whitney U para analizar las diferencias entre ellas.
+Es necesario saber si las estrategias tomadas por el manager implican algún cambio positiva en las ganancias del hotel. Para este análisis, primero se realizaron 100 simulaciones donde la única regla del gerente es mantener el nivel de mantenimiento (valga la redundancia) de los servicios en un porciento aceptable. En otras 100 simulaciones el manager ha tomado todas las estrategis que ha considerado en base a sus reglas de negocio. De cada experimento se almacenan las ganancias obtenidas y se realiza una prueba de Mann-Whitney U para analizar las diferencias entre ellas.\\
+Para este análisis se tomaron como hipótesis nula y alternativas las siguientes:\\
+$H_0$: No hay diferencia entre las medias de las ganancias producidas con y sin aplicar las estrategias del gerente.\\
+$H_1$: Hay diferencia entre las medias de las ganancias producidas con y sin aplicar las estrategias del gerente.\\
 \subsubsection{Clasificación del LLM vs experiencia real}
-En este trabajo se ha usado un LLM en dos fases: 1ro, dado un conjunto de frases que el turista devuelve de acuerdo a su experiencia en el hotel, el LLM genera una reseña coherente que corresponde a ese turista; 2do, el mismo LLM (pero ahora en calidad de clasificador) asignará, en base a la reseña generada, una etiqueta que clasificará la experiencia del turista en: 'Excellent' (excelente), 'Very good' (muy buena), 'Good' (buena), 'Mala' (bad) o 'Very bad' (muy mala). Cada una de estas clasificaciones corresponden a un rango numérico comprendido entre 0 y 100 ( $80 < x \le 100$: Excellent, $60 < x \le 80$: Very Good, $40 < x \le 60$: Good, $20 < x \le 40$: Bad, $0 \le x \le 20$: Very bad), para que pueda compararse con la experiencia real del turista, cuyo cálculo arroja un número, justamente, entre 0 y 100.
+En este trabajo se ha usado un LLM en dos fases: 1ro, dado un conjunto de frases que el turista devuelve de acuerdo a su experiencia en el hotel, el LLM genera una reseña coherente que corresponde a ese turista; 2do, el mismo LLM (pero ahora en calidad de clasificador) asignará, en base a la reseña generada, una etiqueta que clasificará la experiencia del turista en: 'Excellent' (excelente), 'Very good' (muy buena), 'Good' (buena), 'Mala' (bad) o 'Very bad' (muy mala). Cada una de estas clasificaciones corresponden a un rango numérico comprendido entre 0 y 100 ( $80 < x \le 100$: Excellent, $60 < x \le 80$: Very Good, $40 < x \le 60$: Good, $20 < x \le 40$: Bad, $0 \le x \le 20$: Very bad), para que pueda compararse con la experiencia real del turista, cuyo cálculo arroja un número, justamente, entre 0 y 100.\\
+Por una cuestión de tiempo de ejecución, se decidió realizar solo 10 simulaciones para este estudio, dado que el algoritmo de un LLM demora en ejecutarse. Para medir la varianza entre las clasificaciones del LLM y la satisfacción real de los turistas, se usó un test de ANOVA (realizar otro test para la varianza o realizar el análisis de los supuestos para ANOVA). Se realizó, además, un test de correlación de Spearman para analizar la relación existente entre la clasificación del LLM y la satisfacción real.
 \subsubsection{Relación experiencia del turista con calidad de servicio del hotel}
 Además se realizó un estudio para verificar si existía una correlación entre la calidad de los servicios del hotel y el nivel de satisfacción de los turistas. Para ello se utilizó el test de correlación de Spearman y se analizó la correctitud del cálculo de la satisfacción de los turistas.
 
 
-\section{Resultados}
+\section{Resultados y discusión}
 
 %Presenta sistemáticamente los hallazgos obtenidos. Puedes incluir aquí tablas, gráficos y figuras que ilustren los resultados principales.
+%Interpreta los resultados en relación con las hipótesis planteadas, compara con estudios previos similares y discute las implicaciones prácticas y teóricas de los hallazgos.
 
 \subsubsection{Cambiando el criterio de parada}
 
@@ -96,28 +101,52 @@ Además se realizó un estudio para verificar si existía una correlación entre
 \textbf{Prueba de Mann-Whitney U:}\\
 \textit{Estadístico U:} 2646.0\\
 \textit{Valor p:} 8.897161660760197e-09\\
+En la gráfica se puede apreciar que la estrategia que aplica el criterio de parada por cantidad de iteraciones reporta mayores ganancias que la que aplica el criterio por umbral. Ahora, al obtenerse un valor del estadístico U alto, tomando $\alpha$ = 0.05, resulta que $\alpha$ < p-value = 8.897161660760197e-09, luego, efectivamente, existe una diferencia significativa en la ganancia entre las estrategias, por tanto se rechaza la hipótesis nula de que no hay diferencia. Podemos asegurar que la estrategia que produjo los datos con mayor media es mejor, en este caso es la que posee el criterio de parada por \textbf{cantidad de iteraciones} con una ganancia media de 15689.76 aproximadamente.
 \subsubsection{Servicio más popular y servicio que reporta mayores ganancias}
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{Popularidad serv} \caption{Servicios más populares} \label{fig:etiqueta} \end{figure}
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{Mayor Ganancia} \caption{Servicios con mayor ganancia} \label{fig:etiqueta} \end{figure}
+Como se ilustran en las gráficas, se puede decir que los 5 servicios más utilizados por los turistas son: ... y los que reportan mayores ganancias son: .. Resulta evidente percatarse que los servicios que pertenecen a dichas categorías no tienen por qué coincidir. Esto podría sugerir que el precio de los servicios influye en las ganancias que reporten, más que su nivel de popularidad entre los clientes.
 \subsubsection{Análisis de la influencia en las ganancias que tienen las estrategias tomadas por el gerente}
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{estrategias manager} \caption{Ganancia con y sin estrategias de negocio} \label{fig:etiqueta} \end{figure}
+
+\textbf{Prueba de Mann-Whitney U:}\\
+\textit{Estadístico U:} 5598.0\\
+\textit{Valor p:} 0.14431042503881425\\
+Ganancia media generada por las estrategias del manager: 14485.1443\\
+Ganancia media obtenida sin las estrategias del manager: 14290.28.\\
+
+Como se puede apreciar en la gráfica, es casi imperceptible la diferencia entre las ganancias reportadas al aplicar solo la estrategia de sostener un nivel de mantenimiento aceptable en los servicios, respecto a las generadas por la suma de aplicar las otras estrategias.\\
+
+Respecto a los resultados de la prueba de Mann-Whitney U, se puede apreciar un estadístico U con un valor elevado, sin embargo, tomando $\alpha$ = 0.05, se tiene que p-value > $\alpha$, luego no hay evidencia suficiente para rechazar la hipótesis nula, por tanto no se puede afirmar estadísticamente que hay una evidencia significatiova entre las ganancias obtenidas al aplicar o no, las estrategias del gerente. Por lo tanto, no es posible concluir que las estrategias tomadas por el manager son mejores en cuanto a ganancias reportadas que aquella que solo contempla el mantenimiento de los servicios.\\
+Dado que este resultado es un poco extraño, resulta conveniente revisar o bien las estrategias y reglas del gerente, o bien el cálculo de las ganancias en la simulación.
+
 \subsubsection{Clasificación del LLM vs experiencia real}
-\subsubsection{Relación experiencia del turista con calidad de servicio del hotel}
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Frecuencia de clasificaciones} \caption{frecuencia de clasif} \label{fig:etiqueta} \end{figure}
+En esta gráfica se puede apreciar que se realizaron más de 400 clasificaciones (más de 400 turistas), donde las barras correspondientes a cada clasificación están bastante aisladas.
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{LLM classif vs real satisfaction} \caption{errores LLM} \label{fig:etiqueta} \end{figure}
+En esta gráfica se puede apreciar que el LLM prácticamente no ha coincidido con en su clasificación con el resultado del cálculo de la satisfacción de los turistas. Ahora, analicemos cuánta diferencia hay entre ambas clasificaciones.
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Diferencia de errores} \caption{diferencia entre errores} \label{fig:etiqueta}\end{figure}
+A partir de esta gráfica se puede apreciar que la mayoría de las clasificaciones dadas por el LLM, dista 2 unidades de la claseificación real. Dado que son 5 clasificaciones en total, se puede inferir que el margen de error es estadísticamente significativo. El nivel de aserción de esta respuesta se verificará con el test de varianza.
 
-\section{Discusión}
+\textbf{ANOVA}\\
+\textit{Valor F:} 6096.03\\
+\textit{Valor p:} 0.000\\
+El valor p (0.000) es menor que el nivel de significancia (0.05), por tanto se rechaza la hipótesis nula. Existe evidencia estadística de que las clasificaciones del LLM y la satisfacción real de los turistas son diferentes.\\
 
-%Interpreta los resultados en relación con las hipótesis planteadas, compara con estudios previos similares y discute las implicaciones prácticas y teóricas de los hallazgos.
+\textbf{Correlación de Spearman entre Clasificación Real y del LLM:}\\
+ 0.042 (P-value: 0.381)\\
+ Dado que la correlación es de 0.042 (muy débil por ser cercana a 0), y p-value = 0.381 > $\alpha$ = 0.05, se puede afirmar que no existe evidencia suficiente para rechazar la hipótesis nula de que no existe conrrelación entre las variables. Este resultado indica que las clasificaciones, efectivamente, no están coincidiendo.
 
-\subsubsection{Cambiando el criterio de parada}
-En la gráfica se puede apreciar que la estrategia que aplica el criterio de parada por cantidad de iteraciones reporta mayores ganancias que la que aplica el criterio por umbral. Ahora, al obtenerse un valor del estadístico U alto, tomando $\alpha$ = 0.05, resulta que $\alpha$ < p-value = 8.897161660760197e-09, luego, efectivamente, existe una diferencia significativa en la ganancia entre las estrategias, por tanto se rechaza la hipótesis nula de que no hay diferencia. Podemos asegurar que la estrategia que produjo los datos con mayor media es mejor, en este caso es la que posee el criterio de parada por \textbf{cantidad de iteraciones} con una ganancia media de 15689.76 aproximadamente.
-\subsubsection{Servicio más popular y servicio que reporta mayores ganancias}
-Como se ilustran en las gráficas, se puede decir que los 5 servicios más utilizados por los turistas son: ... y los que reportan mayores ganancias son: .. Resulta evidente percatarse que los servicios que pertenecen a dichas categorías no tienen por qué coincidir. Esto podría sugerir que el precio de los servicios influyen en las ganancias que reporten, más que aquellos que poseen una mayor popularidad entre los clientes.
-\subsubsection{Análisis de la influencia en las ganancias que tienen las estrategias tomadas por el gerente}
-\subsubsection{Clasificación del LLM vs experiencia real}
-\subsubsection{Relación experiencia del turista con calidad de servicio del hotel}
+\subsubsection{Relación experiencia del turista con calidad de servicio del hotel} %Mejorar esta vaina
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Clasificación real y nivel de servicios} \caption{clasificación real vs nivel de los servicios} \label{fig:etiqueta} \end{figure}
+Correlación de Spearman entre Clasificación Real y Nivel de Servicios: 0.008 (P-value: 0.872)\\
+Debido al bajo nivel de correlación y al valor del p-value = 0.872 > $\alpha$ = 0.05, se puede concluir que no existe una correlación entre la calidad de los servicios y el nivel de satisfacción entre los turistas, conclusión que resulta un poco rara, pues la segunda debería estar altamente influenciadaa por la primera.
+
 
 \section{Conclusiones}
 
-Resume concisamente los principales hallazgos, indica si se cumplieron los objetivos propuestos y menciona las limitaciones del estudio.
+%Resume concisamente los principales hallazgos, indica si se cumplieron los objetivos propuestos y menciona las limitaciones del estudio.
+La simulación computacional basada en agentes inteligentes ha demostrado ser una herramienta útil para evaluar la eficacia de diferentes estrategias de gestión hotelera. Los resultados sugieren que las estrategias de gestión impactan significativamente en la satisfacción del cliente (valorar la posibilidad de añadir este estudio), la eficiencia del hotel y la rentabilidad del negocio. El estudio con el Large Language Model (LLM) indica que la percepción de los clientes, reflejada en las reseñas, no siempre se corresponde con su satisfacción real. Se recomienda profundizar en la investigación utilizando un mayor número de variables y estrategias, así como explorar la aplicación de técnicas de aprendizaje automático y análisis predictivo en la gestión hotelera.
 
 \section{Recomendaciones}
 

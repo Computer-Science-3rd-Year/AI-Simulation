@@ -1,6 +1,7 @@
 import random
 import params as prm
 import enums as enu
+import copy
 
 services = {prm.energy: {prm.coffee, prm.rest_room, prm.energy_drink},
             prm.food: {prm.buffet, prm.snack_bar, prm.room_service, prm.restaurant, prm.ranchon},
@@ -31,7 +32,7 @@ def beliefs(hotel):
             # 'room_features': None,    # alguno de los niveles que están en survey.py
             # 'room_clean_mainten': None,#  ''
             # 'general_quality': None, #  ''
-            # 'used_services': {}, # servicios usados por el turista
+            'used_services': [], # servicios usados por el turista
             # 'amenities_variety': None,
             # 'staff_friendliness': None,
             # 'quality_price': None
@@ -62,7 +63,7 @@ def brf(hotel, perception, beliefs):
     # bajar el nivel de las necesidades
     low_necesity_level(beliefs)
 
-    claculate_satisfaction(beliefs, hotel.get_average_level())
+    claculate_satisfaction(beliefs, hotel.get_average_level_service(beliefs['used_services']))
 
 def generate_option(beliefs, desires):
     if not beliefs['has_room']:
@@ -207,11 +208,11 @@ def message_for_mainten(service, service_name):
     if maintenance >= 80:
         return f'The {service_name} was in optimal maintenance conditions. '
     elif maintenance >= 60:
-        return f'The {service_name} needed a bit of maintenance. '
+        return f'The {service_name} needs a bit of maintenance. '
     elif maintenance >= 40:
-        return f'The {service_name} is not in the worst condition but definitely needs maintenance. '
+        return f'The {service_name} definitely needs maintenance. '
     elif maintenance >= 20:
-        return f'The {service_name} needs a lot of maintenance, it is practically neglected. '
+        return f'The {service_name} needs a lot of maintenance. '
     else:
         return f'The {service_name} was in terrible maintenance conditions. '
 
@@ -243,6 +244,9 @@ def reserve_room(env, hotel, name, beliefs, desires, len_of_stay):
 
 def use_service(env, hotel, name, beliefs, desires, intention, service, outputs, experience, service_name, cant_required, necesity_level, max_level):
     beliefs['using_service'] = True
+    if not service in beliefs['used_services']: 
+        beliefs['used_services'].append(copy.copy(service))
+
     with service.resource.request() as request_service:
         yield request_service
         if service.utilities[0].container.level >= cant_required/10:
