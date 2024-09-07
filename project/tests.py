@@ -94,7 +94,7 @@ values_1 = []
 values_price_1 = []
 for service in money_service:
     result = sum(money_service[service])/len(money_service[service])
-    if result > 2200:
+    if result > 1700:
         names_1.append(service.name)
         values_1.append(result)
         values_price_1.append(service.price)
