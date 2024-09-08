@@ -14,15 +14,15 @@
 
 \subsection*{Resumen} \addcontentsline{toc}{section}{Resumen}
 
-Este trabajo presenta una simulación computacional de un hotel, basada en agentes inteligentes, con el objetivo de evaluar la eficacia de diferentes estrategias de negocio en el ámbito hotelero. La simulación contempla tres tipos de agentes fundamentales: turistas, trabajadores y el gerente del hotel. Los turistas tienen, entre otros aspectos, una serie de restricciones que deben cumplir las habitaciones en las que se alojarán. Para lograr su cumplimiento, se aplica el algoritmo de Constraint Satisfaction Problem (CSP). El gerente es quien implementa las distintas estrategias, conocidas en el sector hotelero, a partir de las reacciones de los turistas, utilizando algoritmos de inteligencia artificial. Se emplea una metaheurística para determinar qué servicios conviene añadir al hotel con el fin de optimizar las ganancias. Se compararon dos criterios de parada para este algoritmo, pero no se obtuvieron resultados concluyentes debido a la significativa varianza en cada simulación (ver anotación).
+Este trabajo presenta una simulación computacional de un hotel, basada en agentes inteligentes, con el objetivo de evaluar la eficacia de diferentes estrategias de negocio en el ámbito hotelero. La simulación contempla tres tipos de agentes fundamentales: turistas, trabajadores y el gerente del hotel. Los turistas tienen, entre otros aspectos, una serie de restricciones que deben cumplir las habitaciones en las que se alojarán. Para lograr su cumplimiento, se aplica el algoritmo de Constraint Satisfaction Problem (CSP). El gerente es quien implementa las distintas estrategias, conocidas en el sector hotelero, a partir de las reacciones de los turistas, utilizando algoritmos de inteligencia artificial. Se emplea una metaheurística para determinar qué servicios conviene añadir al hotel con el fin de optimizar las ganancias. Se compararon dos criterios de parada para este algoritmo, donde se concluyó que el criterio de parada por cantudad de iteraciones daba mejores resultados.
 
-Paralelamente, se realiza un estudio que involucra la generación y clasificación de reseñas por un Large Language Model (LLM), a partir de las reacciones de los turistas motivadas por sus experiencias. Las clasificaciones se compararon con el nivel de satisfacción real de cada turista, obteniendo resultados con poca varianza.
+Paralelamente, se realiza un estudio que involucra la generación y clasificación de reseñas por un Large Language Model (LLM), a partir de las reacciones de los turistas motivadas por sus experiencias. Las clasificaciones se compararon con el nivel de satisfacción real de cada turista, obteniéndose resultados diferentes, en su mayoría, y con poca varianza. Además, se analizó la relación entre la satisfacción de cada turista y la calidad de los servicios.
 
 \subsection*{Palabras clave} \textit{Simulación, Agentes Inteligentes, Estrategias de Negocio, Algoritmos de IA, LLM}
 
-\subsection*{Abstract} This work presents a computational simulation of a hotel, using intelligent agents, to evaluate the performance of different business strategies in the hotel industry. The simulation involves three key agent types: tourists, workers, and the hotel manager. Tourists possess constraints, such as room preferences, which are addressed using the Constraint Satisfaction Problem (CSP) algorithm. The manager implements various business strategies based on tourist feedback, employing artificial intelligence algorithms. A metaheuristic approach is utilized to determine optimal hotel service additions for maximizing profit. Two stopping criteria for the metaheuristic were compared, but conclusive results were not obtained due to significant variance in each simulation (see annotation). 
+\subsection*{Abstract} This work presents a computational simulation of a hotel, based on intelligent agents, with the aim of evaluating the effectiveness of different business strategies in the hotel field. The simulation contemplates three types of fundamental agents: tourists, workers and the hotel manager. Tourists have, among other aspects, a series of restrictions that must be met by the rooms in which they will stay. To achieve compliance, the Constraint Satisfaction Problem (CSP) algorithm is applied. The manager is the one who implements the different strategies, known in the hotel sector, based on the reactions of tourists, using artificial intelligence algorithms. A metaheuristic is used to determine which services should be added to the hotel in order to optimize profits. Two stop criteria for this algorithm were compared, where it was concluded that the stop criterion by number of iterations gave better results. 
 
-Alongside this, a parallel study analyzes tourist experiences, generating and classifying reviews using a Large Language Model (LLM). These classifications were compared against the actual satisfaction levels of tourists, yielding results with minimal variance.
+At the same time, a study is carried out that involves the generation and classification of reviews by a Large Language Model (LLM), based on the reactions of tourists motivated by their experiences. The rankings were compared with the level of real satisfaction of each tourist, obtaining different results, for the most part, and with little variance. In addition, the relationship between the satisfaction of each tourist and the quality of services was analyzed.
 
 \subsection*{Keywords}\textit{1. Hotel Simulation, Intelligent Agents, Business Strategies, Large Language Model (LLM)}
 
@@ -30,11 +30,13 @@ Alongside this, a parallel study analyzes tourist experiences, generating and cl
 
 \section{Introducción}
 
-La industria hotelera se encuentra en constante evolución, buscando optimizar sus operaciones y estrategias para satisfacer las necesidades cambiantes de los viajeros. En este contexto, la simulación computacional ha surgido como una herramienta poderosa para analizar y evaluar diferentes escenarios de negocio. Este trabajo presenta una simulación de un hotel basada en agentes inteligentes, con el objetivo de explorar la eficacia de distintas estrategias de gestión en el sector hotelero. 
+La industria hotelera se encuentra en constante evolución, buscando optimizar sus operaciones y estrategias para satisfacer las necesidades cambiantes de los viajeros. En este contexto, la simulación computacional ha surgido como una herramienta poderosa para analizar y evaluar diferentes escenarios de negocio. Este trabajo presenta una simulación de un hotel basada en agentes inteligentes, la cual constituye la base sobre la que se desarrollan los estudios de este trabajo.
 
 Este trabajo se centra en la interacción entre tres tipos de agentes: turistas, personal del hotel y el gerente; y el medio: el hotel. Los clientes, con sus preferencias y limitaciones individuales, interactúan con el hotel, buscando satisfacer sus necesidades. Los trabajadores se encargan de cumplir con sus deberes en sus respectivas labores, haciendo depender su eficacia del salario que reciben. El gerente, por su parte, toma decisiones estratégicas para optimizar la rentabilidad del hotel, basándose en el comportamiento de los clientes y utilizando algoritmos de inteligencia artificial para identificar las mejores opciones.
 
-El objetivo principal de este trabajo es evaluar la eficacia de diferentes estrategias de negocio en el ámbito hotelero, a través de la simulación computacional. Se busca analizar la influencia de las estrategias de gestión en la satisfacción del cliente, la eficiencia del hotel y la rentabilidad del negocio. Además, se realiza un estudio paralelo utilizando un Modelo de Lenguaje de Gran Escala (LLM) para analizar la relación entre las experiencias de los clientes y las reseñas que generan. El objetivo es determinar si la percepción de los clientes, reflejada en las reseñas, se corresponde con su satisfacción real.
+El hotel, como medio en el que se desarrolla la simulación, contiene los recursos necesarios para que los agentes puedan modificarlo, así como consultar el estado de sus propiedades, en dependencia del rol que estén desenvolviendo. Los agentes, a su vez, se verán influenciados por el medio, donde dicha afectación dependerá principalmente de las creencias de cada uno.
+
+El objetivo principal de este trabajo es evaluar la eficacia de diferentes estrategias de negocio en el ámbito hotelero, así como la realización de otros estudios sobre los datos obtenidos y eficiencia de algunos de los algoritmos utilizados de inteligencia artificial (IA). Se busca analizar la influencia de las estrategias de gestión en la satisfacción del cliente, la eficiencia del hotel y la rentabilidad del negocio. Además, se realiza un estudio paralelo utilizando un Modelo de Lenguaje de Gran Escala (LLM) para analizar la relación entre las experiencias de los clientes y las reseñas que generan, y de esta forma determinar si la percepción de los clientes, reflejada en las reseñas, se corresponde con su satisfacción real.
 
 \section{Marco teórico}
 
@@ -65,7 +67,7 @@ El uso de algoritmos de inteligencia artificial en este trabajo resultó crucial
 Anteriormente se mencionó que los turistas imponían una serie de restricciones que deben tener las habitaciones en las cuales se hospeden. Las habitaciones, como es lógico, también poseen determinadas características que pueden o no coincidir con aquellas que el turista desee. Para resolver el problema de buscar cuál es la mejor forma de asignar habitaciones a un conjunto de turistas, a modo de complacer a la mayor cantidad de turistas, se empleó el algoritmo Constraint Satisfaction Problem (CSP). Obsérvese que el espacio sobre el cual se realiza la búsqueda crece exponencialmente, por tanto resulta inviable resolver dicho problema con algún otro algoritmo que no incluya inteligencia artificial.
 
 \subsubsection{Metaheurística}
-Uno de las estrategias de negocio que aplica el gerente en aras de hacer crecer las ganancias, es la inclusión de nuevos servicios en el hotel. Sin embargo, es necesario tener en cuenta el presupuesto disponible, así como el costo de añadir dicho servicio (costo de construcción, y de contratación de empleados) así como las ganancias que se esperan obtener una vez se active. Con el objetivo en contrar la mejor combinación de servicios a añadir que maximicen las ganancias se empleó un algoritmo de metaheurística, al ser un problema de optimización en un espacio de búsqueda (verificar acá lo del espacio de búsqueda)
+Uno de las estrategias de negocio que aplica el gerente en aras de hacer crecer las ganancias, es la inclusión de nuevos servicios en el hotel. Sin embargo, es necesario tener en cuenta el presupuesto disponible, así como el costo de añadir dicho servicio (costo de construcción, y de contratación de empleados) así como las ganancias que se esperan obtener una vez se active. Con el objetivo de contrar la mejor combinación de servicios a añadir que maximicen las ganancias se empleó un algoritmo de metaheurística, al ser un problema de optimización en un espacio de búsqueda (verificar acá lo del espacio de búsqueda)
 
 \subsubsection{Large Language Model (LLM)}
 Cuando cada turista utiliza un servicio o utilidad, añade a su cúmulo de experiencias un frase breve que clasifica el servicio. Luego todo este conjunto de frases son procesadas por un LLM para generar una reseña coherentemente redactada. Luego, esta reseña será analizada por el propio LLM el cual la utilizará para clasificar en: 'Excellent' (excelente), 'Very Good' (muy buena), 'Good' (buena), 'Bad' (mala) o 'Very Bad' (muy mala) la experiencia de un turista. Cabe destacar que el cálculo real de la satisfacción del turista existe, y se realiza a partir de sus experiencias propias.
@@ -73,16 +75,11 @@ Cuando cada turista utiliza un servicio o utilidad, añade a su cúmulo de exper
 \subsection{Estudios}
 \subsubsection{Cambiando el criterio de parada}
 Una de las estrategias de negocio aplicadas por el gerente consiste en añadir nuevos servicios al hotel. Su elección buscará maximizar la ganancia, por lo que agregará el conjunto de servicios que satisfaga esta condición. Para ello se empleó una metaheurística (explicado anteriormente) cuyo criterio de parada consiste en un límite, es decir, una vez que se alcance una ganancia objetivo, se aprueba como conjunto de servicios válido a añadir. Sin embargo, ¿las ganancias obtenidas se mantendrá si utilizamos como criterio de parada la cantidad de iteraciones del algoritmo? Para responder a esta interrogante se realizó 100 simulaciones con cada criterio, y luego se hizo una prueba de Mann-Whitney U para analizar la varianza entre las ganancias. Los resultados y discusión serán expuestos en la próxima sección.\\
-Para este análisis se tomaron como hipótesis nula y alternativas las siguientes:\\
-$H_0$: No hay diferencia entre las medias de las ganancias producidas aplicando cada criterio.\\
-$H_1$: Hay diferencia entre las medias de las ganancias producidas aplicando cada criterio.\\
 \subsubsection{Servicio más popular y servicio que reporta mayores ganancias}
 Resulta necesario para el negocio de la hotelería saber cuál es el servicio más usado por los huéspedes así como el que reporta mayores ganancias. Con 100 simulaciones realizadas aplicando un criterio de parada, y luego 100 simulaciones más aplicando el otro criterio de parada, se analizó asimismo si el servicio más popular y el que reporta mayor ganancia están relacionados con este cambio en el algoritmo de metaheurística.
 \subsubsection{Análisis de la influencia en las ganancias que tienen las estrategias tomadas por el gerente}
 Es necesario saber si las estrategias tomadas por el manager implican algún cambio positiva en las ganancias del hotel. Para este análisis, primero se realizaron 100 simulaciones donde la única regla del gerente es mantener el nivel de mantenimiento (valga la redundancia) de los servicios en un porciento aceptable. En otras 100 simulaciones el manager ha tomado todas las estrategis que ha considerado en base a sus reglas de negocio. De cada experimento se almacenan las ganancias obtenidas y se realiza una prueba de Mann-Whitney U para analizar las diferencias entre ellas.\\
-Para este análisis se tomaron como hipótesis nula y alternativas las siguientes:\\
-$H_0$: No hay diferencia entre las medias de las ganancias producidas con y sin aplicar las estrategias del gerente.\\
-$H_1$: Hay diferencia entre las medias de las ganancias producidas con y sin aplicar las estrategias del gerente.\\
+
 \subsubsection{Clasificación del LLM vs experiencia real}
 En este trabajo se ha usado un LLM en dos fases: 1ro, dado un conjunto de frases que el turista devuelve de acuerdo a su experiencia en el hotel, el LLM genera una reseña coherente que corresponde a ese turista; 2do, el mismo LLM (pero ahora en calidad de clasificador) asignará, en base a la reseña generada, una etiqueta que clasificará la experiencia del turista en: 'Excellent' (excelente), 'Very good' (muy buena), 'Good' (buena), 'Mala' (bad) o 'Very bad' (muy mala). Cada una de estas clasificaciones corresponden a un rango numérico comprendido entre 0 y 100 ( $80 < x \le 100$: Excellent, $60 < x \le 80$: Very Good, $40 < x \le 60$: Good, $20 < x \le 40$: Bad, $0 \le x \le 20$: Very bad), para que pueda compararse con la experiencia real del turista, cuyo cálculo arroja un número, justamente, entre 0 y 100.\\
 Por una cuestión de tiempo de ejecución, se decidió realizar solo 10 simulaciones para este estudio, dado que el algoritmo de un LLM demora en ejecutarse. Para medir la varianza entre las clasificaciones del LLM y la satisfacción real de los turistas, se usó un test de ANOVA (realizar otro test para la varianza o realizar el análisis de los supuestos para ANOVA). Se realizó, además, un test de correlación de Spearman para analizar la relación existente entre la clasificación del LLM y la satisfacción real.
@@ -98,6 +95,10 @@ Además se realizó un estudio para verificar si existía una correlación entre
 \subsubsection{Cambiando el criterio de parada}
 
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{Distribución de ganancias por estrategia} \caption{} \label{fig:etiqueta} \end{figure}
+
+Para este análisis se tomaron como hipótesis nula y alternativas las siguientes:\\
+$H_0$: No hay diferencia entre las medias de las ganancias producidas aplicando cada criterio.\\
+$H_1$: Hay diferencia entre las medias de las ganancias producidas aplicando cada criterio.\\
 \textbf{Prueba de Mann-Whitney U:}\\
 \textit{Estadístico U:} 2646.0\\
 \textit{Valor p:} 8.897161660760197e-09\\
@@ -109,6 +110,9 @@ Como se ilustran en las gráficas, se puede decir que los 5 servicios más utili
 \subsubsection{Análisis de la influencia en las ganancias que tienen las estrategias tomadas por el gerente}
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{estrategias manager} \caption{Ganancia con y sin estrategias de negocio} \label{fig:etiqueta} \end{figure}
 
+Para este análisis se tomaron como hipótesis nula y alternativas las siguientes:\\
+$H_0$: No hay diferencia entre las medias de las ganancias producidas con y sin aplicar las estrategias del gerente.\\
+$H_1$: Hay diferencia entre las medias de las ganancias producidas con y sin aplicar las estrategias del gerente.\\
 \textbf{Prueba de Mann-Whitney U:}\\
 \textit{Estadístico U:} 5598.0\\
 \textit{Valor p:} 0.14431042503881425\\
@@ -135,12 +139,12 @@ El valor p (0.000) es menor que el nivel de significancia (0.05), por tanto se r
 
 \textbf{Correlación de Spearman entre Clasificación Real y del LLM:}\\
  0.042 (P-value: 0.381)\\
- Dado que la correlación es de 0.042 (muy débil por ser cercana a 0), y p-value = 0.381 > $\alpha$ = 0.05, se puede afirmar que no existe evidencia suficiente para rechazar la hipótesis nula de que no existe conrrelación entre las variables. Este resultado indica que las clasificaciones, efectivamente, no están coincidiendo.
+ Dado que la correlación es de 0.042 (muy débil por ser cercana a 0), y p-value = 0.381 $> \alpha$ = 0.05, se puede afirmar que no existe evidencia suficiente para rechazar la hipótesis nula de que no existe conrrelación entre las variables. Este resultado indica que las clasificaciones, efectivamente, no están coincidiendo.
 
 \subsubsection{Relación experiencia del turista con calidad de servicio del hotel} %Mejorar esta vaina
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{Clasificación real y nivel de servicios} \caption{clasificación real vs nivel de los servicios} \label{fig:etiqueta} \end{figure}
 Correlación de Spearman entre Clasificación Real y Nivel de Servicios: 0.008 (P-value: 0.872)\\
-Debido al bajo nivel de correlación y al valor del p-value = 0.872 > $\alpha$ = 0.05, se puede concluir que no existe una correlación entre la calidad de los servicios y el nivel de satisfacción entre los turistas, conclusión que resulta un poco rara, pues la segunda debería estar altamente influenciadaa por la primera.
+Debido al bajo nivel de correlación y al valor del p-value = 0.872 $> \alpha$ = 0.05, se puede concluir que no existe una correlación entre la calidad de los servicios y el nivel de satisfacción entre los turistas, conclusión que resulta un poco rara, pues la segunda debería estar altamente influenciadaa por la primera.
 
 
 \section{Conclusiones}
