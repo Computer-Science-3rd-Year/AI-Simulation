@@ -32,7 +32,7 @@ def beliefs(hotel):
             # 'room_features': None,    # alguno de los niveles que están en survey.py
             # 'room_clean_mainten': None,#  ''
             # 'general_quality': None, #  ''
-            'used_services': [], # servicios usados por el turista
+            'used_services': [], # servicios usados por el turista antes de calcular su nivel de satisfacción
             # 'amenities_variety': None,
             # 'staff_friendliness': None,
             # 'quality_price': None
@@ -62,8 +62,8 @@ def brf(hotel, perception, beliefs):
     
     # bajar el nivel de las necesidades
     low_necesity_level(beliefs)
-
-    claculate_satisfaction(beliefs, hotel.get_average_level_service(beliefs['used_services']))
+    if len(beliefs['used_services']) != 0:
+        claculate_satisfaction(beliefs, hotel.get_average_level_service(beliefs['used_services']))
 
 def generate_option(beliefs, desires):
     if not beliefs['has_room']:
@@ -177,13 +177,14 @@ def claculate_satisfaction(beliefs, service_quality):
     # Ponderación de las quejas
     complaint_score = beliefs['complaints'] * 0.25 #complaint_weight 
 
-    # Ponderación de la calidad del servicio
-    service_score = service_quality * 0.25 #service_weight
+    # # Ponderación de la calidad del servicio
+    # service_score = service_quality * 0.25 #service_weight
 
     # Cálculo final
-    result = max(0, (needs_score + service_score - complaint_score) / 2)
+    result = max(0, (needs_score - complaint_score))
 
     beliefs['satisfaction'] = result
+    beliefs['used_services'] = [] # actualizar el array de servicios usados hasta el próximo cálculo
     # result = max(0, sum_needs/necesities_count - 2*beliefs['complaints'])
     
     # beliefs['satisfaction'] = result
@@ -255,16 +256,20 @@ def use_service(env, hotel, name, beliefs, desires, intention, service, outputs,
                 hotel.use_services[service] = 0   
              
             hotel.use_services[service] += 1
+            percent_ = percent(service.maintenance, prm.MAXIMUM_MAINTENANCE)
 
             if intention[0] != 'rest_room':
                 price = service.price
-                hotel.revenues[service] += price
-                hotel.budget += price
-                beliefs['budget'] -= price ##### PRESUPUESTO DEL TURISTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                part_price = part(percent_, price)
+                hotel.revenues[service] += part_price
+                hotel.budget += part_price
+                beliefs['budget'] -= part_price ##### PRESUPUESTO DEL TURISTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             outputs.append((env.now, f'El turista {name} accedió al servicio {service_name}, {beliefs[necesity_level][0]}'))
             
-            if not max_level:
-                beliefs[necesity_level][0] += cant_required
+            if not max_level:                
+                part_cant_req = part(percent_, cant_required)
+                beliefs[necesity_level][0] += part_cant_req
+
             
             desires['want_' + intention[1]] = False
             experience.append(message_for_mainten(service, service_name))
@@ -276,9 +281,9 @@ def use_service(env, hotel, name, beliefs, desires, intention, service, outputs,
             beliefs['using_service'] = False
             if not max_level:
                 if intention[0] != 'rest_room':
-                    service.utilities[0].container.get(int(cant_required/10))
+                    service.utilities[0].container.get(max(1, int(part_cant_req/10)))
                 else:
-                    service.utilities[0].container.get(int(cant_required)) 
+                    service.utilities[0].container.get(int(part_cant_req)) 
         else:
             hotel.complaints += 1
             beliefs['complaints'] += 1
@@ -313,4 +318,16 @@ def init_necesity_level(range, necesity):
     else:
         servs_list = random.sample(list(services[necesity]), random.randint(1, len(services[necesity])))
         result = [level, servs_list]
+    return result
+
+def percent(x, n):
+    result = (100*x)/n
+    return result
+
+def part(p, n):
+    result = (p*n)/100
+    return result
+
+def total(x, p):
+    result = (100*x)/p
     return result

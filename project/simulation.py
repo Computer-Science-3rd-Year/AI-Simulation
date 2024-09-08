@@ -192,22 +192,23 @@ def run_simulation():
     # Execute!
     env.run(until=prm.SIM_TIME)
 
-    # # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # #print(melia_hotel.experiences)
-    # for tourist in melia_hotel.experiences:
-    #   review = llm.generate_review(melia_hotel.experiences[tourist])
-    #   melia_hotel.reviews[tourist] = review
-    #   classif = llm.classify_review(review).lower()
-    #   melia_hotel.classifications[tourist] = classif
-    #   outputs.append((sys.maxsize, f'{tourist}:\nREVIEW --> {review}\nCLASSIFICATION --> {classif}\n'))
-    #   #print(tourist, classif, melia_hotel.tourist_register[tourist]['satisfaction'], f'\n{melia_hotel.experiences[tourist]}\n{review}')
-    #   print("5")
+    # NO BORRARRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #print(melia_hotel.experiences)
+    for tourist in melia_hotel.experiences:
+      review = llm.generate_review(melia_hotel.experiences[tourist])
+      melia_hotel.reviews[tourist] = review
+      classif = llm.classify_review(review).lower()
+      melia_hotel.classifications[tourist] = classif
+      outputs.append((sys.maxsize, f'{tourist}:\nREVIEW --> {review}\nCLASSIFICATION --> {classif}\n'))
+      print(tourist, classif, melia_hotel.tourist_register[tourist]['satisfaction']) #, f'\n{melia_hotel.experiences[tourist]}\n{review}')
+      #print("5")
      
 
     os.remove("output.txt")
     with open("output.txt", "a") as f:
         for timestamp, message in sorted(outputs, key = lambda outputs_: outputs_[0]):
                 f.write(f"{timestamp}: {message}" + '\n')
+    #print('wiiii')
     
     return melia_hotel
 
