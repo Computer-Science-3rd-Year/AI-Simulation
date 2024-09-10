@@ -7,7 +7,7 @@ import pandas as pd
 
 def llm_and_real_classification():
     result = [] #[(real_classif, llm_classif), ...]
-    for _ in range(5):
+    for _ in range(10):
         melia_hotel = run_simulation()
 
         for tourist in melia_hotel.tourist_register:

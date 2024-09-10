@@ -8,3 +8,14 @@
 - en el test de servicios más populares y los que dan mayores ganancias, devolver en el studio el precio de cada uno. Se podría establecer una gráfica de histograma o cualquier otra que ilustre todos los servicios del hotel y los compare en cuanto a precio, antes de devolver los que mayor ganancia reportan.
 - en el test de las estrategias del manager, actualmente se toma como que no hace ninguna estrategia que solo suba el nivel de mantenimiento de los servicios, sin embargo, estaría Bueno probar el "no hacer nada" con cada una de las estrategias y así probar cuál es la que reporta mayor ganancia respect a tomar todas. Además de evaluar la ganancia, evaluar tb el nivel de satisfacción de los clientes.	
 - revisar la coherencia entre el cálculo de satisfacción del turista con los mensajes de experiencia que está devolviendo
+
+
+
+
+Valor F: 0.37
+Valor p: 0.541
+El valor p (0.541) es mayor que el nivel de significancia (0.05). No se rechaza la hipótesis nula. No hay evidencia estadística suficiente para afirmar que las clasificaciones del LLM y la satisfacción real de los turistas son diferentes.
+
+nCorrelación de Spearman entre Clasificación Real y del LLM: -0.020 (P-value: 0.776)
+Correlación de Spearman entre Clasificación Real y Nivel de Servicios: -0.032 (P-value: 0.647)
+Correlación de Spearman entre Clasificación Real y Nivel de Servicios: -0.032 (P-value: 0.647)

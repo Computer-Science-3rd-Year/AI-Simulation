@@ -108,7 +108,7 @@ En la gráfica se puede apreciar que la estrategia que aplica el criterio de par
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{precio popularidad} \caption{Precios de los servicios más populares} \label{fig:etiqueta} \end{figure}
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{Mayor Ganancia} \caption{Servicios con mayor ganancia} \label{fig:etiqueta} \end{figure}
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{precio mayor ganancia} \caption{precios de los servicios con mayor ganancia} \label{fig:etiqueta} \end{figure}
-Como se ilustran en las gráficas, se puede decir que los 5 servicios más utilizados por los turistas son: ... y los que reportan mayores ganancias son: .. Resulta evidente percatarse que los servicios que pertenecen a dichas categorías no tienen por qué coincidir. Si se analiza, además, las gráficas que ilustran los precios de los servicios más populares así como los que reportan mayores ganancias, es posible distinguir que que el precio de estos últimos es más que el doble de los primeros. Esto podría sugerir que el precio de los servicios influye en las ganancias que reporten al hotel, considerablemente más que su nivel de popularidad entre los clientes.
+Como se ilustran en las gráficas, se puede decir que los 5 servicios más utilizados por los turistas son (ver Figura 2)  y los que reportan mayores ganancias son (ver Figura 4) Resulta evidente percatarse que los servicios que pertenecen a dichas categorías no tienen por qué coincidir. Si se analiza, además, las gráficas que ilustran los precios de los servicios más populares así como los que reportan mayores ganancias, es posible distinguir que que el precio de estos últimos es más que el doble de los primeros. Esto podría sugerir que el precio de los servicios influye en las ganancias que reporten al hotel, considerablemente más que su nivel de popularidad entre los clientes.
 \subsubsection{Análisis de la influencia en las ganancias que tienen las estrategias tomadas por el gerente}
 \begin{figure}[H] \centering \includegraphics[width=\textwidth]{estrategias manager} \caption{Ganancia con y sin estrategias de negocio} \label{fig:etiqueta} \end{figure}
 
@@ -127,26 +127,21 @@ Respecto a los resultados de la prueba de Mann-Whitney U, se puede apreciar un e
 Dado que este resultado es un poco extraño, resulta conveniente revisar o bien las estrategias y reglas del gerente, o bien el cálculo de las ganancias en la simulación.
 
 \subsubsection{Clasificación del LLM vs experiencia real}
-\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Frecuencia de clasificaciones} \caption{frecuencia de clasif} \label{fig:etiqueta} \end{figure}
-En esta gráfica se puede apreciar que se realizaron más de 400 clasificaciones (más de 400 turistas), donde las barras correspondientes a cada clasificación están bastante aisladas.
-\begin{figure}[H] \centering \includegraphics[width=\textwidth]{LLM classif vs real satisfaction} \caption{errores LLM} \label{fig:etiqueta} \end{figure}
-En esta gráfica se puede apreciar que el LLM prácticamente no ha coincidido con en su clasificación con el resultado del cálculo de la satisfacción de los turistas. Ahora, analicemos cuánta diferencia hay entre ambas clasificaciones.
-\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Diferencia de errores} \caption{diferencia entre errores} \label{fig:etiqueta}\end{figure}
-A partir de esta gráfica se puede apreciar que la mayoría de las clasificaciones dadas por el LLM, dista 2 unidades de la claseificación real. Dado que son 5 clasificaciones en total, se puede inferir que el margen de error es estadísticamente significativo. El nivel de aserción de esta respuesta se verificará con el test de varianza.
-
-\textbf{ANOVA}\\
-\textit{Valor F:} 6096.03\\
-\textit{Valor p:} 0.000\\
-El valor p (0.000) es menor que el nivel de significancia (0.05), por tanto se rechaza la hipótesis nula. Existe evidencia estadística de que las clasificaciones del LLM y la satisfacción real de los turistas son diferentes.\\
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Frecuencia de clasificaciones_last} \caption{frecuencia de clasif} \label{fig:etiqueta} \end{figure}
+En esta gráfica se puede apreciar que se realizaron más de 400 clasificaciones (más de 400 turistas), donde las barras correspondientes a cada clasificación, la del LLM y la correspondiente al cálculo real prácticamente se solapan.
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{LLM classif vs real satisfaction_last} \caption{errores LLM} \label{fig:etiqueta} \end{figure}
+En esta gráfica se puede apreciar que el LLM prácticamente coincidió en su clasificación con el resultado del cálculo de la satisfacción de los turistas, acertando un 82,2\% del total de clasificaciones. Ahora, analicemos cuánta diferencia hay entre ambas clasificaciones.
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Diferencia de errores_last} \caption{diferencia entre errores} \label{fig:etiqueta}\end{figure}
+A partir de esta gráfica se puede apreciar que la mayoría de las clasificaciones dadas por el LLM, dista 1 unidad de la claseificación real. Dado que son 5 clasificaciones en total, se puede inferir que el margen de error no es estadísticamente significativo.
 
 \textbf{Correlación de Spearman entre Clasificación Real y del LLM:}\\
- 0.042 (P-value: 0.381)\\
- Dado que la correlación es de 0.042 (muy débil por ser cercana a 0), y p-value = 0.381 $> \alpha$ = 0.05, se puede afirmar que no existe evidencia suficiente para rechazar la hipótesis nula de que no existe conrrelación entre las variables. Este resultado indica que las clasificaciones, efectivamente, no están coincidiendo.
+0.127 (P-value: 0.008)\\
+Dado que la correlación es de 0.127 (débil por ser cercana a 0), y p-value = 0.008 $< \alpha$ = 0.05, se puede afirmar que existe evidencia suficiente para rechazar la hipótesis nula de que no existe conrrelación entre las variables. Este resultado indica que las clasificaciones, efectivamente, están coincidiendo.
 
 \subsubsection{Relación experiencia del turista con calidad de servicio del hotel} %Mejorar esta vaina
-\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Clasificación real y nivel de servicios} \caption{clasificación real vs nivel de los servicios} \label{fig:etiqueta} \end{figure}
-Correlación de Spearman entre Clasificación Real y Nivel de Servicios: 0.008 (P-value: 0.872)\\
-Debido al bajo nivel de correlación y al valor del p-value = 0.872 $> \alpha$ = 0.05, se puede concluir que no existe una correlación entre la calidad de los servicios y el nivel de satisfacción entre los turistas, conclusión que resulta un poco rara, pues la segunda debería estar altamente influenciadaa por la primera.
+\begin{figure}[H] \centering \includegraphics[width=\textwidth]{Clasificación real y nivel de servicios_last} \caption{clasificación real vs nivel de los servicios} \label{fig:etiqueta} \end{figure}
+Correlación de Spearman entre Clasificación Real y Nivel de Servicios: -0.047 (P-value: 0.325)\\
+Debido al bajo nivel de correlación y al valor del p-value = 0.325 $> \alpha$ = 0.05, se puede concluir que no existe evidencia suficiente para rechazar la hipótesis nula de que no existe correlación entre la calidad de los servicios y el nivel de satisfacción de los turistas. Esta conclusión resulta un poco rara, pues la segunda debería estar altamente influenciadaa por la primera.
 
 
 \section{Conclusiones}
@@ -156,24 +151,7 @@ La simulación computacional basada en agentes inteligentes ha demostrado ser un
 
 \section{Recomendaciones}
 
-Presenta propuestas para futuras investigaciones y aplicaciones prácticas de los resultados obtenidos.
+Para acercar los resultados obtenidos en esta simulación a los que se pueden obtener en la vida real se recomienda ajustar la escala de tiempo. Asimismo sería interesante analizar la influencia de las diferentes estrategias de marketing vía digital en el desarrollo del hotel, principalmente en la llegada de los clientes.
 
-\vspace{-1em} \hrulefill
-
-\begin{thebibliography}{99}
-
-\bibitem{autor1} Autor1, A. P. (Año). Título del trabajo. Fuente.
-
-\bibitem{autor2} Autor2, B. Q. (Año). Título del trabajo. Fuente.
-
-\end{thebibliography}
-
-\vspace{-1em} \hrulefill
-
-\appendix
-
-\section{Anexos}
-
-Incluye aquí cualquier material complementario que apoye el informe principal.
 
 \end{document} $
